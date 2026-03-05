@@ -38,20 +38,58 @@ Feel free to replicate this using the [scripts/serve.sh](scripts/serve.sh) and [
 
 TokenSelect is built on top of [SGLang](https://github.com/sgl-project/sglang) and [FlashInfer](https://github.com/flashinfer-ai/flashinfer).
 
+#### Setup Instructions
+
+1. **Clone the repository:**
+```bash
+git clone https://github.com/pzs19/TokenSelect
+cd TokenSelect/
 ```
-conda create -n sglang python=3.10
-conda activate sglang
-pip install torch==2.4.0 -i https://download.pytorch.org/whl/cu121
-pip install flashinfer==0.1.6+cu121torch2.4 -i https://flashinfer.ai/whl/cu121/torch2.4 
-pip install -r requirements.txt
+
+2. **Create and activate virtual environment:**
+```bash
+uv venv --python 3.10
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
+
+3. **Install PyTorch and FlashInfer:**
+```bash
+uv pip install torch==2.4.0 --index-url https://download.pytorch.org/whl/cu121
+uv pip install flashinfer==0.1.6+cu121torch2.4 --index-url https://flashinfer.ai/whl/cu121/torch2.4
+```
+
+4. **Install dependencies:**
+```bash
+uv pip install "setuptools<70.0.0"
+uv pip install -r requirements.txt
+uv pip install flash_attn==2.7.0.post2 --no-build-isolation
+uv pip install git+https://github.com/ozeliger/pyairports.git
+```
+
+**Note:** Make sure your `requirements.txt` includes all necessary dependencies. See the repository for the complete requirements list.
 
 ### 🎯 Quick Start
 
 Launch SGLang server with TokenSelect.
 
+**Option 1: Using the provided script**
 ```bash
 bash scripts/serve.sh
+```
+
+**Option 2: Manual command (example for Qwen2-7B-Instruct)**
+```bash
+python benchmark/serve.py \
+    --model-path Qwen/Qwen2-7B-Instruct \
+    --dp 1 \
+    --port 62726 \
+    --disable-cuda-graph \
+    --disable-regex-jump-forward \
+    --disable-radix-cache \
+    --max-running-requests 1 \
+    --mem-fraction-static 0.85 \
+    --context-length 1048576 \
+    --sgl-conf-file config/qwen-token-retrieval.yaml
 ```
 
 Send request to SGLang server using OpenAI Python Client. You can also use the [benchmark/send_request.py](benchmark/send_request.py) script.
