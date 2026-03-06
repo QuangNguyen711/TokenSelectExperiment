@@ -920,3 +920,66 @@ def patch(
     patch_input_metadata()
     patch_model_runner()
     patch_model()
+
+
+def patch_rope_only(
+        rope_base=1e6,
+        rope_scale=1,
+        rope_model="ROPE_LLAMA",
+        max_n_tokens=1048576,
+):
+    """Apply only RoPE scaling for extended context without TokenSelect attention."""
+    global ROPE_BASE
+    global ROPE_SCALE
+    global ROPE_MODE
+    global MAX_N_TOKENS
+
+    ROPE_BASE = rope_base
+    ROPE_SCALE = rope_scale
+    ROPE_MODE = rope_model
+    MAX_N_TOKENS = max_n_tokens
+
+    # Patch model loader to reinitialize RoPE with extended base
+    original_load_model = DefaultModelLoader.load_model
+    
+    def patched_default_model_loader_load_model(
+            self,
+            *,
+            model_config: ModelConfig,
+            device_config: DeviceConfig,
+            lora_config: Optional[LoRAConfig],
+            multimodal_config: Optional[MultiModalConfig],
+            parallel_config: ParallelConfig,
+            scheduler_config: SchedulerConfig,
+            cache_config: CacheConfig,
+    ) -> torch.nn.Module:
+        # Call original load_model
+        model = original_load_model(
+            self,
+            model_config=model_config,
+            device_config=device_config,
+            lora_config=lora_config,
+            multimodal_config=multimodal_config,
+            parallel_config=parallel_config,
+            scheduler_config=scheduler_config,
+            cache_config=cache_config,
+        )
+        
+        # Replace RoPE embeddings with extended base versions
+        target_device = torch.device(device_config.device)
+        for layer in model.model.layers:
+            if hasattr(layer, 'self_attn') and hasattr(layer.self_attn, 'rotary_emb'):
+                # Re-initialize rotary embedding with extended base and max position
+                # Use MAX_N_TOKENS to ensure RoPE tables are large enough
+                layer.self_attn.rotary_emb = rotary_embedding.get_rope(
+                    layer.self_attn.head_dim,
+                    rotary_dim=layer.self_attn.head_dim,
+                    max_position=MAX_N_TOKENS,  # Use extended context length
+                    base=ROPE_BASE,
+                    rope_scaling=None,  # We handle scaling via base
+                )
+        
+        return model
+
+    DefaultModelLoader.load_model = patched_default_model_loader_load_model
+

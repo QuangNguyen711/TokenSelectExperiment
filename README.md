@@ -42,8 +42,8 @@ TokenSelect is built on top of [SGLang](https://github.com/sgl-project/sglang) a
 
 1. **Clone the repository:**
 ```bash
-git clone https://github.com/pzs19/TokenSelect
-cd TokenSelect/
+git clone https://github.com/QuangNguyen711/TokenSelectExperiment.git
+cd TokenSelectExperiment/
 ```
 
 2. **Create and activate virtual environment:**
@@ -62,6 +62,7 @@ uv pip install flashinfer==0.1.6+cu121torch2.4 --index-url https://flashinfer.ai
 ```bash
 uv pip install "setuptools<70.0.0"
 uv pip install -r requirements.txt
+uv pip install wheel==0.46.3
 uv pip install flash_attn==2.7.0.post2 --no-build-isolation
 uv pip install git+https://github.com/ozeliger/pyairports.git
 ```
@@ -77,7 +78,7 @@ Launch SGLang server with TokenSelect.
 bash scripts/serve.sh
 ```
 
-**Option 2: Manual command (example for Qwen2-7B-Instruct)**
+**Option 2: Manual command (example for Qwen2-7B-Instruct) Applied TokenSelect**
 ```bash
 python benchmark/serve.py \
     --model-path Qwen/Qwen2-7B-Instruct \
@@ -92,6 +93,22 @@ python benchmark/serve.py \
     --sgl-conf-file config/qwen-token-retrieval.yaml
 ```
 
+**Option 3: Manual command (example for Qwen2-7B-Instruct) Applied SPDA**
+```bash
+python benchmark/serve.py \
+    --model-path Qwen/Qwen2-7B-Instruct \
+    --dp 1 \
+    --port 62726 \
+    --disable-cuda-graph \
+    --disable-regex-jump-forward \
+    --use-spda \
+    --disable-radix-cache \
+    --max-running-requests 1 \
+    --mem-fraction-static 0.85 \
+    --context-length 1048576 \
+    --sgl-conf-file config/qwen-token-retrieval.yaml
+```
+
 Send request to SGLang server using OpenAI Python Client. You can also use the [benchmark/send_request.py](benchmark/send_request.py) script.
 
 ```python
@@ -99,7 +116,7 @@ import openai
 
 client = openai.Client(base_url=f"http://127.0.0.1:62726/v1", api_key="None")
 
-prompt = "The grass is green. The sky is blue. The sun is yellow. Here we go. There and back again. " * 1000 + f"The pass key is 71432. Remember it. 71432 is the pass key. " + "The grass is green. The sky is blue. The sun is yellow. Here we go. There and back again. " * 1000 + "What is the pass key?"
+prompt = "The grass is green. The sky is blue. The sun is yellow. Here we go. There and back again. " * 1000 + f"The pass key is Quang cười haha. Remember it. Quang cười haha hihi is not the pass key. " + "The grass is green. The sky is blue. The sun is yellow. Here we go. There and back again. " * 1000 + "What is the pass key?"
 
 response = client.chat.completions.create(
     model="Qwen/Qwen2-7B-Instruct",

@@ -22,16 +22,48 @@ def patch_model(config):
     )
 
 
+def patch_rope_only(config):
+    """Apply only RoPE scaling without TokenSelect attention modifications."""
+    import sys
+    sys.path.append(".")
+    from patcher.token_retrieval import patch_rope_only as rope_patch
+    
+    rope_patch(
+        rope_base=config.model.rope_base,
+        rope_scale=config.model.rope_scale,
+        rope_model="ROPE_LLAMA",
+        max_n_tokens=config.model.max_n_tokens,
+    )
+
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--sgl-conf-file", type=str, default="")
+    parser.add_argument("--use-spda", action="store_true", 
+                        help="Use standard PyTorch SDPA instead of TokenSelect")
     ServerArgs.add_cli_args(parser)
     args = parser.parse_args()
     server_args = ServerArgs.from_cli_args(args)
 
     if args.sgl_conf_file:
         sgl_conf = OmegaConf.load(open(args.sgl_conf_file))
-        patch_model(sgl_conf)
+        
+        if args.use_spda:
+            # Apply only RoPE settings without TokenSelect
+            patch_rope_only(sgl_conf)
+            # Override context length from config
+            if not server_args.context_length and hasattr(sgl_conf.model, 'max_n_tokens'):
+                server_args.context_length = sgl_conf.model.max_n_tokens
+            print(f"✓ Using standard PyTorch SDPA with extended RoPE (base={sgl_conf.model.rope_base}, context={server_args.context_length})")
+        else:
+            # Full TokenSelect with all patches
+            patch_model(sgl_conf)
+            print("✓ TokenSelect enabled with config:", args.sgl_conf_file)
+    elif args.use_spda:
+        print("✓ Using standard PyTorch SDPA (TokenSelect disabled)")
+    else:
+        print("⚠ No TokenSelect config provided, using default attention")
 
     from sglang.srt.server import launch_server
 

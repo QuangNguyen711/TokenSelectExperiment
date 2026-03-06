@@ -9,9 +9,10 @@ tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
 port=62726
 client = openai.Client(base_url=f"http://127.0.0.1:{port}/v1", api_key="None")
 
-key=71432
+key="Quang cười haha"
+fake_key="Quang cười hihi"
 n_repeat=5000
-prompt = "The grass is green. The sky is blue. The sun is yellow. Here we go. There and back again. " * n_repeat + f"The pass key is {key}. Remember it. {key} is the pass key. " + "The grass is green. The sky is blue. The sun is yellow. Here we go. There and back again. " * n_repeat + "What is the pass key?"
+prompt = "The grass is green. The sky is blue. The sun is yellow. Here we go. There and back again. " * n_repeat + f"The pass key is {key}. Remember it. {fake_key} is not the pass key. " + "The grass is green. The sky is blue. The sun is yellow. Here we go. There and back again. " * n_repeat + "What is the pass key?"
 
 print("prompt length:", len(tokenizer.encode(prompt)))
 
