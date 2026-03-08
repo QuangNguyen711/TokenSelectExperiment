@@ -130,6 +130,13 @@ print(response)
 
 ### 📊 Experiment
 
+#### How to download all evaluation datas?
+```bash
+sudo apt update
+sudo apt install aria2
+bash scripts/download.sh
+```
+
 #### Evaluation on InfiniteBench
 
 Download data from [https://github.com/OpenBMB/Infini](https://github.com/OpenBMB/InfiniteBench).
