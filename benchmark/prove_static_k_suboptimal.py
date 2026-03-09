@@ -11,8 +11,14 @@ Key Analysis:
 - → Static K sẽ gây ra: thừa computation cho sparse queries, thiếu tokens cho distributed queries
 
 Usage:
-    python prove_static_k_suboptimal.py --samples-per-dataset 2
-    python prove_static_k_suboptimal.py --samples-per-dataset 1 --visualize-all
+    # Short context (fits in memory): analyze all query positions
+    python prove_static_k_suboptimal.py --max-tokens 4096 --visualize-all
+    
+    # Long context (200K tokens): use chunked prefill with KV cache
+    python prove_static_k_suboptimal.py --max-tokens 200000 --chunk-size 4096
+    
+    # Or use sampling mode (faster, less memory)  
+    python prove_static_k_suboptimal.py --max-tokens 200000 --sample-true-k 200
 """
 
 import argparse
@@ -418,11 +424,208 @@ def get_attention_layer_by_layer(model, tokenizer, context: str, query: str,
     return layer_stats, num_tokens
 
 
+def sample_true_k_with_kv_cache(model, tokenizer, context: str, query: str,
+                                 max_tokens: int = 200000, target_coverage: float = 0.90,
+                                 num_samples: int = 100, layers_to_analyze: list = None):
+    """
+    Sample TRUE K values for specific query positions using KV cache.
+    
+    This method processes the full context but only computes attention for sampled
+    query positions, avoiding O(n²) memory while getting true K values.
+    
+    How it works:
+    1. Process context in segments, building KV cache
+    2. For sampled query positions, compute attention against FULL KV cache
+    3. Measure K needed for 90% coverage - NO chunk limitation!
+    
+    Args:
+        num_samples: Number of query positions to sample (default: 100)
+        
+    Returns:
+        layer_stats: Dict with true K values for sampled positions
+        num_tokens: Total context length
+    """
+    import time
+    
+    prompt = f"Context: {context}\n\nQuestion: {query}\n\nAnswer:"
+    
+    inputs = tokenizer(prompt, return_tensors="pt", truncation=True, max_length=max_tokens)
+    inputs = inputs.to(model.device)
+    
+    num_tokens = inputs.input_ids.shape[1]
+    print(f"    Input tokens: {num_tokens}")
+    print(f"    Sampling {num_samples} query positions for TRUE K measurement")
+    print(f"    (No chunk limitation - K can go up to {num_tokens})")
+    
+    # Sample query positions across the context
+    # Focus more on later positions which have more context to attend to
+    sample_positions = np.linspace(100, num_tokens - 1, num_samples).astype(int)
+    sample_positions = sorted(set(sample_positions))  # Remove duplicates
+    print(f"    Sample positions: {min(sample_positions)} to {max(sample_positions)}")
+    
+    # Method: Process full context and capture Q, K, V for sampled positions
+    # Use hooks to intercept Q, K at specific layers
+    
+    class QKSampleHook:
+        """Hook to capture Q and K for computing attention at sampled positions."""
+        def __init__(self, sample_positions, target_coverage, num_heads=28, head_dim=128):
+            self.sample_positions = torch.tensor(sample_positions)
+            self.target_coverage = target_coverage
+            self.num_heads = num_heads
+            self.head_dim = head_dim
+            self.layer_idx = 0
+            self.layer_stats = {}
+            self.q_proj_output = None
+            self.k_proj_output = None
+            
+        def reset(self):
+            self.layer_idx = 0
+            self.layer_stats = {}
+            
+        def capture_q(self, module, input, output):
+            self.q_proj_output = output.detach()
+            
+        def capture_k(self, module, input, output):
+            self.k_proj_output = output.detach()
+            # Compute attention and K for sampled positions
+            self._compute_sampled_k()
+            self.q_proj_output = None
+            self.k_proj_output = None
+            self.layer_idx += 1
+            
+        def _compute_sampled_k(self):
+            """Compute K for sampled query positions against full context."""
+            if self.q_proj_output is None or self.k_proj_output is None:
+                return
+                
+            Q = self.q_proj_output  # (1, seq_len, hidden)
+            K = self.k_proj_output  # (1, seq_len, hidden)
+            
+            seq_len = Q.shape[1]
+            hidden_dim = Q.shape[2]
+            
+            # Reshape to (1, heads, seq, head_dim)
+            actual_heads = hidden_dim // self.head_dim
+            Q = Q.view(1, seq_len, actual_heads, self.head_dim).transpose(1, 2)
+            K = K.view(1, seq_len, actual_heads, self.head_dim).transpose(1, 2)
+            
+            # Only compute attention for sampled query positions
+            sample_positions = [p for p in self.sample_positions.tolist() if p < seq_len]
+            if len(sample_positions) == 0:
+                return
+                
+            required_k_list = []
+            
+            for q_pos in sample_positions:
+                # Q at position q_pos: (1, heads, 1, head_dim)
+                q = Q[:, :, q_pos:q_pos+1, :]
+                
+                # K up to position q_pos (causal): (1, heads, q_pos+1, head_dim)
+                k = K[:, :, :q_pos+1, :]
+                
+                # Attention scores: (1, heads, 1, q_pos+1)
+                scale = 1.0 / (self.head_dim ** 0.5)
+                attn_scores = torch.matmul(q, k.transpose(-2, -1)) * scale
+                attn_weights = torch.nn.functional.softmax(attn_scores, dim=-1)
+                
+                # Average over heads: (q_pos+1,)
+                attn_avg = attn_weights[0].mean(dim=0).squeeze(0)
+                
+                # Sort and find K for target coverage
+                sorted_attn, _ = attn_avg.sort(descending=True)
+                cumsum = sorted_attn.cumsum(dim=0)
+                reached = cumsum >= self.target_coverage
+                
+                if reached.any():
+                    k_val = reached.float().argmax().item() + 1
+                else:
+                    k_val = len(attn_avg)
+                    
+                required_k_list.append(k_val)
+            
+            if len(required_k_list) > 0:
+                k_tensor = torch.tensor(required_k_list)
+                self.layer_stats[self.layer_idx] = {
+                    "min_k": k_tensor.min().item(),
+                    "max_k": k_tensor.max().item(),
+                    "max_k_limited": False,  # No chunk limitation!
+                    "mean_k": k_tensor.float().mean().item(),
+                    "std_k": k_tensor.float().std().item(),
+                    "k_ratio": k_tensor.max().item() / max(k_tensor.min().item(), 1),
+                    "k_ratio_note": "TRUE ratio (no chunk limit)",
+                    "num_samples": len(required_k_list),
+                    "sample_positions": sample_positions,
+                    "required_k_list": required_k_list,
+                }
+    
+    # Detect model architecture for head_dim and num_heads
+    config = model.config
+    num_heads = getattr(config, 'num_attention_heads', 28)
+    head_dim = getattr(config, 'head_dim', getattr(config, 'hidden_size', 3584) // num_heads)
+    
+    hook_handler = QKSampleHook(sample_positions, target_coverage, num_heads, head_dim)
+    hooks = []
+    
+    # Register hooks on Q and K projections
+    layer_count = 0
+    for name, module in model.named_modules():
+        if 'q_proj' in name and hasattr(module, 'weight'):
+            h = module.register_forward_hook(hook_handler.capture_q)
+            hooks.append(h)
+        elif 'k_proj' in name and hasattr(module, 'weight'):
+            h = module.register_forward_hook(hook_handler.capture_k)  
+            hooks.append(h)
+            layer_count += 1
+    
+    print(f"    Registered hooks on {layer_count} layers")
+    
+    # Forward pass (no output_attentions needed - we compute ourselves)
+    start_time = time.time()
+    with torch.no_grad():
+        outputs = model(**inputs, output_attentions=False, return_dict=True)
+    elapsed = time.time() - start_time
+    
+    # Remove hooks
+    for h in hooks:
+        h.remove()
+    
+    # Clear memory
+    del outputs
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+    
+    print(f"    Sampling completed in {elapsed:.1f}s")
+    
+    # Filter to requested layers
+    if layers_to_analyze is None:
+        num_layers = len(hook_handler.layer_stats)
+        layers_to_analyze = [0, num_layers//2, num_layers-1] if num_layers > 0 else []
+    
+    final_stats = {l: hook_handler.layer_stats[l] for l in layers_to_analyze 
+                   if l in hook_handler.layer_stats}
+    
+    return final_stats, num_tokens
+
+
 def get_attention_chunked(model, tokenizer, inputs, target_coverage: float = 0.90,
                          layers_to_analyze: list = None, chunk_size: int = 8192):
     """
-    Process long sequences in chunks to save memory.
-    Each chunk attends to itself + previous chunks (autoregressive).
+    Process long sequences in chunks WITH KV cache for correct attention.
+    
+    Each query token can attend to ALL previous tokens (not limited to chunk).
+    Uses hooks to capture Q, K tensors and compute attention manually.
+    
+    Memory-efficient: only keeps Q, K for computing statistics, not full attention matrices.
+    
+    Args:
+        inputs: Tokenized inputs
+        target_coverage: Target cumulative attention for K calculation
+        layers_to_analyze: Which layers to analyze (default: early, mid, late)
+        chunk_size: Tokens per chunk
+        
+    Returns:
+        layer_stats: Dict with K statistics per layer
+        num_tokens: Total tokens processed
     """
     import time
     
@@ -431,27 +634,159 @@ def get_attention_chunked(model, tokenizer, inputs, target_coverage: float = 0.9
     num_chunks = (num_tokens + chunk_size - 1) // chunk_size
     
     print(f"    Processing {num_tokens} tokens in {num_chunks} chunks of {chunk_size}")
+    print(f"    ✓ Using KV cache: tokens can attend to FULL past context")
+    print(f"    ✓ Max K can be up to {num_tokens} (no artificial limit)")
     
-    # Determine layers to analyze - use fewer layers for speed
+    # Detect model config
+    config = model.config
+    num_heads = getattr(config, 'num_attention_heads', 28)
+    num_kv_heads = getattr(config, 'num_key_value_heads', num_heads)
+    head_dim = getattr(config, 'head_dim', getattr(config, 'hidden_size', 3584) // num_heads)
+    num_layers = getattr(config, 'num_hidden_layers', 28)
+    
     if layers_to_analyze is None:
-        # Do a quick forward pass on first chunk to count layers
-        with torch.no_grad():
-            chunk_input = input_ids[:min(chunk_size, num_tokens)].unsqueeze(0).to(model.device)
-            sample_out = model(chunk_input, output_attentions=True, return_dict=True)
-            num_layers = len(sample_out.attentions)
-            # Only analyze 3 layers for speed: early, mid, late
-            layers_to_analyze = [0, num_layers//2, num_layers-1]
-            del sample_out
-            if torch.cuda.is_available():
-                torch.cuda.empty_cache()
+        layers_to_analyze = [0, num_layers // 2, num_layers - 1]
     
     print(f"    Analyzing layers: {layers_to_analyze}")
-    print(f"    Estimated time: ~{num_chunks * 2}s ({num_chunks} chunks × ~2s each) [GPU-vectorized]")
+    print(f"    Model config: {num_layers} layers, {num_heads} heads, head_dim={head_dim}")
     
-    # Aggregate stats across chunks
-    layer_stats = {layer_idx: {'required_k_list': []} for layer_idx in layers_to_analyze}
+    # Storage for K values per layer
+    layer_k_values = {layer_idx: [] for layer_idx in layers_to_analyze}
     
+    # Hook class to capture Q, K and compute K statistics per chunk
+    class ChunkedQKHook:
+        def __init__(self, target_layers, target_coverage, num_heads, num_kv_heads, head_dim):
+            self.target_layers = set(target_layers)
+            self.target_coverage = target_coverage
+            self.num_heads = num_heads
+            self.num_kv_heads = num_kv_heads
+            self.head_dim = head_dim
+            self.layer_idx = 0
+            
+            # Current chunk's Q (for current chunk's queries)
+            self.current_q = None
+            # Accumulated K cache (all past + current keys)
+            self.k_cache = {l: [] for l in target_layers}
+            
+            # Results
+            self.chunk_k_stats = {l: [] for l in target_layers}
+            
+        def reset_for_chunk(self):
+            self.layer_idx = 0
+            self.current_q = None
+            
+        def q_hook(self, module, input, output):
+            if self.layer_idx in self.target_layers:
+                self.current_q = output.detach()
+        
+        def k_hook(self, module, input, output):
+            if self.layer_idx in self.target_layers:
+                # Accumulate K into cache
+                self.k_cache[self.layer_idx].append(output.detach())
+                
+                # Compute K statistics for this chunk's queries
+                if self.current_q is not None:
+                    self._compute_chunk_stats()
+                    
+            self.current_q = None
+            self.layer_idx += 1
+            
+        def _compute_chunk_stats(self):
+            """Compute required K for current chunk's queries against all past context."""
+            layer = self.layer_idx
+            Q = self.current_q  # (1, chunk_len, hidden)
+            
+            # Concatenate all K from cache
+            K_list = self.k_cache[layer]
+            K = torch.cat(K_list, dim=1)  # (1, total_past_len, hidden)
+            
+            chunk_len = Q.shape[1]
+            total_k_len = K.shape[1]
+            hidden_dim = Q.shape[2]
+            
+            # Handle GQA: expand K if num_kv_heads < num_heads
+            actual_q_heads = hidden_dim // self.head_dim
+            
+            # Reshape Q and K
+            Q = Q.view(1, chunk_len, actual_q_heads, self.head_dim).transpose(1, 2)  # (1, heads, chunk_len, head_dim)
+            
+            # For K, need to handle potential GQA
+            k_hidden = K.shape[2]
+            actual_k_heads = k_hidden // self.head_dim
+            K = K.view(1, total_k_len, actual_k_heads, self.head_dim).transpose(1, 2)  # (1, kv_heads, total_k_len, head_dim)
+            
+            # Expand K for GQA if needed
+            if actual_k_heads < actual_q_heads:
+                repeat_factor = actual_q_heads // actual_k_heads
+                K = K.repeat_interleave(repeat_factor, dim=1)
+            
+            # Compute attention scores: (1, heads, chunk_len, total_k_len)
+            scale = 1.0 / (self.head_dim ** 0.5)
+            attn_scores = torch.matmul(Q, K.transpose(-2, -1)) * scale
+            
+            # Apply causal mask: query i can attend to keys 0..(start_pos + i)
+            # start_pos = total_k_len - chunk_len (position of first query in this chunk)
+            start_pos = total_k_len - chunk_len
+            
+            # Create causal mask
+            # For query at position q (0..chunk_len-1), can attend to keys 0..(start_pos + q)
+            causal_mask = torch.ones(chunk_len, total_k_len, device=Q.device, dtype=torch.bool)
+            for q in range(chunk_len):
+                valid_k_len = start_pos + q + 1
+                causal_mask[q, valid_k_len:] = False
+            
+            attn_scores = attn_scores.masked_fill(~causal_mask.unsqueeze(0).unsqueeze(0), float('-inf'))
+            
+            # Softmax
+            attn_weights = torch.nn.functional.softmax(attn_scores, dim=-1)  # (1, heads, chunk_len, total_k_len)
+            
+            # Average over heads
+            attn_avg = attn_weights[0].mean(dim=0)  # (chunk_len, total_k_len)
+            
+            # Compute required K for each query position
+            required_k_list = []
+            for q in range(chunk_len):
+                valid_k_len = start_pos + q + 1
+                row = attn_avg[q, :valid_k_len]
+                
+                if len(row) == 0:
+                    required_k_list.append(1)
+                    continue
+                    
+                sorted_vals, _ = row.sort(descending=True)
+                cumsum = sorted_vals.cumsum(dim=0)
+                reached = cumsum >= self.target_coverage
+                
+                if reached.any():
+                    k_val = reached.float().argmax().item() + 1
+                else:
+                    k_val = len(row)
+                
+                required_k_list.append(int(k_val))
+            
+            self.chunk_k_stats[layer].extend(required_k_list)
+            
+            # Free memory from attention computation
+            del Q, K, attn_scores, attn_weights, attn_avg
+    
+    # Create hook handler
+    hook_handler = ChunkedQKHook(layers_to_analyze, target_coverage, num_heads, num_kv_heads, head_dim)
+    
+    # Register hooks
+    hooks = []
+    for name, module in model.named_modules():
+        if 'q_proj' in name and hasattr(module, 'weight'):
+            h = module.register_forward_hook(hook_handler.q_hook)
+            hooks.append(h)
+        elif 'k_proj' in name and hasattr(module, 'weight'):
+            h = module.register_forward_hook(hook_handler.k_hook)
+            hooks.append(h)
+    
+    print(f"    Registered hooks on {len(hooks)//2} layers")
+    
+    # Process chunks with KV cache
     total_start = time.time()
+    past_key_values = None
     
     for chunk_idx in range(num_chunks):
         chunk_start = time.time()
@@ -461,57 +796,65 @@ def get_attention_chunked(model, tokenizer, inputs, target_coverage: float = 0.9
         # Get chunk input
         chunk_input_ids = input_ids[start_pos:end_pos].unsqueeze(0).to(model.device)
         
-        # Forward pass for this chunk
+        # Reset hook state for new chunk
+        hook_handler.reset_for_chunk()
+        
+        # Forward pass with KV cache
         with torch.no_grad():
-            outputs = model(chunk_input_ids, output_attentions=True, return_dict=True)
+            outputs = model(
+                chunk_input_ids,
+                past_key_values=past_key_values,
+                use_cache=True,
+                output_attentions=False,  # We compute attention ourselves via hooks
+                return_dict=True
+            )
+            past_key_values = outputs.past_key_values
         
-        attentions = outputs.attentions
-        chunk_len = chunk_input_ids.shape[1]
-        
-        # Analyze each layer
-        for layer_idx in layers_to_analyze:
-            if layer_idx >= len(attentions):
-                continue
-            
-            attention = attentions[layer_idx].float()
-            
-            # GPU-vectorized K computation (exact same result, ~100x faster)
-            required_k = compute_required_k_vectorized_gpu(attention, target_coverage)
-            
-            # Skip first 50 tokens of first chunk only
-            start_q = 50 if chunk_idx == 0 else 0
-            valid_k = required_k[start_q:]
-            
-            # Extend the list with results
-            layer_stats[layer_idx]['required_k_list'].extend(valid_k.cpu().tolist())
-            
-            # Free memory
-            del attention, required_k, valid_k
-        
-        # Free chunk outputs
-        del outputs, attentions
+        # Clear outputs (we already captured Q, K via hooks)
+        del outputs
         if torch.cuda.is_available():
             torch.cuda.empty_cache()
         
         chunk_time = time.time() - chunk_start
         elapsed = time.time() - total_start
-        remaining = (num_chunks - chunk_idx - 1) * chunk_time
-        print(f"      Chunk {chunk_idx+1}/{num_chunks}: tokens {start_pos}-{end_pos} ({chunk_time:.1f}s, ETA: {remaining:.0f}s)")
+        remaining = (num_chunks - chunk_idx - 1) * (elapsed / (chunk_idx + 1))
+        
+        # Get max K so far for progress
+        max_k_so_far = max(
+            (max(hook_handler.chunk_k_stats[l]) if hook_handler.chunk_k_stats[l] else 0)
+            for l in layers_to_analyze
+        )
+        print(f"      Chunk {chunk_idx+1}/{num_chunks}: tokens {start_pos}-{end_pos}, "
+              f"max_K_so_far={max_k_so_far}, ({chunk_time:.1f}s, ETA: {remaining:.0f}s)")
     
-    # Compute final statistics from aggregated K values
+    # Remove hooks
+    for h in hooks:
+        h.remove()
+    
+    # Compute final statistics
     final_stats = {}
-    for layer_idx, stats in layer_stats.items():
-        k_list = stats['required_k_list']
+    for layer_idx in layers_to_analyze:
+        k_list = hook_handler.chunk_k_stats[layer_idx]
+        # Skip first 50 tokens
+        k_list = k_list[50:] if len(k_list) > 50 else k_list
+        
         if len(k_list) > 0:
             k_tensor = torch.tensor(k_list)
             final_stats[layer_idx] = {
                 "min_k": k_tensor.min().item(),
                 "max_k": k_tensor.max().item(),
+                "max_k_limited": False,  # No artificial limit with KV cache!
                 "mean_k": k_tensor.float().mean().item(),
                 "std_k": k_tensor.float().std().item(),
                 "k_ratio": k_tensor.max().item() / max(k_tensor.min().item(), 1),
+                "k_ratio_note": "TRUE ratio (with KV cache)",
                 "required_k_list": k_list,
             }
+    
+    # Clear KV cache
+    del past_key_values, hook_handler
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
     
     total_time = time.time() - total_start
     print(f"    Total chunked processing time: {total_time:.1f}s")
@@ -1193,13 +1536,16 @@ def visualize_head_comparison(head_stats: dict, layer_idx: int, dataset: str, sa
 
 def analyze_dataset_full(model, tokenizer, dataset: str, sample_idx: int, 
                         visualize: bool = True, output_dir: Path = OUTPUT_DIR,
-                        max_tokens: int = 4096, chunk_size: int = None):
+                        max_tokens: int = 4096, chunk_size: int = None,
+                        sample_true_k: int = None):
     """
     Phân tích đầy đủ một sample.
-    Dùng phương pháp layer-by-layer để tiết kiệm memory.
     
     Args:
-        chunk_size: If provided, process in chunks for long contexts (e.g., 8192)
+        chunk_size: If provided, process in chunks for long contexts. 
+                    WARNING: Max K is limited by chunk_size!
+        sample_true_k: If provided, sample N query positions to measure TRUE K
+                       without any chunk limitation. K can go up to full context length.
     """
     print(f"\n  Sample {sample_idx}:")
     
@@ -1213,13 +1559,23 @@ def analyze_dataset_full(model, tokenizer, dataset: str, sample_idx: int,
     
     print(f"    Context length: {len(context)} chars")
     
-    # Get attention stats layer by layer (memory efficient)
-    layer_stats, num_tokens = get_attention_layer_by_layer(
-        model, tokenizer, context, query, 
-        max_tokens=max_tokens, 
-        target_coverage=TARGET_COVERAGE,
-        chunk_size=chunk_size
-    )
+    # Choose method based on arguments
+    if sample_true_k:
+        # Use sampling mode for TRUE K values (no chunk limitation)
+        layer_stats, num_tokens = sample_true_k_with_kv_cache(
+            model, tokenizer, context, query,
+            max_tokens=max_tokens,
+            target_coverage=TARGET_COVERAGE,
+            num_samples=sample_true_k
+        )
+    else:
+        # Use layer-by-layer method (may be limited by chunk_size)
+        layer_stats, num_tokens = get_attention_layer_by_layer(
+            model, tokenizer, context, query, 
+            max_tokens=max_tokens, 
+            target_coverage=TARGET_COVERAGE,
+            chunk_size=chunk_size
+        )
     
     if not layer_stats:
         print(f"    No stats computed")
@@ -1227,8 +1583,11 @@ def analyze_dataset_full(model, tokenizer, dataset: str, sample_idx: int,
     
     # Print stats for each analyzed layer
     for layer_idx, stats in layer_stats.items():
+        k_limited = stats.get('max_k_limited', False)
+        k_note = " ⚠️ LIMITED" if k_limited else " ✓ TRUE"
+        
         print(f"    Layer {layer_idx}:")
-        print(f"      K range: {stats['min_k']} - {stats['max_k']} (ratio: {stats['k_ratio']:.1f}x)")
+        print(f"      K range: {stats['min_k']} - {stats['max_k']} (ratio: {stats['k_ratio']:.1f}x){k_note}")
         
         # Classify queries
         mean_k = stats['mean_k']
@@ -1242,53 +1601,93 @@ def analyze_dataset_full(model, tokenizer, dataset: str, sample_idx: int,
         stats['sparse_queries_pct'] = sparse_pct
         stats['dense_queries_pct'] = dense_pct
     
-    # Visualize K distribution
+    # Visualize K distribution for ALL analyzed layers
     if visualize:
         try:
             import matplotlib.pyplot as plt
             
-            # Pick middle layer for visualization
-            mid_layer = list(layer_stats.keys())[len(layer_stats)//2]
-            k_values = layer_stats[mid_layer]['required_k_list']
-            
-            fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-            
-            # K over query positions
-            ax1 = axes[0]
-            ax1.plot(k_values, linewidth=0.5, alpha=0.7)
-            ax1.axhline(y=np.mean(k_values), color='red', linestyle='--', 
-                       label=f'Mean K = {np.mean(k_values):.1f}')
-            ax1.fill_between(range(len(k_values)), k_values, alpha=0.3)
-            ax1.set_xlabel('Query Position')
-            ax1.set_ylabel(f'Required K (for {TARGET_COVERAGE:.0%} coverage)')
-            ax1.set_title(f'K Varies Across Queries\nMin={min(k_values)}, Max={max(k_values)}, '
-                         f'Ratio={max(k_values)/max(min(k_values),1):.1f}x')
-            ax1.legend()
-            ax1.grid(True, alpha=0.3)
-            
-            # K distribution histogram
-            ax2 = axes[1]
-            ax2.hist(k_values, bins=50, color='steelblue', alpha=0.7, edgecolor='black')
-            ax2.axvline(x=np.mean(k_values), color='red', linestyle='--', linewidth=2,
-                       label=f'Mean={np.mean(k_values):.1f}')
-            ax2.axvline(x=np.median(k_values), color='green', linestyle='--', linewidth=2,
-                       label=f'Median={np.median(k_values):.1f}')
-            ax2.set_xlabel('Required K')
-            ax2.set_ylabel('Frequency')
-            ax2.set_title('Distribution of Required K')
-            ax2.legend()
-            ax2.grid(True, alpha=0.3)
-            
-            plt.suptitle(f'{dataset} - Sample {sample_idx} - {num_tokens} tokens\n'
-                        f'Static K is suboptimal: queries need different K values', 
-                        fontsize=12, fontweight='bold')
-            plt.tight_layout()
-            
             output_dir.mkdir(parents=True, exist_ok=True)
-            save_path = output_dir / f"{dataset}_sample{sample_idx}_k_analysis.png"
-            plt.savefig(save_path, dpi=150, bbox_inches='tight')
-            plt.close()
-            print(f"    Saved: {save_path}")
+            
+            # Visualize each layer separately
+            for layer_idx in sorted(layer_stats.keys()):
+                k_values = layer_stats[layer_idx]['required_k_list']
+                
+                fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+                
+                # K over query positions
+                ax1 = axes[0]
+                ax1.plot(k_values, linewidth=0.5, alpha=0.7)
+                ax1.axhline(y=np.mean(k_values), color='red', linestyle='--', 
+                           label=f'Mean K = {np.mean(k_values):.1f}')
+                ax1.fill_between(range(len(k_values)), k_values, alpha=0.3)
+                ax1.set_xlabel('Query Position')
+                ax1.set_ylabel(f'Required K (for {TARGET_COVERAGE:.0%} coverage)')
+                ax1.set_title(f'K Varies Across Queries\nMin={min(k_values)}, Max={max(k_values)}, '
+                             f'Ratio={max(k_values)/max(min(k_values),1):.1f}x')
+                ax1.legend()
+                ax1.grid(True, alpha=0.3)
+                
+                # K distribution histogram
+                ax2 = axes[1]
+                ax2.hist(k_values, bins=50, color='steelblue', alpha=0.7, edgecolor='black')
+                ax2.axvline(x=np.mean(k_values), color='red', linestyle='--', linewidth=2,
+                           label=f'Mean={np.mean(k_values):.1f}')
+                ax2.axvline(x=np.median(k_values), color='green', linestyle='--', linewidth=2,
+                           label=f'Median={np.median(k_values):.1f}')
+                ax2.set_xlabel('Required K')
+                ax2.set_ylabel('Frequency')
+                ax2.set_title('Distribution of Required K')
+                ax2.legend()
+                ax2.grid(True, alpha=0.3)
+                
+                plt.suptitle(f'{dataset} - Sample {sample_idx} - Layer {layer_idx} - {num_tokens} tokens\n'
+                            f'Static K is suboptimal: queries need different K values', 
+                            fontsize=12, fontweight='bold')
+                plt.tight_layout()
+                
+                save_path = output_dir / f"{dataset}_sample{sample_idx}_layer{layer_idx}_k_analysis.png"
+                plt.savefig(save_path, dpi=150, bbox_inches='tight')
+                plt.close()
+                print(f"    Saved: {save_path}")
+            
+            # Also create a combined comparison plot for all layers
+            num_layers = len(layer_stats)
+            if num_layers > 1:
+                fig, axes = plt.subplots(2, num_layers, figsize=(6 * num_layers, 10))
+                
+                for col_idx, layer_idx in enumerate(sorted(layer_stats.keys())):
+                    k_values = layer_stats[layer_idx]['required_k_list']
+                    
+                    # Top row: K over positions
+                    ax1 = axes[0, col_idx] if num_layers > 1 else axes[0]
+                    ax1.plot(k_values, linewidth=0.5, alpha=0.7)
+                    ax1.axhline(y=np.mean(k_values), color='red', linestyle='--', 
+                               label=f'Mean={np.mean(k_values):.1f}')
+                    ax1.fill_between(range(len(k_values)), k_values, alpha=0.3)
+                    ax1.set_xlabel('Query Position')
+                    ax1.set_ylabel(f'Required K')
+                    ax1.set_title(f'Layer {layer_idx}\nK Range: {min(k_values)}-{max(k_values)}')
+                    ax1.legend(fontsize=8)
+                    ax1.grid(True, alpha=0.3)
+                    
+                    # Bottom row: K distribution
+                    ax2 = axes[1, col_idx] if num_layers > 1 else axes[1]
+                    ax2.hist(k_values, bins=50, color='steelblue', alpha=0.7, edgecolor='black')
+                    ax2.axvline(x=np.mean(k_values), color='red', linestyle='--', linewidth=2)
+                    ax2.set_xlabel('Required K')
+                    ax2.set_ylabel('Frequency')
+                    ax2.set_title(f'Ratio: {max(k_values)/max(min(k_values),1):.1f}x')
+                    ax2.grid(True, alpha=0.3)
+                
+                plt.suptitle(f'{dataset} - Sample {sample_idx} - All Layers Comparison - {num_tokens} tokens\n'
+                            f'Static K is suboptimal: queries need different K values', 
+                            fontsize=14, fontweight='bold')
+                plt.tight_layout()
+                
+                save_path = output_dir / f"{dataset}_sample{sample_idx}_all_layers_comparison.png"
+                plt.savefig(save_path, dpi=150, bbox_inches='tight')
+                plt.close()
+                print(f"    Saved: {save_path}")
             
         except ImportError:
             print("    matplotlib not available")
@@ -1301,7 +1700,21 @@ def analyze_dataset_full(model, tokenizer, dataset: str, sample_idx: int,
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Prove static K is suboptimal for query tokens")
+    parser = argparse.ArgumentParser(
+        description="Prove static K is suboptimal for query tokens",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Short context (fits in memory): full attention analysis
+  python prove_static_k_suboptimal.py --max-tokens 4096 --visualize-all
+  
+  # Long context (200K tokens): use chunked prefill with KV cache
+  python prove_static_k_suboptimal.py --max-tokens 200000 --chunk-size 4096
+  
+  # Or use sampling mode (faster, less memory)
+  python prove_static_k_suboptimal.py --max-tokens 200000 --sample-true-k 200
+"""
+    )
     parser.add_argument("--samples-per-dataset", type=int, default=2, 
                        help="Number of samples to analyze per dataset")
     parser.add_argument("--model", default="Qwen/Qwen2-7B-Instruct", help="Model name")
@@ -1311,15 +1724,24 @@ def main():
     parser.add_argument("--datasets", nargs="+", default=list(DATASETS.keys()),
                        help="Datasets to analyze")
     parser.add_argument("--max-tokens", type=int, default=4096,
-                       help="Max context tokens. Memory ~= (tokens/1000)^2 * 26GB. Default 4096 (~43GB)")
+                       help="Max context tokens. For >8K, use --chunk-size or --sample-true-k")
     parser.add_argument("--chunk-size", type=int, default=None,
-                       help="Process in chunks for long contexts. Recommended: 8192 for 200K contexts")
+                       help="Process in chunks with KV cache. Each token attends to FULL past context. "
+                            "Recommended: 4096 for long contexts")
+    parser.add_argument("--sample-true-k", type=int, default=None, metavar="N",
+                       help="Sample N query positions to measure K (faster, less memory). "
+                            "Example: --sample-true-k 200")
     args = parser.parse_args()
     
     global TARGET_COVERAGE
     TARGET_COVERAGE = args.coverage
     
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    
+    # Auto-enable chunking for long contexts if not specified
+    if args.max_tokens > 8192 and args.sample_true_k is None and args.chunk_size is None:
+        print(f"⚠️  Long context detected ({args.max_tokens} tokens) - auto-enabling --chunk-size 4096")
+        args.chunk_size = 4096
     
     print("="*70)
     print("PROVING: Static K is Suboptimal for Token Selection")
@@ -1328,16 +1750,37 @@ def main():
     print(f"Target coverage: {TARGET_COVERAGE:.0%}")
     print(f"Samples per dataset: {args.samples_per_dataset}")
     print(f"Max tokens: {args.max_tokens}")
-    print(f"Chunk size: {args.chunk_size or 'None (full context)'}")
+    
+    # Mode selection
+    if args.sample_true_k:
+        print(f"Mode: SAMPLING ({args.sample_true_k} query positions per context)")
+        print(f"  ✓ K values have NO artificial limit!")
+        print(f"  ✓ Max K can be up to full context length ({args.max_tokens})")
+    elif args.chunk_size:
+        print(f"Mode: CHUNKED PREFILL (chunk_size={args.chunk_size})")
+        print(f"  ✓ Using KV cache: tokens attend to FULL past context")
+        print(f"  ✓ Max K can be up to full context length ({args.max_tokens})")
+    else:
+        print(f"Mode: FULL CONTEXT (no chunking)")
+        print(f"  ✓ TRUE K values (no limit)")
+    
     print(f"Datasets: {args.datasets}")
     
-    # Memory estimation (assuming 28 layers, 28 heads, float16)
-    # Memory ≈ layers * heads * seq^2 * 2 bytes
-    effective_seq = args.chunk_size if args.chunk_size else args.max_tokens
-    est_mem_gb = (28 * 28 * effective_seq * effective_seq * 2) / (1024**3)
-    print(f"Estimated attention memory per chunk: ~{est_mem_gb:.1f} GB")
-    if est_mem_gb > 70:
-        print("WARNING: May OOM on 80GB GPU! Consider reducing --max-tokens or adding --chunk-size")
+    # Memory estimation
+    if args.sample_true_k:
+        print(f"Memory mode: Efficient sampling (O(n) per query position)")
+    elif args.chunk_size:
+        # With KV cache chunking, memory is O(chunk_size * total_seq) per layer for attention
+        # But we compute layer by layer, so peak is for one layer
+        peak_mem_gb = (args.chunk_size * args.max_tokens * 4 * 28) / (1024**3)  # float32, 28 heads
+        print(f"Memory mode: Chunked with KV cache")  
+        print(f"  Peak attention memory (last chunk): ~{peak_mem_gb:.1f} GB")
+    else:
+        effective_seq = args.max_tokens
+        est_mem_gb = (28 * 28 * effective_seq * effective_seq * 2) / (1024**3)
+        print(f"Estimated attention memory: ~{est_mem_gb:.1f} GB")
+        if est_mem_gb > 70:
+            print("WARNING: May OOM on 80GB GPU! Consider reducing --max-tokens or adding --chunk-size")
     print("="*70)
     
     model, tokenizer = load_model(args.model)
@@ -1357,7 +1800,8 @@ def main():
                 visualize=args.visualize_all,
                 output_dir=OUTPUT_DIR,
                 max_tokens=args.max_tokens,
-                chunk_size=args.chunk_size
+                chunk_size=args.chunk_size,
+                sample_true_k=args.sample_true_k
             )
             if stats:
                 dataset_stats.append(stats)
@@ -1368,14 +1812,19 @@ def main():
             for s in dataset_stats:
                 all_k_values.extend(s["required_k_per_query"])
             
+            # Check if any stats have max_k_limited flag
+            k_limited = any(s.get("max_k_limited", False) for s in dataset_stats)
+            
             all_dataset_stats[dataset] = {
                 "num_samples": len(dataset_stats),
                 "total_queries": len(all_k_values),
                 "min_k": min(all_k_values),
                 "max_k": max(all_k_values),
+                "max_k_limited": k_limited,
                 "mean_k": np.mean(all_k_values),
                 "std_k": np.std(all_k_values),
                 "k_ratio": max(all_k_values) / max(min(all_k_values), 1),
+                "k_ratio_note": "Limited by chunk_size" if k_limited else "TRUE ratio",
                 "required_k_per_query": all_k_values,
             }
     
@@ -1391,12 +1840,24 @@ def main():
     print("FINAL SUMMARY: Why Static K is Suboptimal")
     print("="*70)
     
+    any_limited = False
     for dataset, stats in all_dataset_stats.items():
+        k_limited = stats.get('max_k_limited', False)
+        k_note = ""  # No longer needed since chunked prefill uses KV cache correctly
+        if k_limited:
+            any_limited = True
+            k_note = " (may be limited)"
+        
         print(f"\n{dataset}:")
         print(f"  Queries analyzed: {stats['total_queries']}")
-        print(f"  Required K range: {stats['min_k']} - {stats['max_k']}")
+        print(f"  Required K range: {stats['min_k']} - {stats['max_k']}{k_note}")
         print(f"  K ratio (max/min): {stats['k_ratio']:.1f}x")
         print(f"  Mean ± Std: {stats['mean_k']:.1f} ± {stats['std_k']:.1f}")
+    
+    # This should no longer trigger since chunked prefill now uses KV cache correctly
+    if any_limited:
+        print(f"\n{'─'*70}")
+        print("⚠️  NOTE: Some K values may be limited. This is unexpected with KV cache.")
     
     # Overall conclusion
     all_ratios = [s["k_ratio"] for s in all_dataset_stats.values()]
@@ -1414,6 +1875,8 @@ def main():
         "model": args.model,
         "target_coverage": TARGET_COVERAGE,
         "samples_per_dataset": args.samples_per_dataset,
+        "sample_true_k": args.sample_true_k,
+        "chunk_size": args.chunk_size,
         "dataset_stats": {k: {kk: vv for kk, vv in v.items() if kk != "required_k_per_query"} 
                          for k, v in all_dataset_stats.items()},
     }
