@@ -19,6 +19,8 @@ def patch_model(config):
         n_init=config.model.n_init,
         n_local=config.model.n_local,
         top_k=config.model.top_k,
+        adaptive_topk=getattr(config.model, 'adaptive_topk', False),
+        attention_threshold=getattr(config.model, 'attention_threshold', 0.9),
     )
 
 

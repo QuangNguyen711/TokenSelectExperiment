@@ -37,6 +37,8 @@ PREFILL_CHUNK_SIZE = -1
 QUERY_ROTATE = False
 QUERY_CACHE = False
 KERNEL_SIZE=-1
+ADAPTIVE_TOPK = False
+ATTENTION_THRESHOLD = 0.9
 
 @contextmanager
 def cuda_timer(timer_name="Operation"):
@@ -368,7 +370,23 @@ class TokenRetriever:
                 scores.unsqueeze(0), kernel_size=KERNEL_SIZE, padding=(KERNEL_SIZE-1)//2, stride=1
             ).squeeze(0)
         
-        topk_indices = torch.topk(scores, topk, dim=-1).indices
+        if ADAPTIVE_TOPK:
+            # Adaptive top-k: stop when cumulative attention reaches threshold
+            sorted_scores, sorted_indices = torch.sort(scores, descending=True)
+            total_score = sorted_scores.sum()
+            cumsum_scores = torch.cumsum(sorted_scores, dim=0)
+            # Find first index where cumsum >= threshold * total
+            threshold_mask = cumsum_scores >= ATTENTION_THRESHOLD * total_score
+            if threshold_mask.any():
+                adaptive_k = min(threshold_mask.nonzero()[0].item() + 1, topk)
+            else:
+                adaptive_k = topk
+            # Ensure at least 1 token is selected
+            adaptive_k = max(adaptive_k, 1)
+            topk_indices = sorted_indices[:adaptive_k]
+        else:
+            topk_indices = torch.topk(scores, topk, dim=-1).indices
+        
         sorted_topk_tokens = torch.sort(topk_indices).values
         return sorted_topk_tokens
 
@@ -891,6 +909,8 @@ def patch(
         n_init=1,
         n_local=16,
         kernel_size=-1,
+        adaptive_topk=False,
+        attention_threshold=0.9,
 ):
     global ROPE_BASE
     global ROPE_SCALE
@@ -903,6 +923,8 @@ def patch(
     global QUERY_CACHE
     global PREFILL_CHUNK_SIZE
     global KERNEL_SIZE
+    global ADAPTIVE_TOPK
+    global ATTENTION_THRESHOLD
 
     ROPE_BASE = rope_base
     ROPE_SCALE = rope_scale
@@ -912,6 +934,8 @@ def patch(
     N_INIT = n_init
     N_Local = n_local
     KERNEL_SIZE=kernel_size
+    ADAPTIVE_TOPK = adaptive_topk
+    ATTENTION_THRESHOLD = attention_threshold
 
     QUERY_ROTATE = True
     PREFILL_CHUNK_SIZE = 512
