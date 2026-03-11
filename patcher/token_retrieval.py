@@ -370,24 +370,37 @@ class TokenRetriever:
                 scores.unsqueeze(0), kernel_size=KERNEL_SIZE, padding=(KERNEL_SIZE-1)//2, stride=1
             ).squeeze(0)
         
-        if ADAPTIVE_TOPK:
-            # Adaptive top-k: stop when cumulative attention reaches threshold
-            sorted_scores, sorted_indices = torch.sort(scores, descending=True)
-            total_score = sorted_scores.sum()
-            cumsum_scores = torch.cumsum(sorted_scores, dim=0)
-            # Find first index where cumsum >= threshold * total
-            threshold_mask = cumsum_scores >= ATTENTION_THRESHOLD * total_score
-            if threshold_mask.any():
-                adaptive_k = min(threshold_mask.nonzero()[0].item() + 1, topk)
-            else:
-                adaptive_k = topk
-            # Ensure at least 1 token is selected
-            adaptive_k = max(adaptive_k, 1)
-            topk_indices = sorted_indices[:adaptive_k]
-        else:
-            topk_indices = torch.topk(scores, topk, dim=-1).indices
+        actual_topk = min(topk, num_tokens)
+        topk_scores, topk_indices = torch.topk(scores, actual_topk, dim=-1)
         
-        sorted_topk_tokens = torch.sort(topk_indices).values
+        if ADAPTIVE_TOPK and ATTENTION_THRESHOLD < 0.9999:
+            # SỬ DỤNG HẰNG SỐ TOÁN HỌC THAY VÌ TÍNH SUM Toàn Bộ Mảng
+            # Lưu ý: Chỉ áp dụng hằng số này nếu KHÔNG dùng max_pool (KERNEL_SIZE <= 0)
+            if KERNEL_SIZE <= 0:
+                total_theoretical_score = num_heads
+                if dist.is_initialized():
+                    total_theoretical_score = num_heads * dist.get_world_size()
+                target_sum = ATTENTION_THRESHOLD * total_theoretical_score
+            else:
+                # Nếu có max_pool làm biến dạng tổng, bắt buộc phải cộng tay lại
+                target_sum = ATTENTION_THRESHOLD * scores.sum(dtype=torch.float32)
+
+            cumsum_scores = torch.cumsum(topk_scores, dim=0, dtype=torch.float32)
+            
+            threshold_mask = cumsum_scores >= target_sum
+            
+            max_val, max_idx = torch.max(threshold_mask, dim=0)
+            if max_val:
+                adaptive_k = max_idx.item() + 1
+            else:
+                adaptive_k = actual_topk
+            
+            adaptive_k = max(adaptive_k, 1)
+            final_indices = topk_indices[:adaptive_k]
+        else:
+            final_indices = topk_indices
+        
+        sorted_topk_tokens = torch.sort(final_indices).values
         return sorted_topk_tokens
 
     def retrieval_indices(self, query, layer_id, n_init, n_local, topk):
@@ -809,9 +822,12 @@ def patch_model():
             retrieved_indices = input_metadata.token_retriever.retrieval_indices(q.contiguous(), self.layer_id, N_INIT,
                                                                                  N_Local, TOP_K)
             if retrieved_indices is not None:
+                # Adaptive Top-K làm số lượng indices thay đổi theo layer. 
+                # Ta cần reset FlashInfer wrapper nếu độ dài bị lệch so với buffer hiện tại.
                 if (
                         self.layer_id == 0
-                ):  # we only need to estimate the length of indices once
+                        or len(retrieved_indices) != len(decode_wrapper._paged_kv_indices_buf)
+                ):  
                     retrieved_indptr = decode_wrapper._paged_kv_indptr_buf.clone()
                     retrieved_indptr[1] = len(retrieved_indices)
                     kv_last_page_len = (
