@@ -3,7 +3,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 import sys
 import time
 import torch
-
+import random
 import requests
 from transformers import AutoTokenizer
 
@@ -60,6 +60,8 @@ def get_model_and_tokenizer(config, kernel_size):
             n_local=config.model.n_local,
             top_k=config.model.top_k,
             kernel_size=kernel_size,
+            adaptive_topk=getattr(config.model, 'adaptive_topk', False),
+            attention_threshold=getattr(config.model, 'attention_threshold', 0.9),
         )
     else:
         raise NotImplementedError()
@@ -409,14 +411,18 @@ if __name__ == "__main__":
             "code_run",
             "code_debug",
         ]:
-            path = "../data/infinitebench"
+            path = "benchmark/data/infinite-bench"
             data = load_infinite_bench(path, dname)
         else:
-            data = load_from_disk(f"../data/longbench/{dataset}")
+            data = load_from_disk(f"benchmark/data/longbench/{dataset}")
+
+        data_list = list(data)
+        random.seed(42)
+        data = random.sample(data_list, min(20, len(data_list)))
 
         out_path = os.path.join(output_dir_path, f"{dname}.jsonl")
-        if multiprocessing:
-            out_path = out_path + f"_{config.rank}"
+        # if multiprocessing:
+        #     out_path = out_path + f"_{config.rank}"
         os.makedirs(os.path.dirname(out_path), exist_ok=True)
 
         print(f"Pred {dname}")
@@ -455,7 +461,7 @@ if __name__ == "__main__":
                 f.write("\n")
 
     timing_file_path = os.path.join(output_dir_path, "dataset_timing.json")
-    if multiprocessing:
-        timing_file_path = timing_file_path + f"_{config.rank}"
+    # if multiprocessing:
+    #     timing_file_path = timing_file_path + f"_{config.rank}"
     with open(timing_file_path, "a") as f:
         json.dump(dataset_timing, f, indent=4)

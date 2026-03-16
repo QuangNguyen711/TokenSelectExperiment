@@ -65,6 +65,8 @@ uv pip install -r requirements.txt
 uv pip install wheel==0.46.3
 uv pip install flash_attn==2.7.0.post2 --no-build-isolation
 uv pip install git+https://github.com/ozeliger/pyairports.git
+uv pip install evaluate==0.4.6
+uv pip install rouge_score==0.1.2 nltk==3.9.3 absl-py==2.4.0
 ```
 
 5. **Gather all to run on kaggle ssh server**
@@ -76,6 +78,8 @@ uv pip install --python .venv/bin/python -r requirements.txt
 uv pip install --python .venv/bin/python wheel==0.46.3
 uv pip install --python .venv/bin/python flash_attn==2.7.0.post2 --no-build-isolation
 uv pip install --python .venv/bin/python git+https://github.com/ozeliger/pyairports.git
+uv pip install --python .venv/bin/python evaluate==0.4.6
+uv pip install --python .venv/bin/python rouge_score==0.1.2 nltk==3.9.3 absl-py==2.4.0
 ```
 
 **Note:** Make sure your `requirements.txt` includes all necessary dependencies. See the repository for the complete requirements list.

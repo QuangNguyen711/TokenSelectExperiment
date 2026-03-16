@@ -375,7 +375,7 @@ class TokenRetriever:
         
         if ADAPTIVE_TOPK: 
             # Dùng tổng THỰC TẾ của tensor để tính threshold, bỏ qua sai số lý thuyết
-            target_sum = ATTENTION_THRESHOLD * scores.sum(dtype=torch.float32)
+            target_sum = ATTENTION_THRESHOLD * scores.sum(dtype=torch.float32) + 1e-5
 
             cumsum_scores = torch.cumsum(topk_scores, dim=0, dtype=torch.float32)
             threshold_mask = cumsum_scores >= target_sum
