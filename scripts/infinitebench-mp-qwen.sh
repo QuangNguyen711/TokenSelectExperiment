@@ -1,7 +1,7 @@
 #!/bin/sh
 
 config_path=config/qwen-token-retrieval.yaml
-output_dir=result_release/infinitbench/qwen-adaptive-0.95-norm-L2-token-retrieval
+output_dir=result_release/infinitbench/qwen-adaptive-0.8-norm-L2-token-retrieval
 # output_dir=result_release/infinitbench/qwen-token-retrieval
 
 world_size=1
