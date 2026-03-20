@@ -38,8 +38,6 @@ dtype: bfloat16
 
 EOF
 
-
-
     # Dọn dẹp tiến trình cũ
     pkill pt_main_thread
     sleep 2 # Đợi một chút để VRAM thực sự được giải phóng
