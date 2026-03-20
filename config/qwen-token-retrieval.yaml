@@ -7,8 +7,11 @@ model:
   n_local: 512
   top_k: 8192
   max_n_tokens: 1048576
-  adaptive_topk: true  # Enable adaptive top-k based on attention mass
-  attention_threshold: 0.8  # Stop when cumulative attention reaches this threshold (only used when adaptive_topk=true)
+  adaptive_topk: false
+  attention_threshold: 0.9
+  l2_norm_pooling: true
+  weighted_soft_vote: false
+  union_of_sets: false
 
 max_len: 1048576
 chunk_size: 8192

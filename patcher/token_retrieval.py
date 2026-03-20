@@ -39,6 +39,9 @@ QUERY_CACHE = False
 KERNEL_SIZE=-1
 ADAPTIVE_TOPK = False
 ATTENTION_THRESHOLD = 0.9
+WEIGHTED_SOFT_VOTE = False
+UNION_OF_SETS = False
+L2_NORM_POOLING = False
 
 @contextmanager
 def cuda_timer(timer_name="Operation"):
@@ -360,38 +363,61 @@ class TokenRetriever:
             self.head_dim,
         )
 
-        scores = torch.softmax(scores, dim=-1).sum(dim=0)
-        
-        if dist.is_initialized():  # TP
-            dist.all_reduce(scores, op=dist.ReduceOp.SUM)
-        
-        if KERNEL_SIZE > 0:
-            scores = torch.nn.functional.max_pool1d(
-                scores.unsqueeze(0), kernel_size=KERNEL_SIZE, padding=(KERNEL_SIZE-1)//2, stride=1
-            ).squeeze(0)
-        
         actual_topk = min(topk, num_tokens)
-        topk_scores, topk_indices = torch.topk(scores, actual_topk, dim=-1)
-        
-        if ADAPTIVE_TOPK: 
-            # Dùng tổng THỰC TẾ của tensor để tính threshold, bỏ qua sai số lý thuyết
-            target_sum = ATTENTION_THRESHOLD * scores.sum(dtype=torch.float32) + 1e-5
 
-            cumsum_scores = torch.cumsum(topk_scores, dim=0, dtype=torch.float32)
-            threshold_mask = cumsum_scores >= target_sum
+        # ---------------------------------------------------------
+        # CHOOSE POOLING/VOTING STRATEGY (THE SWITCH)
+        # ---------------------------------------------------------
+        if UNION_OF_SETS:
+            # --- Ý TƯỞNG 2: UNION OF SETS (Độc lập tuyệt đối) ---
+            _, topk_indices_per_head = torch.topk(scores, actual_topk, dim=-1)
+            all_indices_flat = topk_indices_per_head.flatten()
+            final_indices = torch.unique(all_indices_flat)
+            # Bỏ qua Adaptive TopK vì số lượng token đã động sẵn
+            sorted_topk_tokens = final_indices
             
-            max_val, max_idx = torch.max(threshold_mask, dim=0)
-            if max_val:
-                adaptive_k = max_idx.item() + 1
-            else:
-                adaptive_k = actual_topk 
-            
-            adaptive_k = max(adaptive_k, 1)
-            final_indices = topk_indices[:adaptive_k]
         else:
-            final_indices = topk_indices
-        
-        sorted_topk_tokens = torch.sort(final_indices).values
+            if WEIGHTED_SOFT_VOTE:
+                # --- Ý TƯỞNG 1: WEIGHTED SOFT-VOTE ---
+                head_probs = torch.softmax(scores, dim=-1)
+                head_loudness = scores.max(dim=-1).values
+                head_weights = torch.softmax(head_loudness, dim=0).unsqueeze(1)
+                scores = torch.sum(head_probs * head_weights, dim=0)
+            else:
+                # --- ORIGINAL PAPER: HEAD-SOFT-VOTE ---
+                scores = torch.softmax(scores, dim=-1).sum(dim=0)
+
+            # Phân tán điểm (Tensor Parallelism) - Dùng chung cho Ý 1 và Gốc
+            if dist.is_initialized():  # TP
+                dist.all_reduce(scores, op=dist.ReduceOp.SUM)
+            
+            if KERNEL_SIZE > 0:
+                scores = torch.nn.functional.max_pool1d(
+                    scores.unsqueeze(0), kernel_size=KERNEL_SIZE, padding=(KERNEL_SIZE-1)//2, stride=1
+                ).squeeze(0)
+            
+            # Lấy Top-K chung
+            topk_scores, topk_indices = torch.topk(scores, actual_topk, dim=-1)
+            
+            # Xử lý Adaptive Top-K (Chỉ dùng cho Ý 1 và Gốc)
+            if ADAPTIVE_TOPK: 
+                target_sum = ATTENTION_THRESHOLD * scores.sum(dtype=torch.float32) + 1e-5
+                cumsum_scores = torch.cumsum(topk_scores, dim=0, dtype=torch.float32)
+                threshold_mask = cumsum_scores >= target_sum
+                
+                max_val, max_idx = torch.max(threshold_mask, dim=0)
+                if max_val:
+                    adaptive_k = max_idx.item() + 1
+                else:
+                    adaptive_k = actual_topk 
+                
+                adaptive_k = max(adaptive_k, 1)
+                final_indices = topk_indices[:adaptive_k]
+            else:
+                final_indices = topk_indices
+            
+            sorted_topk_tokens = torch.sort(final_indices).values
+
         return sorted_topk_tokens
 
     def retrieval_indices(self, query, layer_id, n_init, n_local, topk):
@@ -411,12 +437,14 @@ class TokenRetriever:
         else:
             query = query.view(query.shape[0], -1)
 
-        # --- GENERALIZED FINGERPRINT: L2-Norm Weighted Mean ---
-        norms = torch.norm(query, p=2, dim=-1, keepdim=True) # Shape: [L, num_heads, 1]
-        weights = norms / (norms.sum(dim=0, keepdim=True) + 1e-6) 
-        query_fingerprints = torch.sum(weights * query, dim=0)
-
-        # query_fingerprints = torch.mean(query, dim=0)
+        if L2_NORM_POOLING:
+            # --- GENERALIZED FINGERPRINT: L2-Norm Weighted Mean ---
+            norms = torch.norm(query, p=2, dim=-1, keepdim=True) # Shape: [L, num_heads * head_dim]
+            weights = norms / (norms.sum(dim=0, keepdim=True) + 1e-6) 
+            query_fingerprints = torch.sum(weights * query, dim=0)
+        else:
+            # --- ORIGINAL PAPER: Mean Pooling ---
+            query_fingerprints = torch.mean(query, dim=0)
 
         if QUERY_CACHE:
             if (
@@ -923,6 +951,9 @@ def patch(
         kernel_size=-1,
         adaptive_topk=False,
         attention_threshold=0.9,
+        weighted_soft_vote=False,
+        union_of_sets=False,
+        l2_norm_pooling=False,
 ):
     global ROPE_BASE
     global ROPE_SCALE
@@ -937,6 +968,9 @@ def patch(
     global KERNEL_SIZE
     global ADAPTIVE_TOPK
     global ATTENTION_THRESHOLD
+    global WEIGHTED_SOFT_VOTE
+    global UNION_OF_SETS
+    global L2_NORM_POOLING
 
     ROPE_BASE = rope_base
     ROPE_SCALE = rope_scale
@@ -948,6 +982,9 @@ def patch(
     KERNEL_SIZE=kernel_size
     ADAPTIVE_TOPK = adaptive_topk
     ATTENTION_THRESHOLD = attention_threshold
+    WEIGHTED_SOFT_VOTE = weighted_soft_vote
+    UNION_OF_SETS = union_of_sets
+    L2_NORM_POOLING = l2_norm_pooling
 
     QUERY_ROTATE = True
     PREFILL_CHUNK_SIZE = 512

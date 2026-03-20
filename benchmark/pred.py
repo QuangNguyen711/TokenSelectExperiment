@@ -62,6 +62,9 @@ def get_model_and_tokenizer(config, kernel_size):
             kernel_size=kernel_size,
             adaptive_topk=getattr(config.model, 'adaptive_topk', False),
             attention_threshold=getattr(config.model, 'attention_threshold', 0.9),
+            weighted_soft_vote=getattr(config.model, 'weighted_soft_vote', False),
+            union_of_sets=getattr(config.model, 'union_of_sets', False),
+            l2_norm_pooling=getattr(config.model, 'l2_norm_pooling', False),
         )
     else:
         raise NotImplementedError()
