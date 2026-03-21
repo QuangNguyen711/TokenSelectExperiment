@@ -369,19 +369,18 @@ class TokenRetriever:
         # CHOOSE POOLING/VOTING STRATEGY (THE SWITCH)
         # ---------------------------------------------------------
         if UNION_OF_SETS:
-            # --- Ý TƯỞNG 2: UNION OF SETS (Độc lập tuyệt đối) ---
-            _, topk_indices_per_head = torch.topk(scores, actual_topk, dim=-1)
+            k_per_head = max(1, actual_topk // num_heads)
+            _, topk_indices_per_head = torch.topk(scores, k_per_head, dim=-1)
             all_indices_flat = topk_indices_per_head.flatten()
             final_indices = torch.unique(all_indices_flat)
-            # Bỏ qua Adaptive TopK vì số lượng token đã động sẵn
             sorted_topk_tokens = final_indices
             
         else:
             if WEIGHTED_SOFT_VOTE:
-                # --- Ý TƯỞNG 1: WEIGHTED SOFT-VOTE ---
+                # --- SOFTMAX CỦA SUM (ENERGY-BASED WEIGHTS) ---
                 head_probs = torch.softmax(scores, dim=-1)
-                head_loudness = scores.max(dim=-1).values
-                head_weights = torch.softmax(head_loudness, dim=0).unsqueeze(1)
+                head_energy = scores.sum(dim=-1)
+                head_weights = torch.softmax(head_energy, dim=0).unsqueeze(1)
                 scores = torch.sum(head_probs * head_weights, dim=0)
             else:
                 # --- ORIGINAL PAPER: HEAD-SOFT-VOTE ---

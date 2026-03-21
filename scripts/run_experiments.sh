@@ -55,7 +55,7 @@ EOF
 
 # Chạy 3 kịch bản
 
-run_experiment "l2norm-no-adaptive" "true" "false" "false" 8192
+# run_experiment "l2norm-no-adaptive" "true" "false" "false" 8192
 run_experiment "weighted-soft-vote" "false" "true" "false" 8192
-run_experiment "union-of-sets" "false" "false" "true" 2048
+run_experiment "union-of-sets" "false" "false" "true" 8192
 

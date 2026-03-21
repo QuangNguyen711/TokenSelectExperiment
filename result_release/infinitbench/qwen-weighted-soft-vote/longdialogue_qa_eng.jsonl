@@ -1,50 +1,50 @@
-{"pred": "Ross", "answers": ["JO"], "all_classes": null, "length": 68289, "token_length": 103860}
+{"pred": "Eleanor Jones", "answers": ["JO"], "all_classes": null, "length": 68289, "token_length": 103860}
 {"pred": "Melvin Frank", "answers": ["MARTHA"], "all_classes": null, "length": 72946, "token_length": 108967}
 {"pred": "Vivian", "answers": ["HAMMOND"], "all_classes": null, "length": 69914, "token_length": 110971}
-{"pred": "The character most likely represented by \"$$MASK$$\" in the provided dialogue script is Brenna Cartwright.", "answers": ["GENERAL HAIG"], "all_classes": null, "length": 67606, "token_length": 108126}
-{"pred": "Joyce", "answers": ["HARVEY", "HARVEY PEKAR"], "all_classes": null, "length": 70505, "token_length": 103600}
+{"pred": "The character most likely represented by \"$$MASK$$\" in the provided dialogue script is Steve/Mike. The scriptwriter refers to this character by the name \"", "answers": ["GENERAL HAIG"], "all_classes": null, "length": 67606, "token_length": 108126}
+{"pred": "Robert Pulcini", "answers": ["HARVEY", "HARVEY PEKAR"], "all_classes": null, "length": 70505, "token_length": 103600}
 {"pred": "Eddie", "answers": ["BOND", "JAMES BOND"], "all_classes": null, "length": 70844, "token_length": 107962}
 {"pred": "Woody Allen", "answers": ["ALLISON"], "all_classes": null, "length": 65985, "token_length": 99610}
-{"pred": "Amanda", "answers": ["NICKY"], "all_classes": null, "length": 64250, "token_length": 103917}
+{"pred": "Based on the context and clues provided in the script, the character most likely to be represented by \"$$MASK$$\" is Captain Christopher Pike. This is because", "answers": ["NICKY"], "all_classes": null, "length": 64250, "token_length": 103917}
 {"pred": "Mike", "answers": ["TAUPIN", "RICHARD TAUPIN"], "all_classes": null, "length": 67607, "token_length": 108125}
-{"pred": "Hildy", "answers": ["HILDY", "Hildy Johnson"], "all_classes": null, "length": 62208, "token_length": 96602}
-{"pred": "Bobby Green", "answers": ["BOBBY GREEN"], "all_classes": null, "length": 73750, "token_length": 114217}
-{"pred": "Nikki", "answers": ["KIT"], "all_classes": null, "length": 71251, "token_length": 106345}
+{"pred": "Walter \"Walter\" \"Walter\" \"Walter\" \"Walter\" \"Walter\" \"Walter\" \"Walter\" \"W", "answers": ["HILDY", "Hildy Johnson"], "all_classes": null, "length": 62208, "token_length": 96602}
+{"pred": "Burt", "answers": ["BOBBY GREEN"], "all_classes": null, "length": 73750, "token_length": 114217}
+{"pred": "Danilo Bach", "answers": ["KIT"], "all_classes": null, "length": 71251, "token_length": 106345}
 {"pred": "Chris", "answers": ["SALIERI"], "all_classes": null, "length": 69134, "token_length": 104927}
 {"pred": "Mark Boal", "answers": ["MAYA"], "all_classes": null, "length": 73336, "token_length": 112005}
-{"pred": "Henry Lamb", "answers": ["LUIS"], "all_classes": null, "length": 62860, "token_length": 98611}
-{"pred": "Hannah", "answers": ["MICKEY", "Mickey Sachs"], "all_classes": null, "length": 68244, "token_length": 107055}
-{"pred": "Carol", "answers": ["DAVID", "DAVID WILLS"], "all_classes": null, "length": 70373, "token_length": 105627}
+{"pred": "The character most likely represented by \"$$MASK$$\" in the provided dialogue script is \"JIM\".", "answers": ["LUIS"], "all_classes": null, "length": 62860, "token_length": 98611}
+{"pred": "MACHETE", "answers": ["MICKEY", "Mickey Sachs"], "all_classes": null, "length": 68244, "token_length": 107055}
+{"pred": "Based on the context and the clues provided in the script, the character most likely to be represented by \"$$MASK$$\" is Emmett, who is mentioned", "answers": ["DAVID", "DAVID WILLS"], "all_classes": null, "length": 70373, "token_length": 105627}
 {"pred": "Chris", "answers": ["JONAH KING"], "all_classes": null, "length": 69133, "token_length": 104928}
 {"pred": "Woody Allen", "answers": ["QUINCE"], "all_classes": null, "length": 65985, "token_length": 99609}
-{"pred": "The character most likely represented by \"$$MASK$$\" in the provided dialogue script is \"David Mills\".", "answers": ["MILLS", "David Mills"], "all_classes": null, "length": 71137, "token_length": 105562}
-{"pred": "Jackie", "answers": ["BLOOM", "LEO BLOOM"], "all_classes": null, "length": 63500, "token_length": 105265}
-{"pred": "Stephen", "answers": ["FRANK"], "all_classes": null, "length": 69414, "token_length": 107326}
-{"pred": "Hanna", "answers": ["NEIL"], "all_classes": null, "length": 69968, "token_length": 111165}
-{"pred": "The character most likely represented by \"$$MASK$$\" in the provided dialogue script is \"Tony Blair\".", "answers": ["DAN RATHER"], "all_classes": null, "length": 69998, "token_length": 104469}
+{"pred": "Seven", "answers": ["MILLS", "David Mills"], "all_classes": null, "length": 71137, "token_length": 105562}
+{"pred": "Rachel", "answers": ["BLOOM", "LEO BLOOM"], "all_classes": null, "length": 63500, "token_length": 105265}
+{"pred": "Stephen Hawking", "answers": ["FRANK"], "all_classes": null, "length": 69414, "token_length": 107326}
+{"pred": "Neil", "answers": ["NEIL"], "all_classes": null, "length": 69968, "token_length": 111165}
+{"pred": "Queen", "answers": ["DAN RATHER"], "all_classes": null, "length": 69998, "token_length": 104469}
 {"pred": "Jackie Brown", "answers": ["NICOLET", "RAY NICOLET"], "all_classes": null, "length": 71359, "token_length": 105378}
 {"pred": "Mario Puzo", "answers": ["SONNY", "SONNY CORLEONE"], "all_classes": null, "length": 73190, "token_length": 112253}
-{"pred": "JANE", "answers": ["LEONOR"], "all_classes": null, "length": 71662, "token_length": 103857}
+{"pred": "Gerald Grunick", "answers": ["LEONOR"], "all_classes": null, "length": 71662, "token_length": 103857}
 {"pred": "Joni", "answers": ["SHERMAN", "Sherman McCoy"], "all_classes": null, "length": 62867, "token_length": 98631}
-{"pred": "Cara Mason", "answers": ["JOE", "JOE Black"], "all_classes": null, "length": 65985, "token_length": 99610}
-{"pred": "Curtis", "answers": ["LOU"], "all_classes": null, "length": 72182, "token_length": 106919}
-{"pred": "The character most likely represented by \"$$MASK$$\" in the dialogue script is \"Autumn\".", "answers": ["SUMMER"], "all_classes": null, "length": 74549, "token_length": 108216}
-{"pred": "Peter", "answers": ["BILLY"], "all_classes": null, "length": 68393, "token_length": 105056}
+{"pred": "Alex", "answers": ["JOE", "JOE Black"], "all_classes": null, "length": 65985, "token_length": 99610}
+{"pred": "TAKE SHELTER", "answers": ["LOU"], "all_classes": null, "length": 72182, "token_length": 106919}
+{"pred": "Charles", "answers": ["SUMMER"], "all_classes": null, "length": 74549, "token_length": 108216}
+{"pred": "Bill James", "answers": ["BILLY"], "all_classes": null, "length": 68393, "token_length": 105056}
 {"pred": "Wink", "answers": ["GAGGI", "Remo", "remo Gaggi"], "all_classes": null, "length": 67339, "token_length": 104460}
-{"pred": "Morrison", "answers": ["INEZ"], "all_classes": null, "length": 66740, "token_length": 99937}
+{"pred": "PAMELA", "answers": ["INEZ"], "all_classes": null, "length": 66740, "token_length": 99937}
 {"pred": "Daniel Farrands", "answers": ["LOOMIS", "SAMUEL J. LOOMIS"], "all_classes": null, "length": 71239, "token_length": 113818}
-{"pred": "Hank", "answers": ["MOTTI", "Admiral Motti"], "all_classes": null, "length": 76033, "token_length": 108792}
+{"pred": "Based on the context and clues provided in the script, the character most likely to be represented by \"$$MASK$$\" is **Hank**. The script", "answers": ["MOTTI", "Admiral Motti"], "all_classes": null, "length": 76033, "token_length": 108792}
 {"pred": "Kym", "answers": ["ABBY"], "all_classes": null, "length": 70849, "token_length": 105250}
 {"pred": "Brooke", "answers": ["ANNIE", "ANNIE MACLEAN"], "all_classes": null, "length": 74661, "token_length": 105363}
 {"pred": "Mark Whitacre", "answers": ["MILLER"], "all_classes": null, "length": 74114, "token_length": 115555}
-{"pred": "George Lucas", "answers": ["SAMUEL"], "all_classes": null, "length": 76033, "token_length": 108793}
-{"pred": "Milton", "answers": ["MILTON", "JOHN MILTON"], "all_classes": null, "length": 65975, "token_length": 106424}
-{"pred": "Earl W. Wallace", "answers": ["ETHAN", "ETHAN HUNT"], "all_classes": null, "length": 82623, "token_length": 118412}
-{"pred": "Jenna", "answers": ["STAMP PAID"], "all_classes": null, "length": 71253, "token_length": 103429}
-{"pred": "Hildy", "answers": ["BRUCE", "Bruce Baldwin"], "all_classes": null, "length": 62208, "token_length": 96603}
-{"pred": "Joan O'Brien", "answers": ["HELMUT", "HELMUT DORQUE"], "all_classes": null, "length": 71696, "token_length": 105322}
+{"pred": "Based on the context and clues provided in the script, the character most likely to be represented by \"$$MASK$$\" is **George Lucas**, the scriptwriter", "answers": ["SAMUEL"], "all_classes": null, "length": 76033, "token_length": 108793}
+{"pred": "Jonathan Lemkin", "answers": ["MILTON", "JOHN MILTON"], "all_classes": null, "length": 65975, "token_length": 106424}
+{"pred": "William Kelley", "answers": ["ETHAN", "ETHAN HUNT"], "all_classes": null, "length": 82623, "token_length": 118412}
+{"pred": "Based on the context and clues provided in the script, the character most likely to be represented by \"$$MASK$$\" is Denver. Denver is a significant character", "answers": ["STAMP PAID"], "all_classes": null, "length": 71253, "token_length": 103429}
+{"pred": "Walter \"Walter\" \"Walt\" \"Walters\" \"Walters\" \"Walt\" \"Walt\" \"Walt\"", "answers": ["BRUCE", "Bruce Baldwin"], "all_classes": null, "length": 62208, "token_length": 96603}
+{"pred": "Joan O'Bri", "answers": ["HELMUT", "HELMUT DORQUE"], "all_classes": null, "length": 71696, "token_length": 105322}
 {"pred": "JACOB", "answers": ["STU", "STUART SHEPARD"], "all_classes": null, "length": 70266, "token_length": 102637}
 {"pred": "John Lee Hancock", "answers": ["CAROL"], "all_classes": null, "length": 62905, "token_length": 97462}
-{"pred": "Stanley", "answers": ["CLAUDIA"], "all_classes": null, "length": 72379, "token_length": 108402}
-{"pred": "Cindy", "answers": ["CINDY", "CINDY PERIERA"], "all_classes": null, "length": 71579, "token_length": 105404}
-{"pred": "The character most likely represented by \"$$MASK$$\" in the provided dialogue script is \"Nicole\".", "answers": ["NICK"], "all_classes": null, "length": 67521, "token_length": 99059}
+{"pred": "Based on the context and clues provided in the script, the character most likely to be represented by \"$$MASK$$\" is \"Earl Partridge\". The", "answers": ["CLAUDIA"], "all_classes": null, "length": 72379, "token_length": 108402}
+{"pred": "Frankie", "answers": ["CINDY", "CINDY PERIERA"], "all_classes": null, "length": 71579, "token_length": 105404}
+{"pred": "Based on the context and clues provided in the script, the character most likely to be represented by \"$$MASK$$\" is **Mortimer** (Nick", "answers": ["NICK"], "all_classes": null, "length": 67521, "token_length": 99059}
