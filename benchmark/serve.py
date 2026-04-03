@@ -1,3 +1,5 @@
+# File: benchmark/serve.py
+
 """Launch the inference server."""
 
 import argparse
@@ -24,6 +26,8 @@ def patch_model(config):
         weighted_soft_vote=getattr(config.model, 'weighted_soft_vote', False),
         union_of_sets=getattr(config.model, 'union_of_sets', False),
         l2_norm_pooling=getattr(config.model, 'l2_norm_pooling', False),
+        dynamic_capacity_union=getattr(config.model, 'dynamic_capacity_union', False),
+        head_wise_adaptive=getattr(config.model, 'head_wise_adaptive', False),
     )
 
 

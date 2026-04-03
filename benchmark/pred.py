@@ -1,3 +1,5 @@
+# File: benchmark/pred.py
+
 import os
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 import sys
@@ -65,6 +67,8 @@ def get_model_and_tokenizer(config, kernel_size):
             weighted_soft_vote=getattr(config.model, 'weighted_soft_vote', False),
             union_of_sets=getattr(config.model, 'union_of_sets', False),
             l2_norm_pooling=getattr(config.model, 'l2_norm_pooling', False),
+            dynamic_capacity_union=getattr(config.model, 'dynamic_capacity_union', False),
+            head_wise_adaptive=getattr(config.model, 'head_wise_adaptive', False),
         )
     else:
         raise NotImplementedError()

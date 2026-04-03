@@ -1,3 +1,5 @@
+# File: patcher/token_retrieval.py
+
 from contextlib import contextmanager
 from math import ceil
 from typing import Optional
@@ -42,6 +44,8 @@ ATTENTION_THRESHOLD = 0.9
 WEIGHTED_SOFT_VOTE = False
 UNION_OF_SETS = False
 L2_NORM_POOLING = False
+DYNAMIC_CAPACITY_UNION = False
+HEAD_WISE_ADAPTIVE = False
 
 @contextmanager
 def cuda_timer(timer_name="Operation"):
@@ -368,7 +372,54 @@ class TokenRetriever:
         # ---------------------------------------------------------
         # CHOOSE POOLING/VOTING STRATEGY (THE SWITCH)
         # ---------------------------------------------------------
-        if UNION_OF_SETS:
+        if DYNAMIC_CAPACITY_UNION:
+            # --- PHƯƠNG PHÁP A: DYNAMIC CAPACITY UNION (DCU) ---
+            # Phương trình: K_h = \lfloor softmax(E_h / \tau) \times K_{max} \rfloor
+            norms = torch.norm(query_fingerprints, p=2, dim=-1)
+            head_energy = norms * scores.max(dim=-1).values
+            
+            # Khắc phục Mode Collapse bằng nội suy nhiệt độ (Temperature Scaling)
+            tau = head_energy.mean() + 1e-5
+            head_weights = torch.softmax(head_energy / tau, dim=0) 
+            
+            # Cấp phát ngân sách động (Bù trừ Overlap bằng hệ số 2.0)
+            k_per_head = (head_weights * actual_topk).to(torch.int32)
+            k_per_head = torch.clamp(k_per_head, min=1, max=actual_topk)
+            
+            all_indices = []
+            for h in range(num_heads):
+                k_h = k_per_head[h].item()
+                _, idx = torch.topk(scores[h], k_h, dim=-1)
+                all_indices.append(idx)
+                
+            final_indices = torch.unique(torch.cat(all_indices))
+
+        elif HEAD_WISE_ADAPTIVE:
+            # --- PHƯƠNG PHÁP B: HEAD-WISE ADAPTIVE UNION ---
+            head_probs = torch.softmax(scores, dim=-1)
+            topk_probs, topk_indices = torch.topk(head_probs, actual_topk, dim=-1)
+            
+            # Chuẩn hóa CDF cục bộ để tránh lỗi hội tụ vô hạn
+            local_sum = topk_probs.sum(dim=-1, keepdim=True) + 1e-5
+            normalized_probs = topk_probs / local_sum
+            cumsum_probs = torch.cumsum(normalized_probs, dim=-1, dtype=torch.float32)
+            
+            # Cắt tại điểm F(k) >= theta
+            threshold_mask = cumsum_probs >= ATTENTION_THRESHOLD
+            max_val, max_idx = torch.max(threshold_mask, dim=-1)
+            
+            # Nếu mảng không chạm ngưỡng (max_val=False), tự động lấy max k
+            adaptive_k_per_head = torch.where(max_val, max_idx + 1, actual_topk)
+            adaptive_k_per_head = torch.clamp(adaptive_k_per_head, min=1)
+            
+            all_indices = []
+            for h in range(num_heads):
+                k_h = adaptive_k_per_head[h].item()
+                all_indices.append(topk_indices[h, :k_h])
+                
+            final_indices = torch.unique(torch.cat(all_indices))
+
+        elif UNION_OF_SETS:
             k_per_head = max(1, actual_topk // num_heads)
             _, topk_indices_per_head = torch.topk(scores, k_per_head, dim=-1)
             all_indices_flat = topk_indices_per_head.flatten()
@@ -953,6 +1004,8 @@ def patch(
         weighted_soft_vote=False,
         union_of_sets=False,
         l2_norm_pooling=False,
+        dynamic_capacity_union=False,
+        head_wise_adaptive=False,
 ):
     global ROPE_BASE
     global ROPE_SCALE
@@ -970,6 +1023,9 @@ def patch(
     global WEIGHTED_SOFT_VOTE
     global UNION_OF_SETS
     global L2_NORM_POOLING
+    global DYNAMIC_CAPACITY_UNION
+    global HEAD_WISE_ADAPTIVE
+
 
     ROPE_BASE = rope_base
     ROPE_SCALE = rope_scale
@@ -984,6 +1040,8 @@ def patch(
     WEIGHTED_SOFT_VOTE = weighted_soft_vote
     UNION_OF_SETS = union_of_sets
     L2_NORM_POOLING = l2_norm_pooling
+    DYNAMIC_CAPACITY_UNION = dynamic_capacity_union
+    HEAD_WISE_ADAPTIVE = head_wise_adaptive
 
     QUERY_ROTATE = True
     PREFILL_CHUNK_SIZE = 512

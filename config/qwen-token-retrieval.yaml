@@ -11,7 +11,9 @@ model:
   attention_threshold: 0.9
   l2_norm_pooling: false
   weighted_soft_vote: false
-  union_of_sets: true
+  union_of_sets: false
+  dynamic_capacity_union: true     # Bật để test Phương pháp A
+  head_wise_adaptive: false        # Bật để test Phương pháp B
 
 max_len: 1048576
 chunk_size: 8192
