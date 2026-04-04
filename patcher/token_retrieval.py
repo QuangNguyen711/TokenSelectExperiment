@@ -374,16 +374,15 @@ class TokenRetriever:
         # ---------------------------------------------------------
         if DYNAMIC_CAPACITY_UNION:
             # --- PHƯƠNG PHÁP A: DYNAMIC CAPACITY UNION (DCU) ---
-            # Phương trình: K_h = \lfloor softmax(E_h / \tau) \times K_{max} \rfloor
             norms = torch.norm(query_fingerprints, p=2, dim=-1)
             head_energy = norms * scores.max(dim=-1).values
             
-            # Khắc phục Mode Collapse bằng nội suy nhiệt độ (Temperature Scaling)
+            # Khắc phục Mode Collapse
             tau = head_energy.mean() + 1e-5
             head_weights = torch.softmax(head_energy / tau, dim=0) 
             
-            # Cấp phát ngân sách động (Bù trừ Overlap bằng hệ số 2.0)
-            k_per_head = (head_weights * actual_topk).to(torch.int32)
+            # Bù trừ Overlap bằng hệ số 2.0
+            k_per_head = (head_weights * actual_topk * 2.0).to(torch.int32)
             k_per_head = torch.clamp(k_per_head, min=1, max=actual_topk)
             
             all_indices = []
@@ -393,22 +392,31 @@ class TokenRetriever:
                 all_indices.append(idx)
                 
             final_indices = torch.unique(torch.cat(all_indices))
+            
+            # Đồng bộ TP và cắt chặn VRAM ngay trong nhánh
+            if dist.is_initialized():
+                mask = torch.zeros(num_tokens, device=scores.device, dtype=torch.int32)
+                mask[final_indices] = 1
+                dist.all_reduce(mask, op=dist.ReduceOp.MAX)
+                final_indices = torch.nonzero(mask).squeeze(-1)
+            
+            if final_indices.shape[0] > actual_topk:
+                final_indices = final_indices[torch.randperm(final_indices.shape[0])[:actual_topk]]
+            
+            sorted_topk_tokens = torch.sort(final_indices).values
 
         elif HEAD_WISE_ADAPTIVE:
             # --- PHƯƠNG PHÁP B: HEAD-WISE ADAPTIVE UNION ---
             head_probs = torch.softmax(scores, dim=-1)
             topk_probs, topk_indices = torch.topk(head_probs, actual_topk, dim=-1)
             
-            # Chuẩn hóa CDF cục bộ để tránh lỗi hội tụ vô hạn
             local_sum = topk_probs.sum(dim=-1, keepdim=True) + 1e-5
             normalized_probs = topk_probs / local_sum
             cumsum_probs = torch.cumsum(normalized_probs, dim=-1, dtype=torch.float32)
             
-            # Cắt tại điểm F(k) >= theta
             threshold_mask = cumsum_probs >= ATTENTION_THRESHOLD
             max_val, max_idx = torch.max(threshold_mask, dim=-1)
             
-            # Nếu mảng không chạm ngưỡng (max_val=False), tự động lấy max k
             adaptive_k_per_head = torch.where(max_val, max_idx + 1, actual_topk)
             adaptive_k_per_head = torch.clamp(adaptive_k_per_head, min=1)
             
@@ -418,6 +426,18 @@ class TokenRetriever:
                 all_indices.append(topk_indices[h, :k_h])
                 
             final_indices = torch.unique(torch.cat(all_indices))
+            
+            # Đồng bộ TP và cắt chặn VRAM ngay trong nhánh
+            if dist.is_initialized():
+                mask = torch.zeros(num_tokens, device=scores.device, dtype=torch.int32)
+                mask[final_indices] = 1
+                dist.all_reduce(mask, op=dist.ReduceOp.MAX)
+                final_indices = torch.nonzero(mask).squeeze(-1)
+            
+            if final_indices.shape[0] > actual_topk:
+                final_indices = final_indices[torch.randperm(final_indices.shape[0])[:actual_topk]]
+            
+            sorted_topk_tokens = torch.sort(final_indices).values
 
         elif UNION_OF_SETS:
             k_per_head = max(1, actual_topk // num_heads)

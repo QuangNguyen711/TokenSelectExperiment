@@ -48,7 +48,7 @@ cd TokenSelectExperiment/
 
 2. **Create and activate virtual environment:**
 ```bash
-uv venv --python 3.10
+uv venv --python 3.10 --seed
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 

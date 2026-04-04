@@ -12,8 +12,8 @@ model:
   l2_norm_pooling: false
   weighted_soft_vote: false
   union_of_sets: false
-  dynamic_capacity_union: true     # Bật để test Phương pháp A
-  head_wise_adaptive: false        # Bật để test Phương pháp B
+  dynamic_capacity_union: true
+  head_wise_adaptive: false
 
 max_len: 1048576
 chunk_size: 8192

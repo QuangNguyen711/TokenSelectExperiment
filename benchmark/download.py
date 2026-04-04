@@ -25,5 +25,5 @@ all_datasets = [
 ]
 
 for dataset in all_datasets:
-    data = load_dataset("THUDM/LongBench", dataset, split="test")
+    data = load_dataset("THUDM/LongBench", dataset, split="test", trust_remote_code=True)
     data.save_to_disk(f"benchmark/data/longbench/{dataset}")

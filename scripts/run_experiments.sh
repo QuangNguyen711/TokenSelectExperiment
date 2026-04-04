@@ -10,6 +10,8 @@ run_experiment() {
     local weighted_vote=$3
     local union_sets=$4
     local top_k_val=$5
+    local dynamic_capacity=$6
+    local head_wise_adaptive=$7
 
     local output_dir="result_release/infinitbench/qwen-${exp_name}"
 
@@ -29,6 +31,8 @@ model:
   l2_norm_pooling: $l2_norm
   weighted_soft_vote: $weighted_vote
   union_of_sets: $union_sets
+  dynamic_capacity_union: $dynamic_capacity
+  head_wise_adaptive: $head_wise_adaptive
 
 max_len: 1048576
 chunk_size: 8192
@@ -53,9 +57,12 @@ EOF
     python benchmark/infinitebench_eval.py --result-dir ${output_dir}
 }
 
-# Chạy 3 kịch bản
+# ==============================================================================
+# CÁC KỊCH BẢN THỬ NGHIỆM
+# Cấu trúc tham số:
+# run_experiment <Tên> <L2-Norm> <Weighted> <Union> <Top_K> <DCU> <Head-Adaptive>
+# ==============================================================================
 
-# run_experiment "l2norm-no-adaptive" "true" "false" "false" 8192
-run_experiment "weighted-soft-vote" "false" "true" "false" 8192
-run_experiment "union-of-sets" "false" "false" "true" 8192
-
+# 2. Chạy 2 cấu hình SOTA mới (Giải quyết bài toán tối ưu đa mục tiêu)
+run_experiment "dynamic-capacity-union" "false" "false" "false" 8192 "true"  "false"
+run_experiment "head-wise-adaptive"     "false" "false" "false" 8192 "false" "true"
