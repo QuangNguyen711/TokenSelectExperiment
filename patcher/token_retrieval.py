@@ -377,23 +377,26 @@ class TokenRetriever:
             norms = torch.norm(query_fingerprints, p=2, dim=-1)
             head_energy = norms * scores.max(dim=-1).values
             
-            # Khắc phục Mode Collapse
             tau = head_energy.mean() + 1e-5
             head_weights = torch.softmax(head_energy / tau, dim=0) 
             
-            # Bù trừ Overlap bằng hệ số 2.0
             k_per_head = (head_weights * actual_topk * 2.0).to(torch.int32)
             k_per_head = torch.clamp(k_per_head, min=1, max=actual_topk)
             
-            all_indices = []
-            for h in range(num_heads):
-                k_h = k_per_head[h].item()
-                _, idx = torch.topk(scores[h], k_h, dim=-1)
-                all_indices.append(idx)
-                
-            final_indices = torch.unique(torch.cat(all_indices))
+            # ==============================================================
+            # TỐI ƯU BĂNG THÔNG: Vector hóa (Triệt tiêu vòng lặp for)
+            # ==============================================================
+            max_k = k_per_head.max().item()
+            # Gọi 1 Batched Kernel Launch duy nhất cho toàn bộ 28 heads
+            _, batched_idx = torch.topk(scores, max_k, dim=-1) 
             
-            # Đồng bộ TP và cắt chặn VRAM ngay trong nhánh
+            # Khởi tạo Ma trận Boolean Mask shape [num_heads, max_k]
+            seq_arange = torch.arange(max_k, device=scores.device).unsqueeze(0)
+            valid_mask = seq_arange < k_per_head.unsqueeze(1)
+            
+            # Áp mask để lọc index và thực hiện hợp nhất tập hợp (Union)
+            final_indices = torch.unique(batched_idx[valid_mask])
+            
             if dist.is_initialized():
                 mask = torch.zeros(num_tokens, device=scores.device, dtype=torch.int32)
                 mask[final_indices] = 1
@@ -420,14 +423,18 @@ class TokenRetriever:
             adaptive_k_per_head = torch.where(max_val, max_idx + 1, actual_topk)
             adaptive_k_per_head = torch.clamp(adaptive_k_per_head, min=1)
             
-            all_indices = []
-            for h in range(num_heads):
-                k_h = adaptive_k_per_head[h].item()
-                all_indices.append(topk_indices[h, :k_h])
-                
-            final_indices = torch.unique(torch.cat(all_indices))
+            # ==============================================================
+            # TỐI ƯU BĂNG THÔNG: Vector hóa 
+            # ==============================================================
+            max_k = adaptive_k_per_head.max().item()
+            # Tái sử dụng mảng topk_indices đã tính, chỉ cắt lấy max_k
+            batched_idx_adaptive = topk_indices[:, :max_k]
             
-            # Đồng bộ TP và cắt chặn VRAM ngay trong nhánh
+            seq_arange = torch.arange(max_k, device=scores.device).unsqueeze(0)
+            valid_mask = seq_arange < adaptive_k_per_head.unsqueeze(1)
+            
+            final_indices = torch.unique(batched_idx_adaptive[valid_mask])
+            
             if dist.is_initialized():
                 mask = torch.zeros(num_tokens, device=scores.device, dtype=torch.int32)
                 mask[final_indices] = 1
