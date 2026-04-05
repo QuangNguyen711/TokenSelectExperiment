@@ -377,15 +377,15 @@ class TokenRetriever:
             norms = torch.norm(query_fingerprints, p=2, dim=-1)
             head_energy = norms * scores.max(dim=-1).values
             
+            # Thêm một hằng số nhỏ vào tau để tránh chia cho zero khi head_energy quá thấp
             tau = head_energy.mean() + 1e-5
+            # Tính trọng số cho mỗi head dựa trên head_energy, sử dụng softmax để đảm bảo tổng bằng 1
             head_weights = torch.softmax(head_energy / tau, dim=0) 
             
-            k_per_head = (head_weights * actual_topk * 2.0).to(torch.int32)
+            # Phân bổ k cho mỗi head dựa trên trọng số đã tính, đảm bảo tổng k không vượt quá actual_topk
+            k_per_head = (head_weights * actual_topk).to(torch.int32)
             k_per_head = torch.clamp(k_per_head, min=1, max=actual_topk)
             
-            # ==============================================================
-            # TỐI ƯU BĂNG THÔNG: Vector hóa (Triệt tiêu vòng lặp for)
-            # ==============================================================
             max_k = k_per_head.max().item()
             # Gọi 1 Batched Kernel Launch duy nhất cho toàn bộ 28 heads
             _, batched_idx = torch.topk(scores, max_k, dim=-1) 
@@ -402,9 +402,6 @@ class TokenRetriever:
                 mask[final_indices] = 1
                 dist.all_reduce(mask, op=dist.ReduceOp.MAX)
                 final_indices = torch.nonzero(mask).squeeze(-1)
-            
-            if final_indices.shape[0] > actual_topk:
-                final_indices = final_indices[torch.randperm(final_indices.shape[0])[:actual_topk]]
             
             sorted_topk_tokens = torch.sort(final_indices).values
 
