@@ -65,4 +65,4 @@ EOF
 
 # 2. Chạy 2 cấu hình SOTA mới (Giải quyết bài toán tối ưu đa mục tiêu)
 run_experiment "dynamic-capacity-union" "false" "false" "false" 8192 "true"  "false"
-run_experiment "head-wise-adaptive"     "false" "false" "false" 8192 "false" "true"
+# run_experiment "head-wise-adaptive"     "false" "false" "false" 8192 "false" "true"
