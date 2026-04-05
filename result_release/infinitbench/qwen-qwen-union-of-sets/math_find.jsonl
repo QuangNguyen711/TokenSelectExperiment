@@ -1,0 +1,10 @@
+{"pred": "47", "answers": [51.0], "all_classes": null, "length": 30000, "token_length": 117901}
+{"pred": "88", "answers": [87], "all_classes": null, "length": 30000, "token_length": 116676}
+{"pred": "82", "answers": [82], "all_classes": null, "length": 30000, "token_length": 116475}
+{"pred": "79", "answers": [78], "all_classes": null, "length": 30000, "token_length": 116314}
+{"pred": "56", "answers": [90], "all_classes": null, "length": 30000, "token_length": 116832}
+{"pred": "88", "answers": [97], "all_classes": null, "length": 30000, "token_length": 117084}
+{"pred": "89", "answers": [95], "all_classes": null, "length": 30000, "token_length": 116847}
+{"pred": "94", "answers": [93], "all_classes": null, "length": 30000, "token_length": 116939}
+{"pred": "50", "answers": [58.0], "all_classes": null, "length": 30000, "token_length": 120080}
+{"pred": "11", "answers": [13], "all_classes": null, "length": 30000, "token_length": 120084}

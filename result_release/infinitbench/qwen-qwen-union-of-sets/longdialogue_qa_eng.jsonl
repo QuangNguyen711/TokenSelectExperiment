@@ -1,0 +1,10 @@
+{"pred": "Tamora", "answers": ["JO"], "all_classes": null, "length": 68289, "token_length": 103860}
+{"pred": "Lotte", "answers": ["MARTHA"], "all_classes": null, "length": 72946, "token_length": 108967}
+{"pred": "AUSTIN GRIMALDI", "answers": ["HAMMOND"], "all_classes": null, "length": 69914, "token_length": 110971}
+{"pred": "Brenna", "answers": ["GENERAL HAIG"], "all_classes": null, "length": 67606, "token_length": 108126}
+{"pred": "JOYCE", "answers": ["HARVEY", "HARVEY PEKAR"], "all_classes": null, "length": 70505, "token_length": 103600}
+{"pred": "Sidney", "answers": ["BOND", "JAMES BOND"], "all_classes": null, "length": 70844, "token_length": 107962}
+{"pred": "Joe", "answers": ["ALLISON"], "all_classes": null, "length": 65985, "token_length": 99610}
+{"pred": "Amanda", "answers": ["NICKY"], "all_classes": null, "length": 64250, "token_length": 103917}
+{"pred": "Brenna", "answers": ["TAUPIN", "RICHARD TAUPIN"], "all_classes": null, "length": 67607, "token_length": 108125}
+{"pred": "Michelle", "answers": ["HILDY", "Hildy Johnson"], "all_classes": null, "length": 62208, "token_length": 96602}

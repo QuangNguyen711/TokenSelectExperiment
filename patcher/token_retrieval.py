@@ -344,7 +344,7 @@ class TokenRetriever:
         self.token_indices[layer_id, self.num_tokens[layer_id]: tail_idx] = indices
         self.num_tokens[layer_id] = tail_idx
 
-    def get_topk_tokens(self, query_fingerprints, token_fingerprints, topk, indices):
+    def get_topk_tokens(self, query_fingerprints, token_fingerprints, topk, indices, layer_id=-1):
         num_q_heads = query_fingerprints.shape[-1] // self.head_dim
         query_fingerprints = query_fingerprints.view(num_q_heads, self.head_dim)
 
@@ -370,20 +370,16 @@ class TokenRetriever:
         actual_topk = min(topk, num_tokens)
 
         # =====================================================================
-        # [MÁY ĐO ĐIỆN NÃO ĐỒ] - TỐI ƯU HÓA LOGGING THEO MỐC TOKEN
+        # [VỊ TRÍ SỬA 2]: MÁY ĐO ĐIỆN NÃO ĐỒ (Cập nhật dán nhãn Dataset)
         # =====================================================================
-        # Khởi tạo bộ nhớ tạm để đánh dấu các mốc đã log
         if not hasattr(self, '_logged_milestones'):
             self._logged_milestones = {}
             
-        # Tính toán cột mốc hiện tại (ví dụ: 120k tokens // 50000 = mốc số 2)
         milestone = num_tokens // 50000 
         
-        # Chỉ chạy log nếu vừa bước sang một mốc 50k mới
-        if milestone > self._logged_milestones.get(self.layer_id, -1) and num_tokens > 1000:
-            self._logged_milestones[self.layer_id] = milestone # Đánh dấu đã log
+        if milestone > self._logged_milestones.get(layer_id, -1) and num_tokens > 1000:
+            self._logged_milestones[layer_id] = milestone 
             
-            # 1. Tính toán thầm lặng trên GPU (Song song, không độ trễ)
             head_probs = torch.softmax(scores, dim=-1)
             entropy = -torch.sum(head_probs * torch.log(head_probs + 1e-9), dim=-1)
             
@@ -394,22 +390,29 @@ class TokenRetriever:
             
             l2_norms = torch.norm(query_fingerprints, p=2, dim=-1)
             
-            # 2. Đồng bộ CPU-GPU (Chỉ xảy ra 20 lần/layer nên rất an toàn)
             mean_entropy = entropy.mean().item()
             min_entropy = entropy.min().item()
             diversity_ratio = unique_tokens / (num_heads * actual_k_sample)
+            unique_sorted_indices = torch.sort(torch.unique(sample_topk)).values
+            gaps = unique_sorted_indices[1:] - unique_sorted_indices[:-1]
+            num_spans = (gaps > 1).sum().item() + 1
+            fragmentation_ratio = num_spans / unique_tokens
             min_entropy_l2 = l2_norms[torch.argmin(entropy)].item()
             mean_l2 = l2_norms.mean().item()
             
-            # 3. Ghi nối (append) cực nhanh vào CSV
             import os
-            log_file = "attention_profiling_qwen2.csv"
+            # MÓC DỮ LIỆU TỪ BASH SCRIPT THÔNG QUA HỆ ĐIỀU HÀNH
+            current_dataset = os.environ.get("CURRENT_DATASET", "unknown_task")
+            current_exp = os.environ.get("CURRENT_EXP", "default_exp")
+            
+            # Tách riêng file log cho từng kịch bản
+            log_file = f"attention_profiling_{current_exp}.csv"
             write_header = not os.path.exists(log_file)
             
             with open(log_file, "a") as f:
                 if write_header:
-                    f.write("layer_id,num_tokens,min_entropy,mean_entropy,diversity_ratio,min_entropy_l2,mean_l2\n")
-                f.write(f"{self.layer_id},{num_tokens},{min_entropy:.4f},{mean_entropy:.4f},{diversity_ratio:.4f},{min_entropy_l2:.4f},{mean_l2:.4f}\n")
+                    f.write("dataset,layer_id,num_tokens,min_entropy,mean_entropy,diversity_ratio,fragmentation_ratio,min_entropy_l2,mean_l2\n")
+                f.write(f"{current_dataset},{layer_id},{num_tokens},{min_entropy:.4f},{mean_entropy:.4f},{diversity_ratio:.4f},{fragmentation_ratio:.4f},{min_entropy_l2:.4f},{mean_l2:.4f}\n")
         # =====================================================================
 
         # ---------------------------------------------------------
@@ -600,7 +603,8 @@ class TokenRetriever:
             token_fingerprints = self.token_fingerprints[layer_id]
             topk_tokens = (
                     self.get_topk_tokens(
-                        query_fingerprints, token_fingerprints, topk, relevant_indices
+                        # [VỊ TRÍ SỬA 3]: Truyền layer_id một cách đàng hoàng vào hàm
+                        query_fingerprints, token_fingerprints, topk, relevant_indices, layer_id=layer_id
                     )
                     + n_init
             )

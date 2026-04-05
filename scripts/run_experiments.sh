@@ -15,6 +15,9 @@ run_experiment() {
 
     local output_dir="result_release/infinitbench/qwen-${exp_name}"
 
+    # Xuất tên kịch bản ra biến môi trường để Python đọc
+    export CURRENT_EXP=$exp_name 
+
     # Ghi đè file config
     cat << EOF > $config_path
 model:
@@ -39,21 +42,32 @@ chunk_size: 8192
 conv_type: qwen
 truncation: suffix
 dtype: bfloat16
-
 EOF
 
-    # Dọn dẹp tiến trình cũ
-    pkill pt_main_thread
-    sleep 2 # Đợi một chút để VRAM thực sự được giải phóng
+    # Tách chuỗi datasets bằng dấu phẩy và tạo vòng lặp
+    IFS=',' read -ra DATASET_ARRAY <<< "$datasets"
+    
+    for dataset in "${DATASET_ARRAY[@]}"; do
+        echo "=========================================================="
+        echo "Đang chạy Dataset: $dataset cho Kịch bản: $exp_name"
+        echo "=========================================================="
+        
+        # Bắn tên dataset vào hệ điều hành
+        export CURRENT_DATASET=$dataset
 
-    # Chạy benchmark
-    bash scripts/multiprocessing-benchmark.sh \
-        --config_path $config_path \
-        --datasets $datasets \
-        --output_dir_path $output_dir \
-        --world_size $world_size
+        # Dọn dẹp tiến trình cũ trước mỗi dataset cho chắc chắn
+        pkill -f pt_main_thread
+        sleep 2 
 
-    # Chạy eval
+        # Chạy benchmark cho TỪNG dataset một
+        bash scripts/multiprocessing-benchmark.sh \
+            --config_path $config_path \
+            --datasets $dataset \
+            --output_dir_path $output_dir \
+            --world_size $world_size
+    done
+
+    # Chạy eval sau khi tất cả dataset đã hoàn thành
     python benchmark/infinitebench_eval.py --result-dir ${output_dir}
 }
 
@@ -64,5 +78,5 @@ EOF
 # ==============================================================================
 
 # 2. Chạy 2 cấu hình SOTA mới (Giải quyết bài toán tối ưu đa mục tiêu)
-run_experiment "dynamic-capacity-union" "false" "false" "false" 8192 "true"  "false"
+run_experiment "qwen-union-of-sets" "false" "false" "true" 8192 "false" "false"
 # run_experiment "head-wise-adaptive"     "false" "false" "false" 8192 "false" "true"

@@ -1,0 +1,10 @@
+{"pred": "D", "answers": ["Label.update", "C"], "all_classes": null, "length": 49346, "token_length": 108295}
+{"pred": "D", "answers": ["FilteredResourceObserver._search_resource_creations", "C"], "all_classes": null, "length": 58955, "token_length": 162631}
+{"pred": "D", "answers": ["outputDOT", "A"], "all_classes": null, "length": 51381, "token_length": 182293}
+{"pred": "D", "answers": ["test_stadia", "B"], "all_classes": null, "length": 23916, "token_length": 132915}
+{"pred": "D", "answers": ["find_melody", "C"], "all_classes": null, "length": 35337, "token_length": 80359}
+{"pred": "D", "answers": ["Channel._get", "B"], "all_classes": null, "length": 58438, "token_length": 138844}
+{"pred": "D", "answers": ["Link.get_href", "C"], "all_classes": null, "length": 62483, "token_length": 153720}
+{"pred": "B", "answers": ["concat_with_iterable_", "C"], "all_classes": null, "length": 60808, "token_length": 138141}
+{"pred": "B", "answers": ["test_maptiler", "C"], "all_classes": null, "length": 23914, "token_length": 132911}
+{"pred": "D", "answers": ["timeseries_analyzer", "A"], "all_classes": null, "length": 60727, "token_length": 144160}

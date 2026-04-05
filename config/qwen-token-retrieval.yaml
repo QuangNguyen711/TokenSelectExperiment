@@ -11,8 +11,8 @@ model:
   attention_threshold: 0.9
   l2_norm_pooling: false
   weighted_soft_vote: false
-  union_of_sets: false
-  dynamic_capacity_union: true
+  union_of_sets: true
+  dynamic_capacity_union: false
   head_wise_adaptive: false
 
 max_len: 1048576
@@ -20,4 +20,3 @@ chunk_size: 8192
 conv_type: qwen
 truncation: suffix
 dtype: bfloat16
-
