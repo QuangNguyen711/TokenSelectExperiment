@@ -46,6 +46,7 @@ UNION_OF_SETS = False
 L2_NORM_POOLING = False
 DYNAMIC_CAPACITY_UNION = False
 HEAD_WISE_ADAPTIVE = False
+DCU_ENERGY_MODE = "both"
 
 @contextmanager
 def cuda_timer(timer_name="Operation"):
@@ -369,75 +370,39 @@ class TokenRetriever:
 
         actual_topk = min(topk, num_tokens)
 
-        # # =====================================================================
-        # # [MÁY ĐO ĐIỆN NÃO ĐỒ] - TỐI ƯU HÓA LOGGING THEO MỐC TOKEN
-        # # =====================================================================
-        # # Khởi tạo bộ nhớ tạm để đánh dấu các mốc đã log
-        # if not hasattr(self, '_logged_milestones'):
-        #     self._logged_milestones = {}
-            
-        # # Tính toán cột mốc hiện tại (ví dụ: 120k tokens // 50000 = mốc số 2)
-        # milestone = num_tokens // 50000 
-        
-        # # Chỉ chạy log nếu vừa bước sang một mốc 50k mới
-        # if milestone > self._logged_milestones.get(self.layer_id, -1) and num_tokens > 1000:
-        #     self._logged_milestones[self.layer_id] = milestone # Đánh dấu đã log
-            
-        #     # 1. Tính toán thầm lặng trên GPU (Song song, không độ trễ)
-        #     head_probs = torch.softmax(scores, dim=-1)
-        #     entropy = -torch.sum(head_probs * torch.log(head_probs + 1e-9), dim=-1)
-            
-        #     k_sample = 128
-        #     actual_k_sample = min(k_sample, num_tokens)
-        #     _, sample_topk = torch.topk(scores, actual_k_sample, dim=-1)
-        #     unique_tokens = torch.unique(sample_topk).shape[0]
-            
-        #     l2_norms = torch.norm(query_fingerprints, p=2, dim=-1)
-            
-        #     # 2. Đồng bộ CPU-GPU (Chỉ xảy ra 20 lần/layer nên rất an toàn)
-        #     mean_entropy = entropy.mean().item()
-        #     min_entropy = entropy.min().item()
-        #     diversity_ratio = unique_tokens / (num_heads * actual_k_sample)
-        #     min_entropy_l2 = l2_norms[torch.argmin(entropy)].item()
-        #     mean_l2 = l2_norms.mean().item()
-            
-        #     # 3. Ghi nối (append) cực nhanh vào CSV
-        #     import os
-        #     log_file = "attention_profiling_qwen2.csv"
-        #     write_header = not os.path.exists(log_file)
-            
-        #     with open(log_file, "a") as f:
-        #         if write_header:
-        #             f.write("layer_id,num_tokens,min_entropy,mean_entropy,diversity_ratio,min_entropy_l2,mean_l2\n")
-        #         f.write(f"{self.layer_id},{num_tokens},{min_entropy:.4f},{mean_entropy:.4f},{diversity_ratio:.4f},{min_entropy_l2:.4f},{mean_l2:.4f}\n")
-        # # =====================================================================
-
         # ---------------------------------------------------------
         # CHOOSE POOLING/VOTING STRATEGY (THE SWITCH)
         # ---------------------------------------------------------
         if DYNAMIC_CAPACITY_UNION:
-            # --- PHƯƠNG PHÁP A: DYNAMIC CAPACITY UNION (DCU) ---
-            norms = torch.norm(query_fingerprints, p=2, dim=-1)
-            head_energy = norms * scores.max(dim=-1).values
+            # --- PHƯƠNG PHÁP A: DYNAMIC CAPACITY UNION (DCU CÓ SWITCH - UNMAPPED) ---
             
-            # Thêm một hằng số nhỏ vào tau để tránh chia cho zero khi head_energy quá thấp
+            # Tính toán có chọn lọc để tiết kiệm thời gian tối đa
+            if DCU_ENERGY_MODE == "l2_only":
+                head_energy = torch.norm(query_fingerprints, p=2, dim=-1)
+            elif DCU_ENERGY_MODE == "max_only":
+                head_energy = scores.max(dim=-1).values
+            else: # "both"
+                norms = torch.norm(query_fingerprints, p=2, dim=-1)
+                max_vals = scores.max(dim=-1).values
+                head_energy = norms * max_vals
+            
+            # Thêm hằng số chống lỗi chia 0
             tau = head_energy.mean() + 1e-5
-            # Tính trọng số cho mỗi head dựa trên head_energy, sử dụng softmax để đảm bảo tổng bằng 1
             head_weights = torch.softmax(head_energy / tau, dim=0) 
             
-            # Phân bổ k cho mỗi head dựa trên trọng số đã tính, đảm bảo tổng k không vượt quá actual_topk
             k_per_head = (head_weights * actual_topk).to(torch.int32)
+            
+            # [ĐÃ THÁO BỎ KẸP TRẦN]: Cho phép 1 Head ôm trọn ngân sách nếu Softmax dồn quyền lực!
             k_per_head = torch.clamp(k_per_head, min=1, max=actual_topk)
             
             max_k = k_per_head.max().item()
-            # Gọi 1 Batched Kernel Launch duy nhất cho toàn bộ 28 heads
+            
+            # Khúc này max_k có thể lên tới 8192, cứ để GPU cày Global Sort xem tốc độ rớt cỡ nào
             _, batched_idx = torch.topk(scores, max_k, dim=-1) 
             
-            # Khởi tạo Ma trận Boolean Mask shape [num_heads, max_k]
             seq_arange = torch.arange(max_k, device=scores.device).unsqueeze(0)
             valid_mask = seq_arange < k_per_head.unsqueeze(1)
             
-            # Áp mask để lọc index và thực hiện hợp nhất tập hợp (Union)
             final_indices = torch.unique(batched_idx[valid_mask])
             
             if dist.is_initialized():
@@ -446,7 +411,7 @@ class TokenRetriever:
                 dist.all_reduce(mask, op=dist.ReduceOp.MAX)
                 final_indices = torch.nonzero(mask).squeeze(-1)
             
-            sorted_topk_tokens = torch.sort(final_indices).values
+            sorted_topk_tokens = final_indices
 
         elif HEAD_WISE_ADAPTIVE:
             # --- PHƯƠNG PHÁP B: HEAD-WISE ADAPTIVE UNION ---
@@ -463,9 +428,6 @@ class TokenRetriever:
             adaptive_k_per_head = torch.where(max_val, max_idx + 1, actual_topk)
             adaptive_k_per_head = torch.clamp(adaptive_k_per_head, min=1)
             
-            # ==============================================================
-            # TỐI ƯU BĂNG THÔNG: Vector hóa 
-            # ==============================================================
             max_k = adaptive_k_per_head.max().item()
             # Tái sử dụng mảng topk_indices đã tính, chỉ cắt lấy max_k
             batched_idx_adaptive = topk_indices[:, :max_k]
@@ -1073,6 +1035,7 @@ def patch(
         l2_norm_pooling=False,
         dynamic_capacity_union=False,
         head_wise_adaptive=False,
+        dcu_energy_mode="both",
 ):
     global ROPE_BASE
     global ROPE_SCALE
@@ -1092,7 +1055,7 @@ def patch(
     global L2_NORM_POOLING
     global DYNAMIC_CAPACITY_UNION
     global HEAD_WISE_ADAPTIVE
-
+    global DCU_ENERGY_MODE
 
     ROPE_BASE = rope_base
     ROPE_SCALE = rope_scale
@@ -1109,6 +1072,7 @@ def patch(
     L2_NORM_POOLING = l2_norm_pooling
     DYNAMIC_CAPACITY_UNION = dynamic_capacity_union
     HEAD_WISE_ADAPTIVE = head_wise_adaptive
+    DCU_ENERGY_MODE = dcu_energy_mode
 
     QUERY_ROTATE = True
     PREFILL_CHUNK_SIZE = 512
