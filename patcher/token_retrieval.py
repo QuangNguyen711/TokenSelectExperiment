@@ -369,48 +369,48 @@ class TokenRetriever:
 
         actual_topk = min(topk, num_tokens)
 
-        # =====================================================================
-        # [MÁY ĐO ĐIỆN NÃO ĐỒ] - TỐI ƯU HÓA LOGGING THEO MỐC TOKEN
-        # =====================================================================
-        # Khởi tạo bộ nhớ tạm để đánh dấu các mốc đã log
-        if not hasattr(self, '_logged_milestones'):
-            self._logged_milestones = {}
+        # # =====================================================================
+        # # [MÁY ĐO ĐIỆN NÃO ĐỒ] - TỐI ƯU HÓA LOGGING THEO MỐC TOKEN
+        # # =====================================================================
+        # # Khởi tạo bộ nhớ tạm để đánh dấu các mốc đã log
+        # if not hasattr(self, '_logged_milestones'):
+        #     self._logged_milestones = {}
             
-        # Tính toán cột mốc hiện tại (ví dụ: 120k tokens // 50000 = mốc số 2)
-        milestone = num_tokens // 50000 
+        # # Tính toán cột mốc hiện tại (ví dụ: 120k tokens // 50000 = mốc số 2)
+        # milestone = num_tokens // 50000 
         
-        # Chỉ chạy log nếu vừa bước sang một mốc 50k mới
-        if milestone > self._logged_milestones.get(self.layer_id, -1) and num_tokens > 1000:
-            self._logged_milestones[self.layer_id] = milestone # Đánh dấu đã log
+        # # Chỉ chạy log nếu vừa bước sang một mốc 50k mới
+        # if milestone > self._logged_milestones.get(self.layer_id, -1) and num_tokens > 1000:
+        #     self._logged_milestones[self.layer_id] = milestone # Đánh dấu đã log
             
-            # 1. Tính toán thầm lặng trên GPU (Song song, không độ trễ)
-            head_probs = torch.softmax(scores, dim=-1)
-            entropy = -torch.sum(head_probs * torch.log(head_probs + 1e-9), dim=-1)
+        #     # 1. Tính toán thầm lặng trên GPU (Song song, không độ trễ)
+        #     head_probs = torch.softmax(scores, dim=-1)
+        #     entropy = -torch.sum(head_probs * torch.log(head_probs + 1e-9), dim=-1)
             
-            k_sample = 128
-            actual_k_sample = min(k_sample, num_tokens)
-            _, sample_topk = torch.topk(scores, actual_k_sample, dim=-1)
-            unique_tokens = torch.unique(sample_topk).shape[0]
+        #     k_sample = 128
+        #     actual_k_sample = min(k_sample, num_tokens)
+        #     _, sample_topk = torch.topk(scores, actual_k_sample, dim=-1)
+        #     unique_tokens = torch.unique(sample_topk).shape[0]
             
-            l2_norms = torch.norm(query_fingerprints, p=2, dim=-1)
+        #     l2_norms = torch.norm(query_fingerprints, p=2, dim=-1)
             
-            # 2. Đồng bộ CPU-GPU (Chỉ xảy ra 20 lần/layer nên rất an toàn)
-            mean_entropy = entropy.mean().item()
-            min_entropy = entropy.min().item()
-            diversity_ratio = unique_tokens / (num_heads * actual_k_sample)
-            min_entropy_l2 = l2_norms[torch.argmin(entropy)].item()
-            mean_l2 = l2_norms.mean().item()
+        #     # 2. Đồng bộ CPU-GPU (Chỉ xảy ra 20 lần/layer nên rất an toàn)
+        #     mean_entropy = entropy.mean().item()
+        #     min_entropy = entropy.min().item()
+        #     diversity_ratio = unique_tokens / (num_heads * actual_k_sample)
+        #     min_entropy_l2 = l2_norms[torch.argmin(entropy)].item()
+        #     mean_l2 = l2_norms.mean().item()
             
-            # 3. Ghi nối (append) cực nhanh vào CSV
-            import os
-            log_file = "attention_profiling_qwen2.csv"
-            write_header = not os.path.exists(log_file)
+        #     # 3. Ghi nối (append) cực nhanh vào CSV
+        #     import os
+        #     log_file = "attention_profiling_qwen2.csv"
+        #     write_header = not os.path.exists(log_file)
             
-            with open(log_file, "a") as f:
-                if write_header:
-                    f.write("layer_id,num_tokens,min_entropy,mean_entropy,diversity_ratio,min_entropy_l2,mean_l2\n")
-                f.write(f"{self.layer_id},{num_tokens},{min_entropy:.4f},{mean_entropy:.4f},{diversity_ratio:.4f},{min_entropy_l2:.4f},{mean_l2:.4f}\n")
-        # =====================================================================
+        #     with open(log_file, "a") as f:
+        #         if write_header:
+        #             f.write("layer_id,num_tokens,min_entropy,mean_entropy,diversity_ratio,min_entropy_l2,mean_l2\n")
+        #         f.write(f"{self.layer_id},{num_tokens},{min_entropy:.4f},{mean_entropy:.4f},{diversity_ratio:.4f},{min_entropy_l2:.4f},{mean_l2:.4f}\n")
+        # # =====================================================================
 
         # ---------------------------------------------------------
         # CHOOSE POOLING/VOTING STRATEGY (THE SWITCH)
