@@ -33,7 +33,7 @@ def extract_and_analyze(base_dir="result_release/infinitbench"):
                     timing = json.load(f)
                     for ds, t in timing.items():
                         if ds not in lat_data: lat_data[ds] = {}
-                        lat_data[ds][method] = float(t)
+                        lat_data[ds][method] = float(t/50)
                 except json.JSONDecodeError:
                     pass
 
@@ -56,7 +56,7 @@ def extract_and_analyze(base_dir="result_release/infinitbench"):
                 else:
                     best_val = max(data_dict[ds].values()) if is_accuracy else min(data_dict[ds].values())
                     if val == best_val:
-                        row.append(f"**{val:.1f}***")
+                        row.append(f"**{val:.1f}**")
                     else:
                         row.append(f"{val:.1f}")
             print("| " + " | ".join(row) + " |")
