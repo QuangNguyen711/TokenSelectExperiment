@@ -1,8 +1,8 @@
 {
-    "kv_retrieval": 914.0392825603485,
-    "longdialogue_qa_eng": 447.0806963443756,
-    "math_find": 501.4570028781891,
-    "code_debug": 552.672774553299,
-    "passkey": 552.7305009365082,
-    "number_string": 568.5149450302124
+    "kv_retrieval": 95.69532585144043,
+    "longdialogue_qa_eng": 52.932141065597534,
+    "math_find": 56.64468789100647,
+    "code_debug": 66.5364408493042,
+    "passkey": 64.3388786315918,
+    "number_string": 65.6589720249176
 }

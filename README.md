@@ -80,6 +80,7 @@ uv pip install --python .venv/bin/python flash_attn==2.7.0.post2 --no-build-isol
 uv pip install --python .venv/bin/python git+https://github.com/ozeliger/pyairports.git
 uv pip install --python .venv/bin/python evaluate==0.4.6
 uv pip install --python .venv/bin/python rouge_score==0.1.2 nltk==3.9.3 absl-py==2.4.0
+uv pip install --python .venv/bin/python tabulate
 ```
 
 **Note:** Make sure your `requirements.txt` includes all necessary dependencies. See the repository for the complete requirements list.

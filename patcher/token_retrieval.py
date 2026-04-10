@@ -345,7 +345,7 @@ class TokenRetriever:
         self.token_indices[layer_id, self.num_tokens[layer_id]: tail_idx] = indices
         self.num_tokens[layer_id] = tail_idx
 
-    def get_topk_tokens(self, query_fingerprints, token_fingerprints, topk, indices):
+    def get_topk_tokens(self, query_fingerprints, token_fingerprints, topk, indices, layer_id=-1):
         num_q_heads = query_fingerprints.shape[-1] // self.head_dim
         query_fingerprints = query_fingerprints.view(num_q_heads, self.head_dim)
 
@@ -497,6 +497,73 @@ class TokenRetriever:
             
             sorted_topk_tokens = torch.sort(final_indices).values
 
+        # =====================================================================
+        # [BỘ ĐO BỔ SUNG]: PHÂN TÍCH HÌNH HỌC NGỮ CẢNH (CONTEXT TOPOLOGY)
+        # =====================================================================
+        if not hasattr(self, '_logged_milestones_topology'):
+            self._logged_milestones_topology = {}
+
+        milestone = num_tokens // 50000 
+        
+        if milestone > self._logged_milestones_topology.get(layer_id, -1) and num_tokens > 1000:
+            self._logged_milestones_topology[layer_id] = milestone
+            
+            # Động tác 1: Nhận diện danh tính thuật toán để xuất file riêng
+            if DYNAMIC_CAPACITY_UNION:
+                method_name = f"dcu_{DCU_ENERGY_MODE}"
+            elif HEAD_WISE_ADAPTIVE:
+                method_name = "head_wise_adaptive"
+            elif UNION_OF_SETS:
+                method_name = "union_of_sets"
+            elif WEIGHTED_SOFT_VOTE:
+                method_name = "weighted_soft_vote"
+            else:
+                method_name = "token_select_baseline"
+
+            import os
+            current_dataset = os.environ.get("CURRENT_DATASET", "unknown_task")
+            
+            # Mỗi phương pháp 1 file CSV riêng biệt, sạch sẽ rành mạch
+            log_file_topo = f"context_topology_{method_name}.csv"
+            write_header_topo = not os.path.exists(log_file_topo)
+
+            # Đảm bảo mảng token phải được sort tăng dần thì mới tính Gap (khoảng cách) đúng được
+            sorted_tokens_for_topo = torch.sort(sorted_topk_tokens).values
+
+            if sorted_tokens_for_topo.shape[0] > 1:
+                # 1. Tính khoảng cách (gap) giữa các token liền kề
+                gaps = sorted_tokens_for_topo[1:] - sorted_tokens_for_topo[:-1]
+
+                # 2. Phát hiện các điểm đứt gãy (gap > 1)
+                break_points = torch.nonzero(gaps > 1).squeeze(-1)
+
+                if break_points.numel() == 0: 
+                    # Kịch bản hoàn hảo: Lấy được 1 khối liền mạch nguyên vẹn
+                    max_span = sorted_tokens_for_topo.shape[0]
+                    mean_span = float(max_span)
+                    num_spans = 1
+                else:
+                    # Kịch bản phân mảnh: Đo độ dài của từng mảnh vỡ
+                    span_lengths = torch.empty(break_points.shape[0] + 1, dtype=torch.int32, device=scores.device)
+                    span_lengths[0] = break_points[0] + 1
+                    if break_points.shape[0] > 1:
+                        span_lengths[1:-1] = break_points[1:] - break_points[:-1]
+                    span_lengths[-1] = sorted_tokens_for_topo.shape[0] - 1 - break_points[-1]
+
+                    max_span = span_lengths.max().item()
+                    mean_span = span_lengths.float().mean().item()
+                    num_spans = span_lengths.shape[0]
+
+                # 3. Độ rải rác: Tỉ lệ bao phủ từ token đầu đến token cuối so với tổng số lượng token
+                spread_ratio = (sorted_tokens_for_topo[-1] - sorted_tokens_for_topo[0]).item() / num_tokens
+
+                # Ghi Log
+                with open(log_file_topo, "a") as f:
+                    if write_header_topo:
+                        f.write("dataset,method,layer_id,num_tokens,total_retrieved,num_spans,mean_span_len,max_span_len,spread_ratio\n")
+                    f.write(f"{current_dataset},{method_name},{layer_id},{num_tokens},{sorted_tokens_for_topo.shape[0]},{num_spans},{mean_span:.2f},{max_span},{spread_ratio:.4f}\n")
+        # =====================================================================
+
         return sorted_topk_tokens
 
     def retrieval_indices(self, query, layer_id, n_init, n_local, topk):
@@ -543,7 +610,7 @@ class TokenRetriever:
                 )
 
                 topk_tokens = (
-                        self.get_topk_tokens(query_fingerprints, token_fingerprints, topk)
+                        self.get_topk_tokens(query_fingerprints, token_fingerprints, topk, layer_id=layer_id)
                         + n_init
                 )
                 self.topk_indices_cache[layer_id] = topk_tokens
@@ -562,7 +629,7 @@ class TokenRetriever:
             token_fingerprints = self.token_fingerprints[layer_id]
             topk_tokens = (
                     self.get_topk_tokens(
-                        query_fingerprints, token_fingerprints, topk, relevant_indices
+                        query_fingerprints, token_fingerprints, topk, relevant_indices, layer_id=layer_id
                     )
                     + n_init
             )

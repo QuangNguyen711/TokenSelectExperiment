@@ -65,6 +65,9 @@ EOF
 # ==============================================================================
 
 # 3 kịch bản bóc tách để chạy kiểm chứng tốc độ và độ chính xác:
+run_experiment "token-retrieval"     "false" "false" "false" 8192 "false" "false"
+run_experiment "union-of-sets"       "false" "false" "true"  8192 "false" "false"
+run_experiment "weighted-soft-vote"  "false" "true"  "false" 8192 "false" "false"
 run_experiment "dcu-energy-both"     "false" "false" "false" 8192 "true" "false" "both"
 run_experiment "dcu-energy-l2only"   "false" "false" "false" 8192 "true" "false" "l2_only"
 run_experiment "dcu-energy-maxonly"  "false" "false" "false" 8192 "true" "false" "max_only"
