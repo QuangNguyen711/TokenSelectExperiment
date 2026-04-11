@@ -335,6 +335,9 @@ class TokenRetriever:
         self.num_tokens = [0 for _ in range(self.num_layers)]
         self.is_first_query = [True for _ in range(self.num_layers)]
         self.skip_count = 0
+        self.phase1_events = []
+        self.phase2_events = []
+        self.prefill_reported = False
 
     def get_all_tokens(self, layer_id):
         return self.token_indices[layer_id, : self.num_tokens[layer_id]]
@@ -866,6 +869,22 @@ def patch_model():
                         start=start,
                         end=end,
                     )
+                
+                # # =========================================================
+                # # MỐC 1: ĐO TOÀN BỘ PHASE 1 (TOKEN SELECT: POOLING + RETRIEVAL)
+                # # =========================================================
+                # start1 = torch.cuda.Event(enable_timing=True)
+                # end1 = torch.cuda.Event(enable_timing=True)
+                # start1.record()
+
+                # retrieved_indices = input_metadata.token_retriever.retrieval_indices(
+                #     q[start:end].contiguous(),
+                #     self.layer_id, N_INIT, N_Local, TOP_K
+                # )
+                
+                # end1.record()
+                # input_metadata.token_retriever.phase1_events.append((start1, end1))
+                # # =========================================================
 
                 retrieved_indices = input_metadata.token_retriever.retrieval_indices(q[start:end].contiguous(),
                                                                                      self.layer_id, N_INIT, N_Local,
@@ -891,6 +910,13 @@ def patch_model():
                     1,
                 )
 
+                # # =========================================================
+                # # MỐC 2: ĐO TOÀN BỘ PHASE 2 (FLASHINFER ATTENTION)
+                # # =========================================================
+                # start2 = torch.cuda.Event(enable_timing=True)
+                # end2 = torch.cuda.Event(enable_timing=True)
+                # start2.record()
+
                 o = prefill_wrapper_paged.forward(
                     q[start:end]
                     .contiguous()
@@ -904,6 +930,10 @@ def patch_model():
                     rope_theta=ROPE_BASE,
                     pos_encoding_mode=ROPE_MODE,
                 )
+                
+                # end2.record()
+                # input_metadata.token_retriever.phase2_events.append((start2, end2))
+                # # =========================================================
 
                 outputs[start:end] = o.view(-1, self.tp_q_head_num * self.head_dim)
             return outputs
@@ -911,6 +941,22 @@ def patch_model():
         def patched_radix_attention_decode_forward_flashinfer(
                 self, q, k, v, input_metadata: InputMetadata
         ):
+            # # =====================================================================
+            # tr = input_metadata.token_retriever
+            # if self.layer_id == 0 and not getattr(tr, 'prefill_reported', False):
+            #     torch.cuda.synchronize() # Đợi GPU hoàn tất toàn bộ Request
+                
+            #     p1_time = sum(s.elapsed_time(e) for s, e in tr.phase1_events) if hasattr(tr, 'phase1_events') else 0
+            #     p2_time = sum(s.elapsed_time(e) for s, e in tr.phase2_events) if hasattr(tr, 'phase2_events') else 0
+                
+            #     print(f"\n" + "="*70)
+            #     print(f" [BÁO CÁO CHUẨN] THỜI GIAN PREFILL CỦA TOÀN BỘ REQUEST")
+            #     print(f" -> Phase 1 (Toàn bộ TokenSelect): {p1_time:.2f} ms")
+            #     print(f" -> Phase 2 (FlashInfer Attention): {p2_time:.2f} ms")
+            #     print("="*70 + "\n")
+                
+            #     tr.prefill_reported = True 
+            # # =====================================================================
             decode_wrapper = input_metadata.flashinfer_decode_wrapper
             if self.sliding_window_size != -1:
                 decode_wrapper = decode_wrapper[0]
