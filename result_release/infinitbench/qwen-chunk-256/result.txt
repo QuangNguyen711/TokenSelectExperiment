@@ -1,0 +1,6 @@
+kv_retrieval, 100.0
+longdialogue_qa_eng, 14.0
+code_debug, 26.0
+passkey, 100.0
+number_string, 100.0
+math_find, 30.0

@@ -1082,6 +1082,7 @@ def patch(
         dynamic_capacity_union=False,
         head_wise_adaptive=False,
         dcu_energy_mode="both",
+        prefill_chunk_size=512,
 ):
     global ROPE_BASE
     global ROPE_SCALE
@@ -1102,6 +1103,7 @@ def patch(
     global DYNAMIC_CAPACITY_UNION
     global HEAD_WISE_ADAPTIVE
     global DCU_ENERGY_MODE
+    global PREFILL_CHUNK_SIZE
 
     ROPE_BASE = rope_base
     ROPE_SCALE = rope_scale
@@ -1121,7 +1123,7 @@ def patch(
     DCU_ENERGY_MODE = dcu_energy_mode
 
     QUERY_ROTATE = True
-    PREFILL_CHUNK_SIZE = 512
+    PREFILL_CHUNK_SIZE = prefill_chunk_size
     QUERY_CACHE = False
 
     patch_input_metadata()

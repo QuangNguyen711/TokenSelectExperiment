@@ -1,3 +1,5 @@
+# File: scripts/run_experiments.sh
+
 #!/bin/sh
 
 config_path="config/qwen-token-retrieval.yaml"
@@ -12,7 +14,8 @@ run_experiment() {
     local top_k_val=$5
     local dynamic_capacity=$6
     local head_wise_adaptive=$7
-    local energy_mode=${8:-"both"} # Bổ sung tham số thứ 8, mặc định là "both"
+    local energy_mode=${8:-"both"}
+    local p_chunk_size=${9:-512}
 
     local output_dir="result_release/infinitbench/qwen-${exp_name}"
 
@@ -37,6 +40,7 @@ model:
   dynamic_capacity_union: $dynamic_capacity
   head_wise_adaptive: $head_wise_adaptive
   dcu_energy_mode: "$energy_mode"
+  prefill_chunk_size: $p_chunk_size
 
 max_len: 1048576
 chunk_size: 8192
@@ -45,7 +49,7 @@ truncation: suffix
 dtype: bfloat16
 EOF
 
-    # ... (Phần dọn dẹp và chạy benchmark giữ nguyên như của bạn) ...
+    # Dọn dẹp process cũ
     pkill -f pt_main_thread
     sleep 2 
 
@@ -65,6 +69,7 @@ EOF
 # ==============================================================================
 
 # 3 kịch bản bóc tách để chạy kiểm chứng tốc độ và độ chính xác:
-run_experiment "dcu-energy-both"     "false" "false" "false" 8192 "true" "false" "both"
-run_experiment "dcu-energy-l2only"   "false" "false" "false" 8192 "true" "false" "l2_only"
-run_experiment "dcu-energy-maxonly"  "false" "false" "false" 8192 "true" "false" "max_only"
+# run_experiment "chunk-256"  "false" "false" "false" 8192 "false" "false" "both" 256
+# run_experiment "chunk-512"  "false" "false" "false" 8192 "false" "false" "both" 512
+# run_experiment "chunk-2048" "false" "false" "false" 8192 "false" "false" "both" 2048
+run_experiment "chunk-2048-dcu-energy-both"     "false" "false" "false" 8192 "true" "false" "both" 2048

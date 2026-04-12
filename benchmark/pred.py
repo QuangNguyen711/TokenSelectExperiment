@@ -70,6 +70,7 @@ def get_model_and_tokenizer(config, kernel_size):
             dynamic_capacity_union=getattr(config.model, 'dynamic_capacity_union', False),
             head_wise_adaptive=getattr(config.model, 'head_wise_adaptive', False),
             dcu_energy_mode=getattr(config.model, 'dcu_energy_mode', 'both'),
+            prefill_chunk_size=getattr(config.model, 'prefill_chunk_size', 512),
         )
     else:
         raise NotImplementedError()
