@@ -46,26 +46,40 @@ def extract_and_analyze(base_dir="result_release/infinitbench"):
 
     # Hàm in bảng
     def print_table(title, data_dict, is_accuracy=True):
-        if not data_dict: return
+        if not data_dict: 
+            return
+            
         datasets = sorted(list(data_dict.keys()))
+        method_list = sorted(methods)
+
         print(f"\n### {title}")
-        header = "| Phương pháp | " + " | ".join(datasets) + " |"
-        separator = "|---|" + "|".join(["---" for _ in datasets]) + "|"
+        
+        header = "| Dataset | " + " | ".join(method_list) + " |"
+        separator = "|---|" + "|".join(["---" for _ in method_list]) + "|"
+        
         print(header)
         print(separator)
 
-        for method in sorted(methods):
-            row = [f"**{method}**"]
-            for ds in datasets:
+        for ds in datasets:
+            row = [f"**{ds}**"]
+            
+            for method in method_list:
                 val = data_dict[ds].get(method, None)
+
                 if val is None:
                     row.append("-")
                 else:
-                    best_val = max(data_dict[ds].values()) if is_accuracy else min(data_dict[ds].values())
+                    best_val = (
+                        max(data_dict[ds].values())
+                        if is_accuracy
+                        else min(data_dict[ds].values())
+                    )
+
                     if val == best_val:
                         row.append(f"**{val:.1f}**")
                     else:
                         row.append(f"{val:.1f}")
+
             print("| " + " | ".join(row) + " |")
 
     print_table("BẢNG 1: ĐỘ CHÍNH XÁC (ACCURACY %)", acc_data, is_accuracy=True)

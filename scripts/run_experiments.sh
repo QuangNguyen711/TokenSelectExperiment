@@ -72,4 +72,4 @@ EOF
 # run_experiment "chunk-256"  "false" "false" "false" 8192 "false" "false" "both" 256
 # run_experiment "chunk-512"  "false" "false" "false" 8192 "false" "false" "both" 512
 # run_experiment "chunk-2048" "false" "false" "false" 8192 "false" "false" "both" 2048
-run_experiment "chunk-2048-dcu-energy-both"     "false" "false" "false" 8192 "true" "false" "both" 2048
+# run_experiment "chunk-2048-dcu-energy-both"     "false" "false" "false" 8192 "true" "false" "both" 2048
