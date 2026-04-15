@@ -12,13 +12,13 @@ run_experiment() {
     local top_k_val=$5
     local dynamic_capacity=$6
     local head_wise_adaptive=$7
-    local energy_mode=${8:-"both"} # Bổ sung tham số thứ 8, mặc định là "both"
+    local energy_mode=${8:-"both"} 
+    # Tham số thứ 9 (p_chunk_size) ta không cần nữa vì code giờ tự tính chunk rồi
 
     local output_dir="result_release/infinitbench/qwen-${exp_name}"
-
     export CURRENT_EXP=$exp_name 
 
-    # Ghi đè file config (Thêm dòng dcu_energy_mode)
+    # GHI ĐÈ FILE CONFIG VỚI NGƯỠNG ALPHA
     cat << EOF > $config_path
 model:
   type: token-retrieval
@@ -37,6 +37,11 @@ model:
   dynamic_capacity_union: $dynamic_capacity
   head_wise_adaptive: $head_wise_adaptive
   dcu_energy_mode: "$energy_mode"
+  # --- THÔNG SỐ VÀNG PROFILING ---
+  alpha_256: 1.2509 
+  alpha_512: 1.0639
+  alpha_1024: 1.0261
+  alpha_2048: 0.9801
 
 max_len: 1048576
 chunk_size: 8192
@@ -45,7 +50,6 @@ truncation: suffix
 dtype: bfloat16
 EOF
 
-    # ... (Phần dọn dẹp và chạy benchmark giữ nguyên như của bạn) ...
     pkill -f pt_main_thread
     sleep 2 
 
@@ -59,15 +63,14 @@ EOF
 }
 
 # ==============================================================================
-# CÁC KỊCH BẢN THỬ NGHIỆM
-# Cấu trúc tham số:
-# run_experiment <Tên> <L2> <Weight> <Union> <TopK> <DCU> <Adaptive> <EnergyMode>
+# GIAI ĐOẠN 2: CHẠY THÍ NGHIỆM ĐÁNH GIÁ (EVALUATION)
 # ==============================================================================
 
-# 3 kịch bản bóc tách để chạy kiểm chứng tốc độ và độ chính xác:
-run_experiment "token-retrieval"     "false" "false" "false" 8192 "false" "false"
-run_experiment "union-of-sets"       "false" "false" "true"  8192 "false" "false"
-run_experiment "weighted-soft-vote"  "false" "true"  "false" 8192 "false" "false"
-run_experiment "dcu-energy-both"     "false" "false" "false" 8192 "true" "false" "both"
-run_experiment "dcu-energy-l2only"   "false" "false" "false" 8192 "true" "false" "l2_only"
-run_experiment "dcu-energy-maxonly"  "false" "false" "false" 8192 "true" "false" "max_only"
+# 1. ĐÃ KHẢO SÁT XONG (Tắt baseline đi)
+# run_experiment "token-retrieval"     "false" "false" "false" 8192 "false" "false" "both"
+
+# 2. CHẠY KỊCH BẢN: TOKENSELECT THUẦN (Baseline) + DYNAMIC CHUNKING (EV-DC)
+run_experiment "tokenselect-dynamic" "false" "false" "false" 8192 "false" "false" "both"
+
+# Nếu bạn muốn test thêm các thuật toán khác để so sánh trong paper:
+# run_experiment "weighted-soft-dynamic" "false" "true"  "false" 8192 "false" "false" "both"

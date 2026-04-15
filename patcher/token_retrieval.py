@@ -47,6 +47,10 @@ L2_NORM_POOLING = False
 DYNAMIC_CAPACITY_UNION = False
 HEAD_WISE_ADAPTIVE = False
 DCU_ENERGY_MODE = "both"
+ALPHA_256 = 1.2509
+ALPHA_512 = 1.0911
+ALPHA_1024 = 1.0261
+ALPHA_2048 = 0.9801
 
 @contextmanager
 def cuda_timer(timer_name="Operation"):
@@ -904,7 +908,6 @@ def patch_model():
         def patched_radix_attention_extend_forward_flashinfer(
                 self, q, k, v, input_metadata: InputMetadata
         ):
-            # using two wrappers is unnecessary in the current PR, but are prepared for future PRs
             prefill_wrapper_paged = input_metadata.flashinfer_prefill_wrapper_paged
             if self.sliding_window_size != -1:
                 prefill_wrapper_paged = prefill_wrapper_paged[0]
@@ -914,65 +917,83 @@ def patch_model():
 
             assert not input_metadata.flashinfer_use_ragged  # not supported yet
 
-            num_chunks = ceil(q.shape[0] / PREFILL_CHUNK_SIZE)
+            seq_len = q.shape[0]
             outputs = torch.empty_like(q)
-
             kv_last_page_len = prefill_wrapper_paged._paged_kv_last_page_len_buf.clone()
             qo_indptr = prefill_wrapper_paged._qo_indptr_buf.clone()
 
-            for chunk_idx in range(num_chunks):
-                start = chunk_idx * PREFILL_CHUNK_SIZE
-                end = min((chunk_idx + 1) * PREFILL_CHUNK_SIZE, q.shape[0])
+            # =================================================================
+            # LÕI EV-DC: TÍNH PHƯƠNG SAI & CẮT CHUNK ĐỘNG
+            # =================================================================
+            with torch.no_grad():
+                q_norms = torch.norm(q.view(seq_len, -1).float(), p=2, dim=-1)
+                global_var = torch.var(q_norms).item() if seq_len > 1 else 1.0
+                
+                T_256  = global_var * ALPHA_256
+                T_512  = global_var * ALPHA_512
+                T_1024 = global_var * ALPHA_1024
+                T_2048 = global_var * ALPHA_2048
 
+            current_pos = 0
+            MAX_LOOKAHEAD = 4096 # Bước nhảy tối đa qua những vùng rác
+
+            while current_pos < seq_len:
+                # Đo biến động của vùng phía trước
+                lookahead_end = min(current_pos + MAX_LOOKAHEAD, seq_len)
+                window_norms = q_norms[current_pos:lookahead_end]
+                window_var = torch.var(window_norms).item() if window_norms.shape[0] > 1 else 0.0
+
+                # Chốt Chunk Size dựa trên điểm số
+                if window_var >= T_256:
+                    step = 256
+                elif window_var >= T_512:
+                    step = 512
+                elif window_var >= T_1024:
+                    step = 1024
+                elif window_var >= T_2048:
+                    step = 2048
+                else:
+                    step = 4096
+
+                start = current_pos
+                end = min(current_pos + step, seq_len)
+
+                # --- Quá trình Attention cho Chunk này ---
                 if k is not None:
                     assert v is not None
-                    self.store_kv_cache(
-                        k,
-                        v,
-                        input_metadata,
-                        start=start,
-                        end=end,
-                    )
+                    self.store_kv_cache(k, v, input_metadata, start=start, end=end)
 
-                retrieved_indices = input_metadata.token_retriever.retrieval_indices(q[start:end].contiguous(),
-                                                                                     self.layer_id, N_INIT, N_Local,
-                                                                                     TOP_K)
+                retrieved_indices = input_metadata.token_retriever.retrieval_indices(
+                    q[start:end].contiguous(), self.layer_id, N_INIT, N_Local, TOP_K
+                )
+                
                 retrieved_indptr = prefill_wrapper_paged._paged_kv_indptr_buf.clone()
 
                 if retrieved_indices is None:
-                    retrieved_indices = input_metadata.token_retriever.get_all_tokens(
-                        self.layer_id
-                    )
+                    retrieved_indices = input_metadata.token_retriever.get_all_tokens(self.layer_id)
 
                 retrieved_indptr[1] = len(retrieved_indices)
                 qo_indptr[1] = end - start
+                
                 prefill_wrapper_paged.end_forward()
                 prefill_wrapper_paged.begin_forward(
-                    qo_indptr,
-                    retrieved_indptr,
-                    retrieved_indices,
-                    kv_last_page_len,
-                    self.tp_q_head_num,
-                    self.tp_k_head_num,
-                    self.head_dim,
-                    1,
+                    qo_indptr, retrieved_indptr, retrieved_indices, kv_last_page_len,
+                    self.tp_q_head_num, self.tp_k_head_num, self.head_dim, 1,
                 )
 
                 o = prefill_wrapper_paged.forward(
-                    q[start:end]
-                    .contiguous()
-                    .view(-1, self.tp_q_head_num, self.head_dim),
+                    q[start:end].contiguous().view(-1, self.tp_q_head_num, self.head_dim),
                     input_metadata.token_to_kv_pool.get_kv_buffer(self.layer_id),
-                    causal=True,
-                    sm_scale=self.scaling,
-                    window_left=self.sliding_window_size,
-                    logits_soft_cap=self.logit_cap,
-                    rope_scale=ROPE_SCALE,
-                    rope_theta=ROPE_BASE,
-                    pos_encoding_mode=ROPE_MODE,
+                    causal=True, sm_scale=self.scaling, window_left=self.sliding_window_size,
+                    logits_soft_cap=self.logit_cap, rope_scale=ROPE_SCALE, 
+                    rope_theta=ROPE_BASE, pos_encoding_mode=ROPE_MODE,
                 )
 
                 outputs[start:end] = o.view(-1, self.tp_q_head_num * self.head_dim)
+                
+                # Tiến lên phía trước
+                current_pos = end
+
             return outputs
 
         def patched_radix_attention_decode_forward_flashinfer(
@@ -1103,6 +1124,10 @@ def patch(
         dynamic_capacity_union=False,
         head_wise_adaptive=False,
         dcu_energy_mode="both",
+        alpha_256=1.2509,
+        alpha_512=1.0911,
+        alpha_1024=1.0261,
+        alpha_2048=0.9801,
 ):
     global ROPE_BASE
     global ROPE_SCALE
@@ -1123,6 +1148,10 @@ def patch(
     global DYNAMIC_CAPACITY_UNION
     global HEAD_WISE_ADAPTIVE
     global DCU_ENERGY_MODE
+    global ALPHA_256
+    global ALPHA_512
+    global ALPHA_1024
+    global ALPHA_2048
 
     ROPE_BASE = rope_base
     ROPE_SCALE = rope_scale
@@ -1144,6 +1173,11 @@ def patch(
     QUERY_ROTATE = True
     PREFILL_CHUNK_SIZE = 512
     QUERY_CACHE = False
+
+    ALPHA_256 = alpha_256
+    ALPHA_512 = alpha_512
+    ALPHA_1024 = alpha_1024
+    ALPHA_2048 = alpha_2048
 
     patch_input_metadata()
     patch_model_runner()

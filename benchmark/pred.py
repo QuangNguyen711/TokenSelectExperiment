@@ -70,6 +70,10 @@ def get_model_and_tokenizer(config, kernel_size):
             dynamic_capacity_union=getattr(config.model, 'dynamic_capacity_union', False),
             head_wise_adaptive=getattr(config.model, 'head_wise_adaptive', False),
             dcu_energy_mode=getattr(config.model, 'dcu_energy_mode', 'both'),
+            alpha_256=getattr(config.model, 'alpha_256', 1.2509),
+            alpha_512=getattr(config.model, 'alpha_512', 1.0911),
+            alpha_1024=getattr(config.model, 'alpha_1024', 1.0261),
+            alpha_2048=getattr(config.model, 'alpha_2048', 0.9801),
         )
     else:
         raise NotImplementedError()
@@ -427,7 +431,7 @@ if __name__ == "__main__":
 
         data_list = list(data)
         random.seed(42)
-        data = random.sample(data_list, min(5, len(data_list)))
+        data = random.sample(data_list, min(100, len(data_list)))
 
         out_path = os.path.join(output_dir_path, f"{dname}.jsonl")
         # if multiprocessing:
