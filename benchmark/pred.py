@@ -71,6 +71,8 @@ def get_model_and_tokenizer(config, kernel_size):
             head_wise_adaptive=getattr(config.model, 'head_wise_adaptive', False),
             dcu_energy_mode=getattr(config.model, 'dcu_energy_mode', 'both'),
             prefill_chunk_size=getattr(config.model, 'prefill_chunk_size', 512),
+            sim_threshold=getattr(config.model, 'sim_threshold', 0.95),
+            max_dynamic_chunk=getattr(config.model, 'max_dynamic_chunk', 1024),
         )
     else:
         raise NotImplementedError()

@@ -47,6 +47,8 @@ L2_NORM_POOLING = False
 DYNAMIC_CAPACITY_UNION = False
 HEAD_WISE_ADAPTIVE = False
 DCU_ENERGY_MODE = "both"
+SIM_THRESHOLD = 0.95
+MAX_DYNAMIC_CHUNK = 1024
 
 @contextmanager
 def cuda_timer(timer_name="Operation"):
@@ -840,7 +842,6 @@ def patch_model():
         def patched_radix_attention_extend_forward_flashinfer(
                 self, q, k, v, input_metadata: InputMetadata
         ):
-            # using two wrappers is unnecessary in the current PR, but are prepared for future PRs
             prefill_wrapper_paged = input_metadata.flashinfer_prefill_wrapper_paged
             if self.sliding_window_size != -1:
                 prefill_wrapper_paged = prefill_wrapper_paged[0]
@@ -848,94 +849,95 @@ def patch_model():
                 if isinstance(prefill_wrapper_paged, list):
                     prefill_wrapper_paged = prefill_wrapper_paged[1]
 
-            assert not input_metadata.flashinfer_use_ragged  # not supported yet
+            assert not input_metadata.flashinfer_use_ragged
 
-            num_chunks = ceil(q.shape[0] / PREFILL_CHUNK_SIZE)
+            seq_len = q.shape[0]
             outputs = torch.empty_like(q)
-
             kv_last_page_len = prefill_wrapper_paged._paged_kv_last_page_len_buf.clone()
             qo_indptr = prefill_wrapper_paged._qo_indptr_buf.clone()
 
-            for chunk_idx in range(num_chunks):
-                start = chunk_idx * PREFILL_CHUNK_SIZE
-                end = min((chunk_idx + 1) * PREFILL_CHUNK_SIZE, q.shape[0])
+            # =================================================================
+            # LÕI V2: PRE-COMPUTED SIMILARITY CHUNK MAP & BUDGET BALANCING
+            # =================================================================
+            BASE_CHUNK = PREFILL_CHUNK_SIZE
+            chunk_plan = []
+
+            if MAX_DYNAMIC_CHUNK > BASE_CHUNK:
+                # BƯỚC 1: Lập bản đồ gộp siêu tốc
+                with torch.no_grad():
+                    num_blocks = seq_len // BASE_CHUNK
+                    if num_blocks > 1:
+                        q_trunc = q[:num_blocks * BASE_CHUNK].float()
+                        q_blocks_mean = q_trunc.view(num_blocks, BASE_CHUNK, -1).mean(dim=1)
+                        sims = torch.nn.functional.cosine_similarity(q_blocks_mean[:-1], q_blocks_mean[1:], dim=1)
+                        merge_flags = (sims >= SIM_THRESHOLD).tolist()
+                    else:
+                        merge_flags = []
+
+                current_pos = 0
+                block_idx = 0
+
+                while current_pos < seq_len:
+                    step = BASE_CHUNK
+                    # Cuộn tuyết: Giống nhau thì gộp, gộp cho đến chạm trần MAX
+                    while block_idx < len(merge_flags) and merge_flags[block_idx] and step < MAX_DYNAMIC_CHUNK:
+                        step += BASE_CHUNK
+                        block_idx += 1
+
+                    start = current_pos
+                    end = min(current_pos + step, seq_len)
+                    chunk_plan.append((start, end))
+
+                    current_pos = end
+                    block_idx += 1
+            else:
+                # Fallback về chạy cơ bản nếu ko bật Dynamic
+                num_chunks = ceil(seq_len / BASE_CHUNK)
+                for chunk_idx in range(num_chunks):
+                    start = chunk_idx * BASE_CHUNK
+                    end = min((chunk_idx + 1) * BASE_CHUNK, seq_len)
+                    chunk_plan.append((start, end))
+
+            # BƯỚC 2: Thực thi theo Plan
+            for start, end in chunk_plan:
+                actual_step = end - start
 
                 if k is not None:
                     assert v is not None
-                    self.store_kv_cache(
-                        k,
-                        v,
-                        input_metadata,
-                        start=start,
-                        end=end,
-                    )
-                
-                # # =========================================================
-                # # MỐC 1: ĐO TOÀN BỘ PHASE 1 (TOKEN SELECT: POOLING + RETRIEVAL)
-                # # =========================================================
-                # start1 = torch.cuda.Event(enable_timing=True)
-                # end1 = torch.cuda.Event(enable_timing=True)
-                # start1.record()
+                    self.store_kv_cache(k, v, input_metadata, start=start, end=end)
 
-                # retrieved_indices = input_metadata.token_retriever.retrieval_indices(
-                #     q[start:end].contiguous(),
-                #     self.layer_id, N_INIT, N_Local, TOP_K
-                # )
-                
-                # end1.record()
-                # input_metadata.token_retriever.phase1_events.append((start1, end1))
-                # # =========================================================
+                # --- Cân bằng Local và Top-K ---
+                current_n_local = max(N_Local, actual_step)
+                current_top_k = max(1, TOP_K - (current_n_local - N_Local))
 
-                retrieved_indices = input_metadata.token_retriever.retrieval_indices(q[start:end].contiguous(),
-                                                                                     self.layer_id, N_INIT, N_Local,
-                                                                                     TOP_K)
+                retrieved_indices = input_metadata.token_retriever.retrieval_indices(
+                    q[start:end].contiguous(), self.layer_id, N_INIT, current_n_local, current_top_k
+                )
+                
                 retrieved_indptr = prefill_wrapper_paged._paged_kv_indptr_buf.clone()
 
                 if retrieved_indices is None:
-                    retrieved_indices = input_metadata.token_retriever.get_all_tokens(
-                        self.layer_id
-                    )
+                    retrieved_indices = input_metadata.token_retriever.get_all_tokens(self.layer_id)
 
                 retrieved_indptr[1] = len(retrieved_indices)
-                qo_indptr[1] = end - start
+                qo_indptr[1] = actual_step
+                
                 prefill_wrapper_paged.end_forward()
                 prefill_wrapper_paged.begin_forward(
-                    qo_indptr,
-                    retrieved_indptr,
-                    retrieved_indices,
-                    kv_last_page_len,
-                    self.tp_q_head_num,
-                    self.tp_k_head_num,
-                    self.head_dim,
-                    1,
+                    qo_indptr, retrieved_indptr, retrieved_indices, kv_last_page_len,
+                    self.tp_q_head_num, self.tp_k_head_num, self.head_dim, 1,
                 )
-
-                # # =========================================================
-                # # MỐC 2: ĐO TOÀN BỘ PHASE 2 (FLASHINFER ATTENTION)
-                # # =========================================================
-                # start2 = torch.cuda.Event(enable_timing=True)
-                # end2 = torch.cuda.Event(enable_timing=True)
-                # start2.record()
 
                 o = prefill_wrapper_paged.forward(
-                    q[start:end]
-                    .contiguous()
-                    .view(-1, self.tp_q_head_num, self.head_dim),
+                    q[start:end].contiguous().view(-1, self.tp_q_head_num, self.head_dim),
                     input_metadata.token_to_kv_pool.get_kv_buffer(self.layer_id),
-                    causal=True,
-                    sm_scale=self.scaling,
-                    window_left=self.sliding_window_size,
-                    logits_soft_cap=self.logit_cap,
-                    rope_scale=ROPE_SCALE,
-                    rope_theta=ROPE_BASE,
-                    pos_encoding_mode=ROPE_MODE,
+                    causal=True, sm_scale=self.scaling, window_left=self.sliding_window_size,
+                    logits_soft_cap=self.logit_cap, rope_scale=ROPE_SCALE, 
+                    rope_theta=ROPE_BASE, pos_encoding_mode=ROPE_MODE,
                 )
-                
-                # end2.record()
-                # input_metadata.token_retriever.phase2_events.append((start2, end2))
-                # # =========================================================
 
                 outputs[start:end] = o.view(-1, self.tp_q_head_num * self.head_dim)
+
             return outputs
 
         def patched_radix_attention_decode_forward_flashinfer(
@@ -1083,6 +1085,8 @@ def patch(
         head_wise_adaptive=False,
         dcu_energy_mode="both",
         prefill_chunk_size=512,
+        sim_threshold=0.95,
+        max_dynamic_chunk=1024,
 ):
     global ROPE_BASE
     global ROPE_SCALE
@@ -1104,6 +1108,8 @@ def patch(
     global HEAD_WISE_ADAPTIVE
     global DCU_ENERGY_MODE
     global PREFILL_CHUNK_SIZE
+    global SIM_THRESHOLD
+    global MAX_DYNAMIC_CHUNK
 
     ROPE_BASE = rope_base
     ROPE_SCALE = rope_scale
@@ -1125,6 +1131,9 @@ def patch(
     QUERY_ROTATE = True
     PREFILL_CHUNK_SIZE = prefill_chunk_size
     QUERY_CACHE = False
+
+    SIM_THRESHOLD = sim_threshold
+    MAX_DYNAMIC_CHUNK = max_dynamic_chunk
 
     patch_input_metadata()
     patch_model_runner()
