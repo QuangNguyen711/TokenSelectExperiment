@@ -15,11 +15,6 @@ model:
   dynamic_capacity_union: false
   head_wise_adaptive: false
   dcu_energy_mode: "both"
-  # --- THÔNG SỐ VÀNG PROFILING ---
-  alpha_256: 1.2000  # (Hạ từ 1.25 xuống 1.2 để vớt trọn kim của KV)
-  alpha_512: 1.0500  # (Hạ xuống để vớt các manh mối phụ)
-  alpha_1024: 1.0100 
-  alpha_2048: 0.9800 # (Vẫn giữ 0.98 để lướt qua 50% rác tuyệt đối)
 
 max_len: 1048576
 chunk_size: 8192

@@ -923,49 +923,56 @@ def patch_model():
             qo_indptr = prefill_wrapper_paged._qo_indptr_buf.clone()
 
             # =================================================================
-            # LÕI EV-DC: TÍNH PHƯƠNG SAI & CẮT CHUNK ĐỘNG
+            # LÕI MỚI: SIMILARITY-BASED DYNAMIC CHUNKING (512 vs 1024)
             # =================================================================
-            with torch.no_grad():
-                q_norms = torch.norm(q.view(seq_len, -1).float(), p=2, dim=-1)
-                global_var = torch.var(q_norms).item() if seq_len > 1 else 1.0
-                
-                T_256  = global_var * ALPHA_256
-                T_512  = global_var * ALPHA_512
-                T_1024 = global_var * ALPHA_1024
-                T_2048 = global_var * ALPHA_2048
-
             current_pos = 0
-            MAX_LOOKAHEAD = 4096 # Bước nhảy tối đa qua những vùng rác
+            BASE_CHUNK = 512
+            MERGED_CHUNK = 1024
+            SIM_THRESHOLD = 0.95  # Độ tương đồng > 98% thì gộp
 
             while current_pos < seq_len:
-                # Đo biến động của vùng phía trước
-                lookahead_end = min(current_pos + MAX_LOOKAHEAD, seq_len)
-                window_norms = q_norms[current_pos:lookahead_end]
-                window_var = torch.var(window_norms).item() if window_norms.shape[0] > 1 else 0.0
+                step = BASE_CHUNK # Mặc định là chạy 512
 
-                # Chốt Chunk Size dựa trên điểm số
-                if window_var >= T_256:
-                    step = 256
-                elif window_var >= T_512:
-                    step = 512
-                elif window_var >= T_1024:
-                    step = 1024
-                elif window_var >= T_2048:
-                    step = 2048
-                else:
-                    step = 4096
+                # Nếu còn đủ 1024 token phía trước, ta lấy ra "nhìn trộm"
+                if current_pos + MERGED_CHUNK <= seq_len:
+                    with torch.no_grad():
+                        q_chunk_1 = q[current_pos : current_pos + BASE_CHUNK].float()
+                        q_chunk_2 = q[current_pos + BASE_CHUNK : current_pos + MERGED_CHUNK].float()
+
+                        # Ép dẹp vector thành 2D để gom Mean Pooling cho từng Chunk
+                        v1 = q_chunk_1.view(BASE_CHUNK, -1).mean(dim=0, keepdim=True)
+                        v2 = q_chunk_2.view(BASE_CHUNK, -1).mean(dim=0, keepdim=True)
+
+                        # Tính Cosine Similarity giữa 2 Chunk 512 liền kề
+                        cos_sim = torch.nn.functional.cosine_similarity(v1, v2).item()
+
+                        # Nếu giống nhau trên mức Threshold -> Gộp thành 1024!
+                        if cos_sim >= SIM_THRESHOLD:
+                            step = MERGED_CHUNK
 
                 start = current_pos
                 end = min(current_pos + step, seq_len)
+                actual_step = end - start
 
                 # --- Quá trình Attention cho Chunk này ---
                 if k is not None:
                     assert v is not None
                     self.store_kv_cache(k, v, input_metadata, start=start, end=end)
 
+                # =========================================================
+                # CÂN BẰNG BUDGET (LOCAL + TOP_K) ĐỂ TRÁNH MẤT NGỮ CẢNH
+                # =========================================================
+                # 1. Ép N_Local giãn nở để cover đủ cái Chunk hiện tại
+                current_n_local = max(N_Local, actual_step)
+                
+                # 2. Bù trừ vào TOP_K để giữ nguyên tổng Budget (đảm bảo ko OOM)
+                # Dùng max(1, ...) để đề phòng trường hợp TOP_K gốc bị set quá nhỏ
+                current_top_k = max(1, TOP_K - (current_n_local - N_Local))
+
                 retrieved_indices = input_metadata.token_retriever.retrieval_indices(
-                    q[start:end].contiguous(), self.layer_id, N_INIT, N_Local, TOP_K
+                    q[start:end].contiguous(), self.layer_id, N_INIT, current_n_local, current_top_k
                 )
+                # =========================================================
                 
                 retrieved_indptr = prefill_wrapper_paged._paged_kv_indptr_buf.clone()
 

@@ -37,11 +37,6 @@ model:
   dynamic_capacity_union: $dynamic_capacity
   head_wise_adaptive: $head_wise_adaptive
   dcu_energy_mode: "$energy_mode"
-  # --- THÔNG SỐ VÀNG PROFILING ---
-  alpha_256: 1.2509 
-  alpha_512: 1.0639
-  alpha_1024: 1.0261
-  alpha_2048: 0.9801
 
 max_len: 1048576
 chunk_size: 8192
@@ -70,7 +65,7 @@ EOF
 # run_experiment "token-retrieval"     "false" "false" "false" 8192 "false" "false" "both"
 
 # 2. CHẠY KỊCH BẢN: TOKENSELECT THUẦN (Baseline) + DYNAMIC CHUNKING (EV-DC)
-run_experiment "tokenselect-dynamic" "false" "false" "false" 8192 "false" "false" "both"
+run_experiment "tokenselect-dynamic-0.95" "false" "false" "false" 8192 "false" "false" "both"
 
 # Nếu bạn muốn test thêm các thuật toán khác để so sánh trong paper:
 # run_experiment "weighted-soft-dynamic" "false" "true"  "false" 8192 "false" "false" "both"
