@@ -15,18 +15,21 @@
 {"pred": "Based on the text provided, the important information hidden within the irrelevant text is the phrase \"Here we go. There and back again.\" This phrase is repeated multiple", "answers": ["64235"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key is \"There and back again\".", "answers": ["82163"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key mentioned in the text is \"88234\".", "answers": ["88329"], "all_classes": null, "length": 99192, "token_length": 125392}
-{"pred": "The pass key, or the important information hidden within the text, is:\n\nThe sun is yellow.\n\nThis is the specific detail you were asked to memorize and", "answers": ["48597"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "Based on the text provided, the important information hidden within the irrelevant text is:\n\n\"The grass is green. The sky is blue. The sun is yellow.\"\n\nThis", "answers": ["36933"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is 85673.", "answers": ["85673"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key is \"12345\".", "answers": ["18059"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "Based on the text provided, the hidden information is:\n\n\"The grass is green. The sky is blue. The sun is yellow.\"\n\nThis sequence of statements is repeated", "answers": ["77123"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key is \"yellow\".", "answers": ["07798"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key mentioned in the text is \"Here we go. There and back again. The grass is green. The sky is blue. The sun is yellow", "answers": ["81536"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key is 55058.", "answers": ["55058"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "Based on the text provided, the important information hidden inside the lot of irrelevant text is:\n\n\"The grass is green. The sky is blue. The sun is yellow", "answers": ["55451"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is 50190.", "answers": ["50190"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key mentioned in the text is \"63452\".", "answers": ["63411"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key, or the important information hidden within the text, is: \"The sun is yellow.\"", "answers": ["27218"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key mentioned in the text is \"54321\".", "answers": ["50489"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "Based on the text provided, the important information hidden inside the lot of irrelevant text is:\n\n\"The grass is green. The sky is blue. The sun is yellow", "answers": ["28024"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key is \"84320\".", "answers": ["86563"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is 41012.", "answers": ["41012"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key mentioned in the text is \"There and back again. The grass is green. The sky is blue. The sun is yellow. Here we go", "answers": ["75802"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key mentioned in the text is \"There and back again. The grass is green. The sky is blue. The sun is yellow. Here we go", "answers": ["51293"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key mentioned in the text is \"There and back again. The grass is green. The sky is blue. The sun is yellow. Here we go", "answers": ["98619"], "all_classes": null, "length": 99192, "token_length": 125392}
@@ -39,7 +42,6 @@
 {"pred": "The pass key mentioned in the text is \"64028\".", "answers": ["65821"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "Based on the text provided, the important information hidden inside the lot of irrelevant text is:\n\n\"The grass is green. The sky is blue. The sun is yellow", "answers": ["04048"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key mentioned in the text is \"10235\".", "answers": ["10339"], "all_classes": null, "length": 99192, "token_length": 125392}
-{"pred": "The pass key, or the important information hidden within the text, is: \"The sun is yellow.\"", "answers": ["18100"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "Based on the text provided, the important information hidden inside the lot of irrelevant text is:\n\n\"The grass is green. The sky is blue. The sun is yellow", "answers": ["01467"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "Based on the text provided, the important information hidden inside the lot of irrelevant text is not explicitly stated. However, there is a mention of a \"pass key", "answers": ["16785"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key mentioned in the text is \"There and back again. The grass is green. The sky is blue. The sun is yellow. Here we go", "answers": ["38770"], "all_classes": null, "length": 99192, "token_length": 125392}
@@ -48,3 +50,51 @@
 {"pred": "Based on the text provided, the important information hidden inside the lot of irrelevant text is:\n\n\"The grass is green. The sky is blue. The sun is yellow", "answers": ["48817"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key mentioned in the text is \"There and back again. The grass is green. The sky is blue. The sun is yellow. Here we go", "answers": ["68488"], "all_classes": null, "length": 99192, "token_length": 125392}
 {"pred": "The pass key mentioned in the text is \"The grass is green. The sky is blue. The sun is yellow. Here we go. There and back again", "answers": ["54342"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"There and back again. The grass is green. The sky is blue. The sun is yellow. Here we go", "answers": ["88866"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is \"12345\".", "answers": ["89141"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"2023\".", "answers": ["20312"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"38251\".", "answers": ["38625"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the important information hidden inside the lot of irrelevant text is not explicitly stated. However, there is a mention of a \"pass key", "answers": ["26425"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the important information hidden within the irrelevant text is not explicitly stated. However, there is a mention of a \"pass key\" in", "answers": ["77079"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"64510\".", "answers": ["69352"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"There and back again. The grass is green. The sky is blue. The sun is yellow. Here we go", "answers": ["73487"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is \"There and back again.\"", "answers": ["70295"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the important information hidden within the irrelevant text is the phrase \"Here we go. There and back again.\" This phrase appears multiple times", "answers": ["30008"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"45612\".", "answers": ["45208"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"08235\".", "answers": ["08950"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"92658\".", "answers": ["95232"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is 03768.", "answers": ["03768"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"98528\".", "answers": ["98838"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key, or the important information hidden within the text, is:\n\nThe sun is yellow.\n\nThis is the specific detail you were asked to memorize and", "answers": ["73076"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is \"There and back again\".", "answers": ["40865"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is 2403.", "answers": ["29778"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"Here we go. There and back again.\"", "answers": ["63295"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is \"There and back again\".", "answers": ["95135"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is \"The grass is green. The sky is blue. The sun is yellow. Here we go. There and back again.\"", "answers": ["08390"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the important information hidden within the irrelevant text is the phrase \"Here we go. There and back again.\" This phrase appears multiple times", "answers": ["34821"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key, or the important information hidden within the text, is: \"The sun is yellow.\"", "answers": ["79110"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"There and back again. The grass is green. The sky is blue. The sun is yellow. Here we go", "answers": ["39957"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the \"pass key\" or \"pass phrase\" seems to be \"There and back again.\" This phrase is repeated multiple times throughout", "answers": ["39274"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"12345\".", "answers": ["11635"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "I'm sorry, but there is no pass key mentioned in the text you provided. The text contains various unrelated statements and descriptions, but does not provide a specific", "answers": ["04827"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"64021\".", "answers": ["60357"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the \"pass key\" or \"pass phrase\" seems to be \"There and back again.\" This phrase is repeated multiple times throughout", "answers": ["61399"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the \"pass key\" or \"pass phrase\" seems to be \"There and back again.\" This phrase is repeated multiple times throughout", "answers": ["82266"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"There and back again. The grass is green. The sky is blue. The sun is yellow. Here we go", "answers": ["13042"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the important information hidden inside the lot of irrelevant text is:\n\n\"The grass is green. The sky is blue. The sun is yellow", "answers": ["05057"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the important information hidden inside the lot of irrelevant text is:\n\n\"The grass is green. The sky is blue. The sun is yellow", "answers": ["60830"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the important information hidden within the irrelevant text is not explicitly stated. However, there is a mention of a \"pass key\" in", "answers": ["57921"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"23456\".", "answers": ["23359"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the important information hidden inside the lot of irrelevant text is:\n\n\"The grass is green. The sky is blue. The sun is yellow", "answers": ["69947"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the important information hidden within the irrelevant text is the phrase \"Here we go. There and back again.\" This phrase is repeated multiple", "answers": ["86086"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"There and back again. The grass is green. The sky is blue. The sun is yellow. Here we go", "answers": ["96305"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the \"pass key\" or \"password\" seems to be \"There and back again.\" This phrase is repeated throughout the text,", "answers": ["43014"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is not explicitly stated in the provided text. The text contains numerous repetitions of various statements, but does not contain a clear \"pass key\" or", "answers": ["86571"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is \"There and back again\".", "answers": ["08893"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"There and back again. The grass is green. The sky is blue. The sun is yellow. Here we go", "answers": ["71744"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the \"pass key\" or \"pass phrase\" seems to be \"There and back again.\" This phrase is repeated multiple times throughout", "answers": ["36263"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"There and back again. The grass is green. The sky is blue. The sun is yellow. Here we go", "answers": ["93771"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key, or the important information hidden within the text, is:\n\nThe sun is yellow.\n\nThis is the only piece of information that stands out as a", "answers": ["19377"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key is \"The grass is green. The sky is blue. The sun is yellow.\"", "answers": ["38081"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "The pass key mentioned in the text is \"0729\".", "answers": ["07630"], "all_classes": null, "length": 99192, "token_length": 125392}
+{"pred": "Based on the text provided, the important information hidden inside the lot of irrelevant text is:\n\n\"The grass is green. The sky is blue. The sun is yellow", "answers": ["98716"], "all_classes": null, "length": 99192, "token_length": 125392}

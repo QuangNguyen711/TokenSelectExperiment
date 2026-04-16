@@ -10,13 +10,13 @@ def extract_and_analyze(base_dir="result_release/infinitbench"):
     lat_data = {}  # {dataset: {method: time}}
     
     methods = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d))]
-    temp = []
-    for method in methods:
-        if method.startswith("qwen-chunk-"):
-            temp.append(method)
+    # temp = []
+    # for method in methods:
+    #     if method.startswith("qwen-chunk-"):
+    #         temp.append(method)
 
-    methods = temp
-    print(f"Phương pháp được phân tích: {methods}")
+    # methods = temp
+    # print(f"Phương pháp được phân tích: {methods}")
 
     # Đọc dữ liệu
     for method in methods:
@@ -40,7 +40,7 @@ def extract_and_analyze(base_dir="result_release/infinitbench"):
                     timing = json.load(f)
                     for ds, t in timing.items():
                         if ds not in lat_data: lat_data[ds] = {}
-                        lat_data[ds][method] = float(t/50)
+                        lat_data[ds][method] = float(t/100)
                 except json.JSONDecodeError:
                     pass
 
