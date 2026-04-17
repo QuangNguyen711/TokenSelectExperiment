@@ -16,6 +16,8 @@ run_experiment() {
     local head_wise_adaptive=$7
     local energy_mode=${8:-"both"}
     local p_chunk_size=${9:-512}
+    local sim_thresh=${10:-0.90}
+    local max_chunk=${11:-1024}
 
     local output_dir="result_release/infinitbench/qwen-${exp_name}"
 
@@ -41,6 +43,8 @@ model:
   head_wise_adaptive: $head_wise_adaptive
   dcu_energy_mode: "$energy_mode"
   prefill_chunk_size: $p_chunk_size
+  sim_threshold: $sim_thresh
+  max_dynamic_chunk: $max_chunk
 
 max_len: 1048576
 chunk_size: 8192
@@ -65,11 +69,14 @@ EOF
 # ==============================================================================
 # CÁC KỊCH BẢN THỬ NGHIỆM
 # Cấu trúc tham số:
-# run_experiment <Tên> <L2> <Weight> <Union> <TopK> <DCU> <Adaptive> <EnergyMode>
+# run_experiment <Tên> <L2> <Weight> <Union> <TopK> <DCU> <Adaptive> <EnergyMode> <PrefillChunk> <Sim_Threshold> <Max_Chunk_Size>
 # ==============================================================================
 
-# 3 kịch bản bóc tách để chạy kiểm chứng tốc độ và độ chính xác:
-# run_experiment "chunk-256"  "false" "false" "false" 8192 "false" "false" "both" 256
-# run_experiment "chunk-512"  "false" "false" "false" 8192 "false" "false" "both" 512
-# run_experiment "chunk-2048" "false" "false" "false" 8192 "false" "false" "both" 2048
-run_experiment "chunk-2048-dcu-energy-both"     "false" "false" "false" 8192 "true" "false" "both" 2048
+# Kịch bản 1: Giống >= 0.95 thì gộp lên tới 1024
+run_experiment "sim-0.95-max-1024" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024
+
+# Kịch bản 2: Nới lỏng hơn, giống >= 0.90 thì gộp lên tới 1024
+run_experiment "sim-0.90-max-1024" "false" "false" "false" 8192 "false" "false" "both" 512 0.90 1024
+
+# Kịch bản 3: Giống >= 0.95, cho phép cuộn tuyết gộp lên tới 2048
+run_experiment "sim-0.95-max-2048" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048
