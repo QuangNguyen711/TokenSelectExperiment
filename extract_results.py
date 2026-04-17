@@ -10,13 +10,6 @@ def extract_and_analyze(base_dir="result_release/infinitbench"):
     lat_data = {}  # {dataset: {method: time}}
     
     methods = [d for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d))]
-    # temp = []
-    # for method in methods:
-    #     if method.startswith("qwen-chunk-"):
-    #         temp.append(method)
-
-    # methods = temp
-    # print(f"Phương pháp được phân tích: {methods}")
 
     # Đọc dữ liệu
     for method in methods:
@@ -44,7 +37,7 @@ def extract_and_analyze(base_dir="result_release/infinitbench"):
                 except json.JSONDecodeError:
                     pass
 
-    # Hàm in bảng
+    # Hàm in bảng đã được đảo chiều
     def print_table(title, data_dict, is_accuracy=True):
         if not data_dict: 
             return
@@ -54,21 +47,25 @@ def extract_and_analyze(base_dir="result_release/infinitbench"):
 
         print(f"\n### {title}")
         
-        header = "| Dataset | " + " | ".join(method_list) + " |"
-        separator = "|---|" + "|".join(["---" for _ in method_list]) + "|"
+        # Đảo chiều: Dataset lên Header
+        header = "| Method | " + " | ".join(datasets) + " |"
+        separator = "|---|" + "|".join(["---" for _ in datasets]) + "|"
         
         print(header)
         print(separator)
 
-        for ds in datasets:
-            row = [f"**{ds}**"]
+        # Lặp qua từng phương pháp (Method) để tạo các hàng
+        for method in method_list:
+            row = [f"**{method}**"]
             
-            for method in method_list:
+            # Lặp qua từng tập dữ liệu (Dataset) để tạo các cột
+            for ds in datasets:
                 val = data_dict[ds].get(method, None)
 
                 if val is None:
                     row.append("-")
                 else:
+                    # Việc tìm cực trị (best_val) vẫn phải so sánh trên cùng 1 dataset
                     best_val = (
                         max(data_dict[ds].values())
                         if is_accuracy
