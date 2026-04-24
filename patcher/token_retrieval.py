@@ -49,6 +49,7 @@ HEAD_WISE_ADAPTIVE = False
 DCU_ENERGY_MODE = "both"
 SIM_THRESHOLD = 0.95
 MAX_DYNAMIC_CHUNK = 1024
+USE_DYNAMIC_CHUNKING = False
 
 @contextmanager
 def cuda_timer(timer_name="Operation"):
@@ -862,7 +863,7 @@ def patch_model():
             BASE_CHUNK = PREFILL_CHUNK_SIZE
             chunk_plan = []
 
-            if MAX_DYNAMIC_CHUNK > BASE_CHUNK:
+            if USE_DYNAMIC_CHUNKING and MAX_DYNAMIC_CHUNK > BASE_CHUNK:
                 # BƯỚC 1: Lập bản đồ gộp siêu tốc
                 with torch.no_grad():
                     num_blocks = seq_len // BASE_CHUNK
@@ -1087,6 +1088,7 @@ def patch(
         prefill_chunk_size=512,
         sim_threshold=0.95,
         max_dynamic_chunk=1024,
+        use_dynamic_chunking=False,
 ):
     global ROPE_BASE
     global ROPE_SCALE
@@ -1110,6 +1112,7 @@ def patch(
     global PREFILL_CHUNK_SIZE
     global SIM_THRESHOLD
     global MAX_DYNAMIC_CHUNK
+    global USE_DYNAMIC_CHUNKING
 
     ROPE_BASE = rope_base
     ROPE_SCALE = rope_scale
@@ -1134,6 +1137,7 @@ def patch(
 
     SIM_THRESHOLD = sim_threshold
     MAX_DYNAMIC_CHUNK = max_dynamic_chunk
+    USE_DYNAMIC_CHUNKING = use_dynamic_chunking
 
     patch_input_metadata()
     patch_model_runner()

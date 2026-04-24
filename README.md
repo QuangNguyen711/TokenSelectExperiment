@@ -50,6 +50,13 @@ cd TokenSelectExperiment/
 ```bash
 uv venv --python 3.10 --seed
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+export PATH="/data/bin:$PATH"
+git config --global --add safe.directory TokenSelectExperiment
+git status
+
+git config user.email "nguyenquang71103@gmail.com"
+git config user.name "quangnguyen711"
 ```
 
 3. **Install PyTorch and FlashInfer:**
@@ -80,6 +87,11 @@ uv pip install --python .venv/bin/python flash_attn==2.7.0.post2 --no-build-isol
 uv pip install --python .venv/bin/python git+https://github.com/ozeliger/pyairports.git
 uv pip install --python .venv/bin/python evaluate==0.4.6
 uv pip install --python .venv/bin/python rouge_score==0.1.2 nltk==3.9.3 absl-py==2.4.0
+uv pip install --python .venv/bin/python nemo nltk omegaconf
+uv pip install --python .venv/bin/python wonderwords
+uv pip install --python .venv/bin/python tenacity
+uv pip install --python .venv/bin/python beautifulsoup4 html2text
+uv pip install --python .venv/bin/python scipy
 ```
 
 **Note:** Make sure your `requirements.txt` includes all necessary dependencies. See the repository for the complete requirements list.
