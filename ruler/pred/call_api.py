@@ -42,7 +42,13 @@ import time
 from tqdm import tqdm
 from pathlib import Path
 import traceback
-from nemo.collections.asr.parts.utils.manifest_utils import read_manifest
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(CURRENT_DIR)
+if PROJECT_ROOT not in sys.path:
+    sys.path.append(PROJECT_ROOT)
+
+from data.manifest_utils import read_manifest
 
 SERVER_TYPES = (
     'trtllm',
@@ -278,14 +284,20 @@ def main():
         # Load api
         llm = get_llm(config['tokens_to_generate'])
 
-    def get_output(idx_list, index_list, input_list, outputs_list, others_list, truncation_list, length_list, llm):
+    thread_errors = []
 
-        while True:
+    def get_output(idx_list, index_list, input_list, outputs_list, others_list, truncation_list, length_list, llm):
+        pred_list = None
+        max_retries = 3
+        for attempt in range(max_retries):
             try:
                 pred_list = llm.process_batch(prompts=input_list)
                 break
             except Exception as e:
                 traceback.print_exc()
+                if attempt == max_retries - 1:
+                    thread_errors.append(str(e))
+                    return
 
         zipped_iter = zip(pred_list, idx_list, index_list, input_list,
                           outputs_list, others_list, truncation_list, length_list)
@@ -358,6 +370,9 @@ def main():
                 for thread in threads:
                     thread.join()
                 threads = []
+
+                if thread_errors:
+                    raise RuntimeError(f"Inference failed after retries: {thread_errors[0]}")
 
                 # dump the results in current processing window on disk
                 for idx in range(start_idx, end_idx + 1):

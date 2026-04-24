@@ -89,7 +89,8 @@ class Client(abc.ABC):
         return outputs
 
     def process_batch(self, prompts: List[str], **kwargs) -> List[dict]:
-        num_threads = max(96, multiprocessing.cpu_count() * 16)
+        max_threads = max(1, multiprocessing.cpu_count() * 2)
+        num_threads = min(max_threads, max(1, len(prompts)))
         with ThreadPoolExecutor(num_threads) as executor:
             futures = []
             for prompt in prompts:
@@ -179,7 +180,11 @@ class SGLClient(Client):
         }
         # TODO: random seed is not supported?
         outputs = self._send_request(request)
-        print(outputs)
+        if isinstance(outputs, dict) and 'error' in outputs:
+            error_msg = outputs['error'].get('message', str(outputs['error']))
+            raise RuntimeError(f"SGLang API error: {error_msg}")
+        if not isinstance(outputs, dict) or 'text' not in outputs:
+            raise RuntimeError(f"Unexpected SGLang response: {outputs}")
         outputs = outputs['text']
         return outputs
 
