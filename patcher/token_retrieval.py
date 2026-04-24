@@ -50,6 +50,7 @@ DCU_ENERGY_MODE = "both"
 SIM_THRESHOLD = 0.95
 MAX_DYNAMIC_CHUNK = 1024
 USE_DYNAMIC_CHUNKING = False
+DYNAMIC_BUDGET_BALANCING = True
 
 @contextmanager
 def cuda_timer(timer_name="Operation"):
@@ -909,7 +910,13 @@ def patch_model():
 
                 # --- Cân bằng Local và Top-K ---
                 current_n_local = max(N_Local, actual_step)
-                current_top_k = max(1, TOP_K - (current_n_local - N_Local))
+                
+                if DYNAMIC_BUDGET_BALANCING:
+                    # Bật bù trừ: Giữ nguyên tổng ngân sách (Tăng Local -> Giảm TopK)
+                    current_top_k = max(1, TOP_K - (current_n_local - N_Local))
+                else:
+                    # Tắt bù trừ: Giữ nguyên Top-K, cho phép tổng ngân sách phình to ra
+                    current_top_k = TOP_K
 
                 retrieved_indices = input_metadata.token_retriever.retrieval_indices(
                     q[start:end].contiguous(), self.layer_id, N_INIT, current_n_local, current_top_k
@@ -1089,6 +1096,7 @@ def patch(
         sim_threshold=0.95,
         max_dynamic_chunk=1024,
         use_dynamic_chunking=False,
+        dynamic_budget_balancing=True,
 ):
     global ROPE_BASE
     global ROPE_SCALE
@@ -1113,6 +1121,7 @@ def patch(
     global SIM_THRESHOLD
     global MAX_DYNAMIC_CHUNK
     global USE_DYNAMIC_CHUNKING
+    global DYNAMIC_BUDGET_BALANCING
 
     ROPE_BASE = rope_base
     ROPE_SCALE = rope_scale
@@ -1122,13 +1131,19 @@ def patch(
     N_INIT = n_init
     N_Local = n_local
     KERNEL_SIZE=kernel_size
+
     ADAPTIVE_TOPK = adaptive_topk
     ATTENTION_THRESHOLD = attention_threshold
     WEIGHTED_SOFT_VOTE = weighted_soft_vote
+
     UNION_OF_SETS = union_of_sets
+
     L2_NORM_POOLING = l2_norm_pooling
+
     DYNAMIC_CAPACITY_UNION = dynamic_capacity_union
+
     HEAD_WISE_ADAPTIVE = head_wise_adaptive
+
     DCU_ENERGY_MODE = dcu_energy_mode
 
     QUERY_ROTATE = True
@@ -1138,6 +1153,7 @@ def patch(
     SIM_THRESHOLD = sim_threshold
     MAX_DYNAMIC_CHUNK = max_dynamic_chunk
     USE_DYNAMIC_CHUNKING = use_dynamic_chunking
+    DYNAMIC_BUDGET_BALANCING = dynamic_budget_balancing
 
     patch_input_metadata()
     patch_model_runner()

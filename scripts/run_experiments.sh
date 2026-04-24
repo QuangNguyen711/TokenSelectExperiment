@@ -19,6 +19,7 @@ run_experiment() {
     local sim_thresh=${10:-0.90}
     local max_chunk=${11:-1024}
     local use_dynamic=${12:-"false"}
+    local budget_balancing=${13:-"true"}
 
     local output_dir="result_release/infinitbench/qwen-${exp_name}"
 
@@ -71,14 +72,17 @@ EOF
 # ==============================================================================
 # CÁC KỊCH BẢN THỬ NGHIỆM
 # Cấu trúc tham số:
-# run_experiment <Tên> <L2> <Weight> <Union> <TopK> <DCU> <Adaptive> <EnergyMode> <PrefillChunk> <Sim_Threshold> <Max_Chunk_Size> <Use_Dynamic_Chunking>
+# run_experiment <Tên> <L2> <Weight> <Union> <TopK> <DCU> <Adaptive> <EnergyMode> <PrefillChunk> <Sim_Threshold> <Max_Chunk_Size> <Use_Dynamic_Chunking> <Budget_Balancing>
 # ==============================================================================
 
 # Kịch bản A: TokenSelect Gốc (Tắt gộp chunk)
-run_experiment "baseline-512" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false"
+# run_experiment "baseline-512" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "true"
 
-# Kịch bản B: Gộp Chunk Động (Bật gộp chunk)
-run_experiment "dynamic-0.95-max-1024" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true"
+# # Kịch bản B: Gộp Chunk Động (Bật gộp chunk)
+# run_experiment "dynamic-0.95-max-1024" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "true"
 
-# Kịch bản C: Gộp Chunk 2048 + L2Norm
-run_experiment "dynamic-0.95-max-2048-l2" "true" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true"
+# # Kịch bản C: Gộp Chunk 2048 + L2Norm
+# run_experiment "dynamic-0.95-max-2048-l2" "true" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true"
+
+# Kịch bản D: Gộp Chunk 2048 + Không Bù Trừ Năng Lượng
+run_experiment "dynamic-0.95-max-2048-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false"
