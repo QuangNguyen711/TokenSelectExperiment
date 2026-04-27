@@ -21,7 +21,7 @@ run_experiment() {
     local use_dynamic=${12:-"false"}
     local budget_balancing=${13:-"true"}
 
-    local output_dir="result_release/infinitbench/qwen-${exp_name}"
+    local output_dir="result_release_ttft/infinitbench/qwen-${exp_name}"
 
     export CURRENT_EXP=$exp_name 
 
@@ -48,6 +48,7 @@ model:
   sim_threshold: $sim_thresh
   max_dynamic_chunk: $max_chunk
   use_dynamic_chunking: $use_dynamic
+  dynamic_budget_balancing: $budget_balancing
 
 max_len: 1048576
 chunk_size: 8192
@@ -85,4 +86,16 @@ EOF
 # run_experiment "dynamic-0.95-max-2048-l2" "true" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true"
 
 # Kịch bản D: Gộp Chunk 2048 + Không Bù Trừ Năng Lượng
-run_experiment "dynamic-0.95-max-2048-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false"
+# run_experiment "dynamic-0.95-max-2048-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false"
+
+# run_experiment "token-retrieval" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "true"
+
+# run_experiment "sim-0.90-max-1024" "false" "false" "false" 8192 "false" "false" "both" 512 0.90 1024 "true" "true"
+
+# run_experiment "sim-0.95-max-1024" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "true"
+
+# run_experiment "sim-0.95-max-1024-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "false"
+
+# run_experiment "sim-0.95-max-2048" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true"
+
+run_experiment "sim-0.95-max-4096-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "false"

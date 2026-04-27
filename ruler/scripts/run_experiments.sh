@@ -197,10 +197,16 @@ run_experiment() {
 #   "top_k=8192,prefill_chunk_size=512,use_dynamic_chunking=true,max_dynamic_chunk=2048,sim_threshold=0.95" \
 #   "50" "42"
 
-run_experiment "dynamic-chunking-1024-sim-0.95" "synthetic" \
+run_experiment "dynamic-chunking-1024-sim-0.95-no-balancing" "synthetic" \
   "131072,65536,32768,16384" \
   "niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3" \
   "top_k=8192,prefill_chunk_size=512,use_dynamic_chunking=true,max_dynamic_chunk=1024,sim_threshold=0.95" \
   "50" "42"
+
+# run_experiment "dynamic-chunking-1024-sim-0.95-dcu-l2-norm" "synthetic" \
+#   "131072,65536,32768,16384" \
+#   "niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3" \
+#   "top_k=8192,prefill_chunk_size=512,use_dynamic_chunking=true,max_dynamic_chunk=1024,sim_threshold=0.95,dynamic_capacity_union=true,dcu_energy_mode=l2_norm" \
+#   "50" "42"
 
 echo "All selected experiments finished."

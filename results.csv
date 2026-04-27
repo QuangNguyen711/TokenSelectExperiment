@@ -1,0 +1,9 @@
+n_repeat,input_tokens,ttft,total_time,answer
+50,2429,0.3995850086212158,0.4018120765686035,"The pass key is ""Quang cười haha""."
+100,4829,0.1484074592590332,0.2257239818572998,"The pass key is ""Quang cười haha""."
+200,9629,0.27060699462890625,0.3503425121307373,"The pass key is ""Quang cười haha""."
+500,24029,1.5976011753082275,1.9445841312408447,"Based on the text provided, the pass key is ""Quang cười haha""."
+1000,48029,1.5250611305236816,1.746121883392334,"The pass key is ""Quang cười haha""."
+2000,96029,3.192204475402832,3.435837745666504,"The pass key is ""Quang cười haha""."
+5000,240029,9.381516933441162,9.781144618988037,"Assistant: The pass key is ""Quang cười haha""."
+10000,480029,20.09894633293152,20.60130548477173,"The pass key is ""Quang cười haha""."
