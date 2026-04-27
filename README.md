@@ -52,7 +52,7 @@ uv venv --python 3.10 --seed
 source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 
 export PATH="/data/bin:$PATH"
-git config --global --add safe.directory TokenSelectExperiment
+git config --global --add safe.directory /data/TokenSelectExperiment
 git status
 
 git config user.email "nguyenquang71103@gmail.com"
@@ -106,6 +106,20 @@ bash scripts/serve.sh
 ```
 
 **Option 2: Manual command (example for Qwen2-7B-Instruct) Applied TokenSelect**
+```
+python benchmark/serve.py \
+    --model-path Qwen/Qwen2-7B-Instruct \
+    --dp 1 \
+    --disable-cuda-graph \
+    --port 62726  \
+    --mem-fraction-static 0.85 \
+    --context-length 1048576 \
+    --chunked-prefill-size 8192 \
+    --max-prefill-tokens 1048576 \
+    --sgl-conf-file config/qwen-token-retrieval.yaml
+```
+
+
 ```bash
 python benchmark/serve.py \
     --model-path Qwen/Qwen2-7B-Instruct \

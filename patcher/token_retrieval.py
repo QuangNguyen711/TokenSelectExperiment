@@ -27,6 +27,20 @@ from vllm.model_executor.model_loader.loader import (
     device_loading_context,
 )
 from vllm.model_executor.model_loader.utils import set_default_torch_dtype
+import time
+
+_TRACKER_PREFILL_START = 0.0
+GLOBAL_TOTAL_TTFT = 0.0
+TTFT_RECORD_PATH = None
+
+
+def record_ttft(ttft: float):
+    global GLOBAL_TOTAL_TTFT
+    GLOBAL_TOTAL_TTFT += ttft
+
+    if TTFT_RECORD_PATH:
+        with open(TTFT_RECORD_PATH, "a", encoding="utf-8") as f:
+            f.write(f"{ttft}\n")
 
 ROPE_BASE = -1
 ROPE_SCALE = -1
@@ -844,6 +858,13 @@ def patch_model():
         def patched_radix_attention_extend_forward_flashinfer(
                 self, q, k, v, input_metadata: InputMetadata
         ):
+            # --- CÀI BẤM GIỜ BẮT ĐẦU PREFILL ---
+            global _TRACKER_PREFILL_START
+            # Chỉ bấm giờ ở layer 0 và lúc _TRACKER_PREFILL_START đang = 0 
+            # (Để đề phòng trường hợp Chunked Prefill nó gọi hàm này nhiều lần, ta chỉ lấy mốc thời gian của chunk đầu tiên)
+            if self.layer_id == 0 and _TRACKER_PREFILL_START == 0.0:
+                _TRACKER_PREFILL_START = time.time()
+            # -----------------------------------
             prefill_wrapper_paged = input_metadata.flashinfer_prefill_wrapper_paged
             if self.sliding_window_size != -1:
                 prefill_wrapper_paged = prefill_wrapper_paged[0]
@@ -951,22 +972,13 @@ def patch_model():
         def patched_radix_attention_decode_forward_flashinfer(
                 self, q, k, v, input_metadata: InputMetadata
         ):
-            # # =====================================================================
-            # tr = input_metadata.token_retriever
-            # if self.layer_id == 0 and not getattr(tr, 'prefill_reported', False):
-            #     torch.cuda.synchronize() # Đợi GPU hoàn tất toàn bộ Request
-                
-            #     p1_time = sum(s.elapsed_time(e) for s, e in tr.phase1_events) if hasattr(tr, 'phase1_events') else 0
-            #     p2_time = sum(s.elapsed_time(e) for s, e in tr.phase2_events) if hasattr(tr, 'phase2_events') else 0
-                
-            #     print(f"\n" + "="*70)
-            #     print(f" [BÁO CÁO CHUẨN] THỜI GIAN PREFILL CỦA TOÀN BỘ REQUEST")
-            #     print(f" -> Phase 1 (Toàn bộ TokenSelect): {p1_time:.2f} ms")
-            #     print(f" -> Phase 2 (FlashInfer Attention): {p2_time:.2f} ms")
-            #     print("="*70 + "\n")
-                
-            #     tr.prefill_reported = True 
-            # # =====================================================================
+            # --- CHỐT GIỜ TTFT Ở TOKEN ĐẦU TIÊN ---
+            global _TRACKER_PREFILL_START, GLOBAL_TOTAL_TTFT
+            if self.layer_id == 0 and _TRACKER_PREFILL_START > 0.0:
+                ttft = time.time() - _TRACKER_PREFILL_START
+                record_ttft(ttft)
+                _TRACKER_PREFILL_START = 0.0  # Reset để chuẩn bị đo cho câu hỏi (sample) tiếp theo trong dataset
+            # --------------------------------------
             decode_wrapper = input_metadata.flashinfer_decode_wrapper
             if self.sliding_window_size != -1:
                 decode_wrapper = decode_wrapper[0]

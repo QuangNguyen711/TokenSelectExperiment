@@ -1,7 +1,7 @@
 import os
 import json
 
-def extract_and_analyze(base_dir="result_release/infinitbench"):
+def extract_and_analyze(base_dir="result_release_ttft/infinitbench"):
     if not os.path.exists(base_dir):
         print(f"Thư mục {base_dir} không tồn tại.")
         return

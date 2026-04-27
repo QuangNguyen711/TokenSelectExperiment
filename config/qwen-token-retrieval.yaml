@@ -17,8 +17,9 @@ model:
   dcu_energy_mode: "both"
   prefill_chunk_size: 512
   sim_threshold: 0.95
-  max_dynamic_chunk: 2048
+  max_dynamic_chunk: 4096
   use_dynamic_chunking: true
+  dynamic_budget_balancing: false
 
 max_len: 1048576
 chunk_size: 8192

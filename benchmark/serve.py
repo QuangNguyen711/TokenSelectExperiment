@@ -21,6 +21,7 @@ def patch_model(config):
         n_init=config.model.n_init,
         n_local=config.model.n_local,
         top_k=config.model.top_k,
+        kernel_size=getattr(config.model, 'kernel_size', -1),
         adaptive_topk=getattr(config.model, 'adaptive_topk', False),
         attention_threshold=getattr(config.model, 'attention_threshold', 0.9),
         weighted_soft_vote=getattr(config.model, 'weighted_soft_vote', False),
@@ -28,6 +29,12 @@ def patch_model(config):
         l2_norm_pooling=getattr(config.model, 'l2_norm_pooling', False),
         dynamic_capacity_union=getattr(config.model, 'dynamic_capacity_union', False),
         head_wise_adaptive=getattr(config.model, 'head_wise_adaptive', False),
+        dcu_energy_mode=getattr(config.model, 'dcu_energy_mode', 'both'),
+        prefill_chunk_size=getattr(config.model, 'prefill_chunk_size', 512),
+        sim_threshold=getattr(config.model, 'sim_threshold', 0.95),
+        max_dynamic_chunk=getattr(config.model, 'max_dynamic_chunk', 1024),
+        use_dynamic_chunking=getattr(config.model, 'use_dynamic_chunking', False),
+        dynamic_budget_balancing=getattr(config.model, 'dynamic_budget_balancing', True),
     )
 
 

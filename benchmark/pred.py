@@ -11,11 +11,25 @@ from transformers import AutoTokenizer
 
 sys.path.append(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0])
 
+import patcher.token_retrieval as tr
 from datasets import load_from_disk
 import json
 from tqdm import tqdm
 import argparse
 from omegaconf import OmegaConf
+
+
+def load_ttft_total(record_path: str) -> float:
+    if not os.path.exists(record_path):
+        return 0.0
+
+    total = 0.0
+    with open(record_path, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                total += float(line)
+    return total
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -408,7 +422,6 @@ if __name__ == "__main__":
 
     # predict on each dataset
     for dataset in datasets:
-        start_time = time.time()
         dname = dataset
         if dataset in [
             "passkey",
@@ -442,8 +455,16 @@ if __name__ == "__main__":
         prompt_format = dataset2prompt[dataset]
         max_gen = dataset2maxlen[dataset]
         kernel_size = dataset2ks.get(dataset, 0)
+        ttft_record_path = os.path.join(output_dir_path, f"{dname}.ttft.log")
+        if os.path.exists(ttft_record_path):
+            os.remove(ttft_record_path)
         
+        tr.TTFT_RECORD_PATH = ttft_record_path
         model, tokenizer = get_model_and_tokenizer(config, kernel_size)
+
+        # --- RESET ĐỒNG HỒ TRƯỚC KHI CHẠY DATASET ---
+        tr.GLOBAL_TOTAL_TTFT = 0.0
+        tr._TRACKER_PREFILL_START = 0.0
 
         preds = get_pred(
             model,
@@ -464,9 +485,7 @@ if __name__ == "__main__":
         del model
         torch.cuda.empty_cache()
 
-        end_time = time.time()
-        elapsed_time = end_time - start_time
-        dataset_timing[dataset] = elapsed_time
+        dataset_timing[dataset] = load_ttft_total(ttft_record_path)
 
         with open(out_path, "w+", encoding="utf-8") as f:
             for pred in preds:
@@ -476,5 +495,5 @@ if __name__ == "__main__":
     timing_file_path = os.path.join(output_dir_path, "dataset_timing.json")
     # if multiprocessing:
     #     timing_file_path = timing_file_path + f"_{config.rank}"
-    with open(timing_file_path, "a") as f:
+    with open(timing_file_path, "w", encoding="utf-8") as f:
         json.dump(dataset_timing, f, indent=4)
