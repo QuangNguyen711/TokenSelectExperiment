@@ -18,7 +18,7 @@ model:
   prefill_chunk_size: 512
   sim_threshold: 0.95
   max_dynamic_chunk: 4096
-  use_dynamic_chunking: true
+  use_dynamic_chunking: false
   dynamic_budget_balancing: false
 
 max_len: 1048576

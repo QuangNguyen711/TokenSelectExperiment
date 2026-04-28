@@ -106,7 +106,7 @@ bash scripts/serve.sh
 ```
 
 **Option 2: Manual command (example for Qwen2-7B-Instruct) Applied TokenSelect**
-```
+```bash
 python benchmark/serve.py \
     --model-path Qwen/Qwen2-7B-Instruct \
     --dp 1 \
