@@ -880,32 +880,41 @@ def patch_model():
             qo_indptr = prefill_wrapper_paged._qo_indptr_buf.clone()
 
             # =================================================================
-            # LÕI V2: PRE-COMPUTED SIMILARITY CHUNK MAP & BUDGET BALANCING
+            # LÕI V2.1: DYNAMIC CHUNKING SỬ DỤNG ANCHOR
             # =================================================================
             BASE_CHUNK = PREFILL_CHUNK_SIZE
             chunk_plan = []
 
             if USE_DYNAMIC_CHUNKING and MAX_DYNAMIC_CHUNK > BASE_CHUNK:
-                # BƯỚC 1: Lập bản đồ gộp siêu tốc
+                # BƯỚC 1: Tính Vector trung bình cho các block
                 with torch.no_grad():
                     num_blocks = seq_len // BASE_CHUNK
-                    if num_blocks > 1:
+                    if num_blocks > 0:
                         q_trunc = q[:num_blocks * BASE_CHUNK].float()
                         q_blocks_mean = q_trunc.view(num_blocks, BASE_CHUNK, -1).mean(dim=1)
-                        sims = torch.nn.functional.cosine_similarity(q_blocks_mean[:-1], q_blocks_mean[1:], dim=1)
-                        merge_flags = (sims >= SIM_THRESHOLD).tolist()
+                        # Normalize sẵn để tính cosine similarity bằng tích vô hướng (dot product) cho nhanh
+                        q_blocks_mean = torch.nn.functional.normalize(q_blocks_mean, p=2, dim=-1)
                     else:
-                        merge_flags = []
+                        q_blocks_mean = None
 
                 current_pos = 0
                 block_idx = 0
 
                 while current_pos < seq_len:
                     step = BASE_CHUNK
-                    # Cuộn tuyết: Giống nhau thì gộp, gộp cho đến chạm trần MAX
-                    while block_idx < len(merge_flags) and merge_flags[block_idx] and step < MAX_DYNAMIC_CHUNK:
-                        step += BASE_CHUNK
-                        block_idx += 1
+                    anchor_idx = block_idx
+                    
+                    # Cuộn tuyết bằng Anchor: So sánh block tiếp theo trực tiếp với Anchor
+                    while (block_idx + 1) < num_blocks and step < MAX_DYNAMIC_CHUNK:
+                        next_idx = block_idx + 1
+                        # Tính cosine similarity (đã normalize nên chỉ cần dot product)
+                        sim = torch.dot(q_blocks_mean[anchor_idx], q_blocks_mean[next_idx]).item()
+                        
+                        if sim >= SIM_THRESHOLD:
+                            step += BASE_CHUNK
+                            block_idx += 1
+                        else:
+                            break # Khác Anchor -> Ngắt Chunk lập tức để tránh Topic Drift
 
                     start = current_pos
                     end = min(current_pos + step, seq_len)
