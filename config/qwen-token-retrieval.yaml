@@ -16,10 +16,10 @@ model:
   head_wise_adaptive: false
   dcu_energy_mode: "both"
   prefill_chunk_size: 512
-  sim_threshold: 0.95
-  max_dynamic_chunk: 512
-  use_dynamic_chunking: false
-  dynamic_budget_balancing: false
+  sim_threshold: 0.999
+  max_dynamic_chunk: 4096
+  use_dynamic_chunking: true
+  dynamic_budget_balancing: true
 
 max_len: 1048576
 chunk_size: 8192

@@ -27,11 +27,13 @@ from vllm.model_executor.model_loader.loader import (
     device_loading_context,
 )
 from vllm.model_executor.model_loader.utils import set_default_torch_dtype
+from collections import defaultdict
 import time
 
 _TRACKER_PREFILL_START = 0.0
 GLOBAL_TOTAL_TTFT = 0.0
 TTFT_RECORD_PATH = None
+STATS_RECORD_PATH = None
 
 
 def record_ttft(ttft: float):
@@ -65,6 +67,9 @@ SIM_THRESHOLD = 0.95
 MAX_DYNAMIC_CHUNK = 1024
 USE_DYNAMIC_CHUNKING = False
 DYNAMIC_BUDGET_BALANCING = True
+TRACKER_CONSECUTIVE_SIM = defaultdict(list)
+TRACKER_CHUNK_LENGTHS = defaultdict(list)
+TRACKER_FIRST_VS_MEAN_SIM = defaultdict(list)
 
 @contextmanager
 def cuda_timer(timer_name="Operation"):
@@ -860,11 +865,26 @@ def patch_model():
         ):
             # --- CÀI BẤM GIỜ BẮT ĐẦU PREFILL ---
             global _TRACKER_PREFILL_START
-            # Chỉ bấm giờ ở layer 0 và lúc _TRACKER_PREFILL_START đang = 0 
-            # (Để đề phòng trường hợp Chunked Prefill nó gọi hàm này nhiều lần, ta chỉ lấy mốc thời gian của chunk đầu tiên)
             if self.layer_id == 0 and _TRACKER_PREFILL_START == 0.0:
                 _TRACKER_PREFILL_START = time.time()
             # -----------------------------------
+
+            # --- KHỞI TẠO LIST ĐỂ LƯU TẠM DỮ LIỆU CỦA LAYER NÀY ---
+            consec_sim_list = []
+            chunk_lengths_list = []
+            first_vs_mean_list = []
+
+            # =================================================================
+            # ĐO LƯỜNG 1: TƯƠNG ĐỒNG NỐI TIẾP
+            # =================================================================
+            with torch.no_grad():
+                q_float = q.float().view(q.shape[0], -1) 
+                q_norm = torch.nn.functional.normalize(q_float, p=2, dim=-1)
+                
+                consecutive_sim = (q_norm[:-1] * q_norm[1:]).sum(dim=-1)
+                consec_sim_list = consecutive_sim.cpu().tolist()
+
+
             prefill_wrapper_paged = input_metadata.flashinfer_prefill_wrapper_paged
             if self.sliding_window_size != -1:
                 prefill_wrapper_paged = prefill_wrapper_paged[0]
@@ -929,6 +949,37 @@ def patch_model():
                     start = chunk_idx * BASE_CHUNK
                     end = min((chunk_idx + 1) * BASE_CHUNK, seq_len)
                     chunk_plan.append((start, end))
+
+            # =================================================================
+            # ĐO LƯỜNG 2 & 3: ĐỘ DÀI CHUNK VÀ FIRST vs MEAN
+            # =================================================================
+            for start, end in chunk_plan:
+                actual_step = end - start
+                chunk_lengths_list.append(actual_step)
+
+                with torch.no_grad():
+                    first_token = q[start].float().view(-1)
+                    first_token_norm = torch.nn.functional.normalize(first_token, p=2, dim=-1)
+                    
+                    chunk_tokens = q[start:end].float().view(actual_step, -1)
+                    chunk_mean = chunk_tokens.mean(dim=0)
+                    chunk_mean_norm = torch.nn.functional.normalize(chunk_mean, p=2, dim=-1)
+                    
+                    sim = torch.dot(first_token_norm, chunk_mean_norm).item()
+                    first_vs_mean_list.append(sim)
+
+            # =================================================================
+            # TIẾN TRÌNH CON GHI TRỰC TIẾP RA FILE (DẠNG JSON LINES)
+            # =================================================================
+            if STATS_RECORD_PATH:
+                import json
+                with open(STATS_RECORD_PATH, "a", encoding="utf-8") as f:
+                    f.write(json.dumps({
+                        "layer": self.layer_id,
+                        "consecutive_sims": consec_sim_list,
+                        "chunk_lengths": chunk_lengths_list,
+                        "first_vs_mean_sims": first_vs_mean_list
+                    }) + "\n")
 
             # BƯỚC 2: Thực thi theo Plan
             for start, end in chunk_plan:

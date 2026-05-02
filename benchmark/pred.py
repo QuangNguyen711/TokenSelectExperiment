@@ -444,7 +444,7 @@ if __name__ == "__main__":
 
         data_list = list(data)
         random.seed(42)
-        data = random.sample(data_list, min(100, len(data_list)))
+        data = random.sample(data_list, min(5, len(data_list)))
 
         out_path = os.path.join(output_dir_path, f"{dname}.jsonl")
         # if multiprocessing:
@@ -455,11 +455,20 @@ if __name__ == "__main__":
         prompt_format = dataset2prompt[dataset]
         max_gen = dataset2maxlen[dataset]
         kernel_size = dataset2ks.get(dataset, 0)
+
+        # 1. Setup file TTFT
         ttft_record_path = os.path.join(output_dir_path, f"{dname}.ttft.log")
         if os.path.exists(ttft_record_path):
             os.remove(ttft_record_path)
-        
         tr.TTFT_RECORD_PATH = ttft_record_path
+
+        # 2. Setup file STATS (Đổi đuôi thành .jsonl)
+        stat_out_path = os.path.join(output_dir_path, f"{dname}_stats.jsonl")
+        if os.path.exists(stat_out_path):
+            os.remove(stat_out_path)
+        tr.STATS_RECORD_PATH = stat_out_path
+
+        # 3. QUAN TRỌNG: Load model (Tiến trình con sẽ copy tr.STATS_RECORD_PATH từ đây)
         model, tokenizer = get_model_and_tokenizer(config, kernel_size)
 
         # --- RESET ĐỒNG HỒ TRƯỚC KHI CHẠY DATASET ---
@@ -484,6 +493,20 @@ if __name__ == "__main__":
 
         del model
         torch.cuda.empty_cache()
+
+        # THÊM ĐOẠN NÀY ĐỂ LƯU THỐNG KÊ (Ép về dict):
+        # stat_out_path = os.path.join(output_dir_path, f"{dname}_stats.json")
+        # with open(stat_out_path, "w") as f:
+        #     json.dump({
+        #         "consecutive_sims": dict(tr.TRACKER_CONSECUTIVE_SIM),
+        #         "chunk_lengths": dict(tr.TRACKER_CHUNK_LENGTHS),
+        #         "first_vs_mean_sims": dict(tr.TRACKER_FIRST_VS_MEAN_SIM)
+        #     }, f)
+        
+        # Xóa dữ liệu cũ để không bị tràn RAM sang dataset sau
+        tr.TRACKER_CONSECUTIVE_SIM.clear()
+        tr.TRACKER_CHUNK_LENGTHS.clear()
+        tr.TRACKER_FIRST_VS_MEAN_SIM.clear()
 
         dataset_timing[dataset] = load_ttft_total(ttft_record_path)
 

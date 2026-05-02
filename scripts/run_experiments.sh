@@ -90,14 +90,14 @@ EOF
 
 # run_experiment "token-retrieval" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "true"
 
-run_experiment "sim-0.95-max-1024-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "true"
+# run_experiment "sim-0.95-max-1024-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "true"
 
-run_experiment "sim-0.95-max-1024-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "false"
+# run_experiment "sim-0.95-max-1024-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "false"
 
 # run_experiment "sim-0.95-max-2048-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true"
 
 # run_experiment "sim-0.95-max-2048-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false"
 
-run_experiment "sim-0.95-max-4096-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "true"
+# run_experiment "sim-0.95-max-4096-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "true"
 
-run_experiment "sim-0.95-max-4096-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "false"
+# run_experiment "sim-0.95-max-4096-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "false"
