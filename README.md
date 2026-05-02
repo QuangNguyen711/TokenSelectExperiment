@@ -54,7 +54,6 @@ source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 export PATH="/data/bin:$PATH"
 git config --global --add safe.directory /data/TokenSelectExperiment
 git status
-
 git config user.email "nguyenquang71103@gmail.com"
 git config user.name "quangnguyen711"
 ```
