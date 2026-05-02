@@ -71,6 +71,7 @@ apply_config_overrides() {
   local sim_threshold="0.95"
   local max_dynamic_chunk="512"
   local use_dynamic_chunking="false"
+  local dynamic_budget_balancing="false"
   local max_len="1048576"
   local chunk_size="8192"
   local conv_type="qwen"
@@ -101,6 +102,7 @@ apply_config_overrides() {
         sim_threshold) sim_threshold="${value}" ;;
         max_dynamic_chunk) max_dynamic_chunk="${value}" ;;
         use_dynamic_chunking) use_dynamic_chunking="${value}" ;;
+        dynamic_budget_balancing) dynamic_budget_balancing="${value}" ;;
         max_len) max_len="${value}" ;;
         chunk_size) chunk_size="${value}" ;;
         conv_type) conv_type="${value}" ;;
@@ -136,6 +138,7 @@ model:
   sim_threshold: ${sim_threshold}
   max_dynamic_chunk: ${max_dynamic_chunk}
   use_dynamic_chunking: ${use_dynamic_chunking}
+  dynamic_budget_balancing: ${dynamic_budget_balancing}
 
 max_len: ${max_len}
 chunk_size: ${chunk_size}
@@ -148,7 +151,7 @@ EOF
 # Like InfiniteBench style:
 # run_experiment <name> <benchmark> <seq_lengths_csv> <tasks_csv> <config_overrides_csv> [num_samples] [random_seed]
 # config_overrides example:
-#   "top_k=4096,prefill_chunk_size=1024,use_dynamic_chunking=true,max_dynamic_chunk=2048"
+#   "top_k=4096,prefill_chunk_size=1024,use_dynamic_chunking=true,max_dynamic_chunk=2048,dynamic_budget_balancing=true"
 run_experiment() {
   local exp_name="$1"
   local benchmark="$2"
@@ -184,29 +187,40 @@ run_experiment() {
 # ==============================================================================
 
 # Full baseline run
-# run_experiment "token-select-baseline" "synthetic" \
-#   "131072,65536,32768,16384" \
-#   "niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3" \
+# run_experiment "token-select-baseline-test" "synthetic" \
+#   "131072,65536,32768,16384,8192,4096" \
+#   "niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3,niah_multivalue,niah_multiquery" \
 #   "top_k=8192,prefill_chunk_size=512,use_dynamic_chunking=false" \
-#   "50" "42"
+#   "100" "42"
 
-# # Medium run
-# run_experiment "dynamic-chunking-2048" "synthetic" \
-#   "131072,65536,32768,16384" \
-#   "niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3" \
-#   "top_k=8192,prefill_chunk_size=512,use_dynamic_chunking=true,max_dynamic_chunk=2048,sim_threshold=0.95" \
-#   "50" "42"
+# run_experiment "dynamic-chunking-1024-sim-anchor-0.95-test" "synthetic" \
+#   "131072,65536,32768,16384,8192,4096" \
+#   "niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3,niah_multivalue,niah_multiquery" \
+#   "top_k=8192,prefill_chunk_size=512,use_dynamic_chunking=true,max_dynamic_chunk=1024,sim_threshold=0.95,dynamic_budget_balancing=true" \
+#   "100" "42"
 
-run_experiment "dynamic-chunking-1024-sim-0.95-no-balancing" "synthetic" \
-  "131072,65536,32768,16384" \
-  "niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3" \
-  "top_k=8192,prefill_chunk_size=512,use_dynamic_chunking=true,max_dynamic_chunk=1024,sim_threshold=0.95" \
-  "50" "42"
+# run_experiment "dynamic-chunking-1024-sim-anchor-0.95-no-balancing-test" "synthetic" \
+#   "131072,65536,32768,16384,8192,4096" \
+#   "niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3,niah_multivalue,niah_multiquery" \
+#   "top_k=8192,prefill_chunk_size=512,use_dynamic_chunking=true,max_dynamic_chunk=1024,sim_threshold=0.95,dynamic_budget_balancing=false" \
+#   "100" "42"
 
-# run_experiment "dynamic-chunking-1024-sim-0.95-dcu-l2-norm" "synthetic" \
-#   "131072,65536,32768,16384" \
-#   "niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3" \
-#   "top_k=8192,prefill_chunk_size=512,use_dynamic_chunking=true,max_dynamic_chunk=1024,sim_threshold=0.95,dynamic_capacity_union=true,dcu_energy_mode=l2_norm" \
-#   "50" "42"
+# run_experiment "dynamic-chunking-4096-sim-anchor-0.95-test" "synthetic" \
+#   "131072,65536,32768,16384,8192,4096" \
+#   "niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3,niah_multivalue,niah_multiquery" \
+#   "top_k=8192,prefill_chunk_size=512,use_dynamic_chunking=true,max_dynamic_chunk=4096,sim_threshold=0.95,dynamic_budget_balancing=true" \
+#   "100" "42"
+
+# run_experiment "dynamic-chunking-4096-sim-anchor-0.95-no-balancing-test" "synthetic" \
+#   "131072,65536,32768,16384,8192,4096" \
+#   "niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3,niah_multivalue,niah_multiquery" \
+#   "top_k=8192,prefill_chunk_size=512,use_dynamic_chunking=true,max_dynamic_chunk=4096,sim_threshold=0.95,dynamic_budget_balancing=false" \
+#   "100" "42"
+
+run_experiment "dynamic-chunking-4096-sim-0.95-dcu-l2-norm" "synthetic" \
+  "131072,65536,32768,16384,8192,4096" \
+  "niah_single_1,niah_single_2,niah_single_3,niah_multikey_1,niah_multikey_2,niah_multikey_3,niah_multivalue,niah_multiquery" \
+  "top_k=8192,prefill_chunk_size=512,use_dynamic_chunking=true,max_dynamic_chunk=4096,sim_threshold=0.95,dynamic_capacity_union=true,dcu_energy_mode=l2_norm" \
+  "100" "42"
 
 echo "All selected experiments finished."
