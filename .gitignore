@@ -404,5 +404,5 @@ dist/*
 
 # custom
 backup
-result
+# result
 data
