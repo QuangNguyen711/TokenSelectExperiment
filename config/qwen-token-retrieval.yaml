@@ -1,7 +1,7 @@
 model:
   type: token-retrieval
-  path: Qwen/Qwen2-7B-Instruct
-  rope_base: 1000000
+  path: Qwen/Qwen3-4B-Instruct-2507
+  rope_base: 5000000
   rope_scale: 1
   n_init: 128
   n_local: 512
@@ -17,7 +17,7 @@ model:
   dcu_energy_mode: "both"
   prefill_chunk_size: 512
   sim_threshold: 0.95
-  max_dynamic_chunk: 512
+  max_dynamic_chunk: 4096
   use_dynamic_chunking: false
   dynamic_budget_balancing: false
 

@@ -1,9 +1,45 @@
 n_repeat,input_tokens,ttft,total_time,answer
-50,2429,0.3995850086212158,0.4018120765686035,"The pass key is ""Quang cười haha""."
-100,4829,0.1484074592590332,0.2257239818572998,"The pass key is ""Quang cười haha""."
-200,9629,0.27060699462890625,0.3503425121307373,"The pass key is ""Quang cười haha""."
-500,24029,1.5976011753082275,1.9445841312408447,"Based on the text provided, the pass key is ""Quang cười haha""."
-1000,48029,1.5250611305236816,1.746121883392334,"The pass key is ""Quang cười haha""."
-2000,96029,3.192204475402832,3.435837745666504,"The pass key is ""Quang cười haha""."
-5000,240029,9.381516933441162,9.781144618988037,"Assistant: The pass key is ""Quang cười haha""."
-10000,480029,20.09894633293152,20.60130548477173,"The pass key is ""Quang cười haha""."
+50,2429,0.21950125694274902,1.322192668914795,"The pass key is **""Quang cười haha""**.
+
+Even though the text says *""Quang cười hihi is not the pass key""*, it also says *""The pass key is Quang cười haha. Remember it.""* — this is a clear statement, despite the contradictory note.
+
+So, based on the direct instruction:  
+👉 **The pass key is ""Quang cười haha""**.
+
+✅ Final Answer: **Quang cười haha**."
+100,4829,0.32663750648498535,1.5282397270202637,"The pass key is **""Quang cười haha""**.
+
+Even though the phrase ""Quang cười haha"" is not a literal or standard pass key, within the context of the repetitive song-like structure and the final line — *""The pass key is Quang cười haha. Remember it. Quang cười hihi is not the pass key.""* — it's clear that **""Quang cười haha""** is presented as the intended pass key, despite the contradictory note that ""Quang"
+200,9629,0.7950701713562012,2.1003129482269287,"The pass key is **""Quang cười haha""**.
+
+It's mentioned in the text:  
+> ""The pass key is Quang cười haha. Remember it. Quang cười hihi is not the pass key.""
+
+So, despite the repetition of the phrase ""The grass is green. The sky is blue. The sun is yellow,"" the actual **pass key** is explicitly stated to be **""Quang cười haha""**.
+
+✅ Final Answer: **Quang cười haha**"
+500,24029,4.872711658477783,7.456466197967529,"The pass key is **""Quang cười haha""**.
+
+This is explicitly stated in the text:
+
+> ""The pass key is Quang cười haha. Remember it. Quang cười hihi is not the pass key.""
+
+Even though the phrase ""Quang cười haha"" appears in a playful or humorous context, it is directly identified as the **pass key** in the sentence. The rest of the text is a repetitive loop of the same lines about the grass, sky, and sun —"
+1000,48029,6.268773317337036,8.760024309158325,"The pass key is **""Quang cười haha""**.
+
+This is explicitly stated in the text:
+
+> ""The pass key is Quang cười haha. Remember it. Quang cười hihi is not the pass key.""
+
+Even though ""Quang cười hihi"" is mentioned as *not* the pass key, the correct one is clearly given as **""Quang cười haha""**.
+
+✅ **Final Answer: Quang cười haha**"
+2000,96029,13.187269926071167,15.631160020828247,"The pass key is **""Quang cười haha""**.
+
+This is explicitly stated in the text:
+
+> ""The pass key is Quang cười haha. Remember it. Quang cười hihi is not the pass key.""
+
+So, despite the playful and repetitive nature of the rest of the dialogue, the pass key is clearly identified as **Quang cười haha**."
+5000,240029,16.926449060440063,16.926564931869507,green
+10000,480029,4.264616250991821,4.264753341674805,is

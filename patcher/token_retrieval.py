@@ -1068,13 +1068,20 @@ def patch_model():
             )
 
         def patched_meta_attention_forward(
-                self,
-                positions: torch.Tensor,
-                hidden_states: torch.Tensor,
-                input_metadata: InputMetadata,
+            self,
+            positions: torch.Tensor,
+            hidden_states: torch.Tensor,
+            input_metadata: InputMetadata,
         ) -> torch.Tensor:
             qkv, _ = self.qkv_proj(hidden_states)
             q, k, v = qkv.split([self.q_size, self.kv_size, self.kv_size], dim=-1)
+            # NEW: Apply q_norm / k_norm if the attention module defines them (Qwen3+)
+            if hasattr(self, "q_norm") and hasattr(self, "k_norm"):
+                N = q.shape[0]
+                q_flat = q.reshape(N * self.num_heads, self.head_dim).contiguous()
+                k_flat = k.reshape(N * self.num_kv_heads, self.head_dim).contiguous()
+                q = self.q_norm(q_flat).view(N, self.num_heads * self.head_dim)
+                k = self.k_norm(k_flat).view(N, self.num_kv_heads * self.head_dim)
             attn_output = self.attn(q, k, v, input_metadata)
             output, _ = self.o_proj(attn_output)
             return output
