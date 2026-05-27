@@ -93,6 +93,10 @@ uv pip install --python .venv/bin/python beautifulsoup4 html2text
 uv pip install --python .venv/bin/python scipy
 ```
 
+```
+transformers==4.51.3
+```
+
 If you want to run Qwen3 models, please also add the following dependencies:
 ```bash
 # Fix in config/qwen-token-retrieval.yaml
