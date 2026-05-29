@@ -536,6 +536,9 @@ class TokenRetriever:
             ).view(query.shape[0], -1)
         else:
             query = query.view(query.shape[0], -1)
+        
+        anchor_len = min(PREFILL_CHUNK_SIZE, query.shape[0])
+        anchor_query = query[:anchor_len]
 
         if L2_NORM_POOLING:
             # --- GENERALIZED FINGERPRINT: L2-Norm Weighted Mean ---
@@ -543,8 +546,11 @@ class TokenRetriever:
             weights = norms / (norms.sum(dim=0, keepdim=True) + 1e-6) 
             query_fingerprints = torch.sum(weights * query, dim=0)
         else:
-            # --- ORIGINAL PAPER: Mean Pooling ---
-            query_fingerprints = torch.mean(query, dim=0)
+            # # --- ORIGINAL PAPER: Mean Pooling --- Tạm thời bỏ vì hiệu quả không tốt, thay bằng phương pháp mới bên dưới
+            # query_fingerprints = torch.mean(query, dim=0)
+            # ====================================================================
+            # --- ANCHOR POOLING (Lấy Mean của riêng phần Anchor) ---
+            query_fingerprints = torch.mean(anchor_query, dim=0)
 
         if QUERY_CACHE:
             if (
