@@ -1,0 +1,19 @@
+\begin{table}[t]
+\centering
+\caption{Per-layer head-to-head retrieval quality at $\theta = 0.95$, 
+$L_{\max} = 4096$. Anchor and Mean queries are compared against 
+per-sub-chunk baselines on the same candidate pool.}
+\label{tab:anchor-vs-mean-layerwise}
+\small
+\begin{tabular}{lccccccc}
+\toprule
+Layer & \#clust & \makecell{Global\\(Anchor)} & \makecell{Global\\(Mean)} & $\Delta$ & \makecell{Last\\(Anchor)} & \makecell{Last\\(Mean)} \\
+\midrule
+Layer 0 & 870 & 91.0 & 76.5 & +14.5 & 91.6 & 75.1 \\
+Layer 6 & 870 & 97.5 & 71.6 & +25.9 & 96.9 & 71.6 \\
+Layer 13 & 871 & 95.3 & 66.6 & +28.8 & 94.0 & 66.5 \\
+Layer 20 & 875 & 94.4 & 75.9 & +18.5 & 93.0 & 75.9 \\
+Layer 27 & 870 & 62.9 & 50.7 & +12.2 & 60.6 & 53.5 \\
+\bottomrule
+\end{tabular}
+\end{table}

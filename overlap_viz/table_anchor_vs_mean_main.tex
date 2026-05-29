@@ -1,0 +1,33 @@
+\begin{table}[t]
+\centering
+\caption{Head-to-head retrieval quality at Layer 27 
+under varying $\theta$ and $L_{\max}$. \textit{Global Recall} reports the 
+average per-sub-chunk recall against the per-sub-chunk baseline (Definition B). 
+$\Delta$ denotes Anchor $-$ Mean: positive values favor anchor-based retrieval. 
+First-Chunk Recall (Anchor) is reported as a sanity check: anchor uses the 
+first-block query on the same pool as the first-block baseline, so this 
+value must be $\approx 100\%$ for the comparison to be valid.}
+\label{tab:anchor-vs-mean}
+\small
+\begin{tabular}{cccccccc}
+\toprule
+$\theta$ & $L_{\max}$ & \#clust & \makecell{Avg Cluster\\Size} & \makecell{Global\\(Anchor)} & \makecell{Global\\(Mean)} & $\Delta$ & \makecell{First\\(Anchor)} \\
+\midrule
+$0.95$ & 1024 & 3500 & 2.0 & 80.5 & 57.7 & +22.7 & 100.0 \\
+$0.95$ & 2048 & 1744 & 4.0 & 68.6 & 53.9 & +14.7 & 100.0 \\
+$0.95$ & 4096 & 870 & 7.9 & 62.9 & 50.7 & +12.2 & 100.0 \\
+\midrule
+$0.97$ & 1024 & 3498 & 2.0 & 80.5 & 57.7 & +22.7 & 100.0 \\
+$0.97$ & 2048 & 1744 & 4.0 & 68.6 & 53.9 & +14.7 & 100.0 \\
+$0.97$ & 4096 & 874 & 7.8 & 62.9 & 50.7 & +12.2 & 100.0 \\
+\midrule
+$0.99$ & 1024 & 3482 & 2.0 & 80.5 & 57.7 & +22.7 & 100.0 \\
+$0.99$ & 2048 & 1758 & 3.9 & 68.8 & 53.9 & +14.9 & 100.0 \\
+$0.99$ & 4096 & 903 & 7.5 & 63.4 & 51.1 & +12.3 & 100.0 \\
+\midrule
+$0.999$ & 1024 & 2926 & 2.0 & 80.7 & 58.2 & +22.5 & 100.0 \\
+$0.999$ & 2048 & 1603 & 3.7 & 70.9 & 54.4 & +16.5 & 100.0 \\
+$0.999$ & 4096 & 974 & 6.0 & 67.4 & 51.9 & +15.5 & 100.0 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,3 +1,4 @@
+# File: scripts/multiprocessing-benchmark.sh
 #!/bin/bash
 
 SHORT=w:,f:,d:,o:,h

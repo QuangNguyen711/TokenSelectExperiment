@@ -1,3 +1,4 @@
+# File: scripts/infinitebench-mp-qwen.sh
 #!/bin/sh
 
 config_path=config/qwen-token-retrieval.yaml
