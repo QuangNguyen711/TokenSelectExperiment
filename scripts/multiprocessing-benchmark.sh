@@ -48,12 +48,24 @@ while true; do
     esac
 done
 
+# Read external CUDA_VISIBLE_DEVICES into an array if set
+if [ -n "$CUDA_VISIBLE_DEVICES" ]; then
+    IFS=',' read -r -a G_ARRAY <<< "$CUDA_VISIBLE_DEVICES"
+else
+    # Default to 0, 1, 2... if not set
+    G_ARRAY=()
+    for ((i=0; i < $world_size; ++i)); do
+        G_ARRAY+=($i)
+    done
+fi
+
 mkdir -p ${output_dir_path}
 
 for ((rank=0; rank < $world_size; ++rank))
 do
+    TARGET_GPU=${G_ARRAY[$rank]}
     rm -rf ~/.cache/outlines
-    CUDA_VISIBLE_DEVICES=${rank} python benchmark/pred.py \
+    CUDA_VISIBLE_DEVICES=${TARGET_GPU} python benchmark/pred.py \
     --config_path ${config_path} \
     --output_dir_path ${output_dir_path} \
     --datasets ${datasets} \
