@@ -100,7 +100,7 @@ def get_model_and_tokenizer(config, kernel_size):
         dtype=config.dtype,
         chunked_prefill_size=config.chunk_size,
         max_prefill_tokens=config.max_len,
-        mem_fraction_static=0.85,
+        mem_fraction_static=0.65,
         disable_cuda_graph=True,
         disable_regex_jump_forward=True,
         disable_radix_cache=True,
@@ -444,7 +444,7 @@ if __name__ == "__main__":
 
         data_list = list(data)
         random.seed(42)
-        data = random.sample(data_list, min(100, len(data_list)))
+        data = random.sample(data_list, min(5, len(data_list)))
 
         out_path = os.path.join(output_dir_path, f"{dname}.jsonl")
         # if multiprocessing:
@@ -460,6 +460,23 @@ if __name__ == "__main__":
             os.remove(ttft_record_path)
         
         tr.TTFT_RECORD_PATH = ttft_record_path
+
+        # NEW: stats + overlap log paths (per dataset)
+        stats_record_path = os.path.join(output_dir_path, f"{dname}_stats.jsonl")
+        if os.path.exists(stats_record_path):
+            os.remove(stats_record_path)
+        tr.STATS_RECORD_PATH = stats_record_path
+
+        overlap_record_path = os.path.join(output_dir_path, f"{dname}_overlap.jsonl")
+        if os.path.exists(overlap_record_path):
+            os.remove(overlap_record_path)
+        tr.OVERLAP_RECORD_PATH = overlap_record_path
+
+        diag_record_path = os.path.join(output_dir_path, f"{dname}_diag.jsonl")
+        if os.path.exists(diag_record_path):
+            os.remove(diag_record_path)
+        tr.DIAGNOSTIC_RECORD_PATH = diag_record_path
+
         model, tokenizer = get_model_and_tokenizer(config, kernel_size)
 
         # --- RESET ĐỒNG HỒ TRƯỚC KHI CHẠY DATASET ---

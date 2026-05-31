@@ -32,7 +32,9 @@ import time
 _TRACKER_PREFILL_START = 0.0
 GLOBAL_TOTAL_TTFT = 0.0
 TTFT_RECORD_PATH = None
-
+STATS_RECORD_PATH = None
+OVERLAP_RECORD_PATH = None
+DIAGNOSTIC_RECORD_PATH = None
 
 def record_ttft(ttft: float):
     global GLOBAL_TOTAL_TTFT
@@ -935,6 +937,368 @@ def patch_model():
                     start = chunk_idx * BASE_CHUNK
                     end = min((chunk_idx + 1) * BASE_CHUNK, seq_len)
                     chunk_plan.append((start, end))
+
+            # =================================================================
+            # STATS + OVERLAP LOG (no effect on generation)
+            # =================================================================
+            if STATS_RECORD_PATH is not None or OVERLAP_RECORD_PATH is not None:
+                import json as _json
+
+                # --- Stats: consecutive sims, chunk lengths, first vs mean ---
+                if STATS_RECORD_PATH is not None:
+                    with torch.no_grad():
+                        q_float = q.float().view(q.shape[0], -1)
+                        q_norm = torch.nn.functional.normalize(q_float, p=2, dim=-1)
+                        consecutive_sim = (q_norm[:-1] * q_norm[1:]).sum(dim=-1)
+                        consec_sim_list = consecutive_sim.cpu().tolist()
+
+                    chunk_lengths_list = []
+                    first_vs_mean_list = []
+                    with torch.no_grad():
+                        for s_, e_ in chunk_plan:
+                            chunk_lengths_list.append(e_ - s_)
+                            first_token = q[s_].float().view(-1)
+                            first_token_norm = torch.nn.functional.normalize(
+                                first_token, p=2, dim=-1
+                            )
+                            chunk_tokens = q[s_:e_].float().view(e_ - s_, -1)
+                            chunk_mean = chunk_tokens.mean(dim=0)
+                            chunk_mean_norm = torch.nn.functional.normalize(
+                                chunk_mean, p=2, dim=-1
+                            )
+                            first_vs_mean_list.append(
+                                torch.dot(first_token_norm, chunk_mean_norm).item()
+                            )
+
+                    with open(STATS_RECORD_PATH, "a", encoding="utf-8") as f:
+                        f.write(_json.dumps({
+                            "layer": self.layer_id,
+                            "consecutive_sims": consec_sim_list,
+                            "chunk_lengths": chunk_lengths_list,
+                            "first_vs_mean_sims": first_vs_mean_list,
+                        }) + "\n")
+
+                # --- Overlap: anchor vs mean retrieval on same pool ---
+                if OVERLAP_RECORD_PATH is not None:
+                    retriever = input_metadata.token_retriever
+                    num_tokens_before = retriever.num_tokens[self.layer_id]
+
+                    if num_tokens_before > N_INIT:
+                        pool_indices = retriever.token_indices[
+                            self.layer_id, N_INIT:num_tokens_before
+                        ].contiguous()
+
+                        if pool_indices.shape[0] >= TOP_K:
+                            overlap_records = []
+
+                            def _build_fp(q_slice):
+                                if QUERY_ROTATE:
+                                    pos_ids = torch.arange(
+                                        N_Local, N_Local + q_slice.shape[0],
+                                        device=q_slice.device,
+                                    )
+                                    q_rot = retriever.rope_embedding(
+                                        q_slice.view(
+                                            q_slice.shape[0], -1, self.head_dim
+                                        ),
+                                        pos_ids,
+                                    ).view(q_slice.shape[0], -1)
+                                else:
+                                    q_rot = q_slice.view(q_slice.shape[0], -1)
+                                return q_rot.mean(dim=0)
+
+                            def _retrieve_set(fp):
+                                topk_pos = retriever.get_topk_tokens(
+                                    fp,
+                                    retriever.token_fingerprints[self.layer_id],
+                                    TOP_K,
+                                    pool_indices,
+                                )
+                                cache_idx = pool_indices[topk_pos.long()]
+                                return set(cache_idx.cpu().tolist())
+
+                            for cl_start, cl_end in chunk_plan:
+                                cl_blocks = (cl_end - cl_start) // BASE_CHUNK
+                                if cl_blocks < 2:
+                                    continue
+
+                                # Anchor query = first block of cluster
+                                anchor_fp = _build_fp(
+                                    q[cl_start:cl_start + BASE_CHUNK].float()
+                                )
+                                # Mean query = full cluster
+                                mean_fp = _build_fp(
+                                    q[cl_start:cl_end].float()
+                                )
+
+                                per_sub_sets = []
+                                for j in range(cl_blocks):
+                                    s_ = cl_start + j * BASE_CHUNK
+                                    e_ = s_ + BASE_CHUNK
+                                    sub_fp = _build_fp(q[s_:e_].float())
+                                    per_sub_sets.append(_retrieve_set(sub_fp))
+
+                                I_anchor = _retrieve_set(anchor_fp)
+                                I_mean = _retrieve_set(mean_fp)
+
+                                rec_a, rec_m = [], []
+                                for I_j in per_sub_sets:
+                                    if not I_j:
+                                        continue
+                                    rec_a.append(len(I_anchor & I_j) / len(I_j))
+                                    rec_m.append(len(I_mean & I_j) / len(I_j))
+
+                                if not rec_a:
+                                    continue
+
+                                overlap_records.append({
+                                    "cluster_size": cl_blocks,
+                                    "pool_size": int(pool_indices.shape[0]),
+                                    "global_recall_anchor": sum(rec_a) / len(rec_a),
+                                    "global_recall_mean": sum(rec_m) / len(rec_m),
+                                    "first_recall_anchor": rec_a[0],
+                                    "first_recall_mean": rec_m[0],
+                                    "last_recall_anchor": rec_a[-1],
+                                    "last_recall_mean": rec_m[-1],
+                                })
+
+                            if overlap_records:
+                                with open(OVERLAP_RECORD_PATH, "a", encoding="utf-8") as f:
+                                    f.write(_json.dumps({
+                                        "layer": self.layer_id,
+                                        "overlaps": overlap_records,
+                                    }) + "\n")
+            
+            # =================================================================
+            # DIAGNOSTIC LOG v2: đo TRỰC TIẾP đại lượng quyết định top-K
+            # =================================================================
+            if DIAGNOSTIC_RECORD_PATH is not None:
+                import json as _json
+                import math
+                retriever = input_metadata.token_retriever
+                num_tokens_before = retriever.num_tokens[self.layer_id]
+
+                # ===== A. Chunk-level cosine (consecutive blocks) =====
+                chunk_cosine_list = []
+                num_blocks_local = seq_len // BASE_CHUNK
+                if num_blocks_local >= 2:
+                    with torch.no_grad():
+                        q_trunc = q[:num_blocks_local * BASE_CHUNK].float()
+                        q_blocks = q_trunc.view(num_blocks_local, BASE_CHUNK, -1).mean(dim=1)
+                        q_blocks_n = torch.nn.functional.normalize(q_blocks, p=2, dim=-1)
+                        chunk_cosine = (q_blocks_n[:-1] * q_blocks_n[1:]).sum(dim=-1)
+                        chunk_cosine_list = chunk_cosine.cpu().tolist()
+
+                diagnostic_records = []
+
+                pool_ok = num_tokens_before > N_INIT
+                if pool_ok:
+                    pool_indices = retriever.token_indices[
+                        self.layer_id, N_INIT:num_tokens_before
+                    ].contiguous()
+                    if pool_indices.shape[0] < TOP_K:
+                        pool_ok = False
+
+                if pool_ok:
+                    pool_size = pool_indices.shape[0]
+                    num_q_heads = self.tp_q_head_num
+                    num_kv_heads = self.tp_k_head_num
+
+                    # ============================================================
+                    # Helper: tái tạo CHÍNH XÁC pipeline get_topk_tokens
+                    # tới NGAY TRƯỚC torch.topk (= scores_summed)
+                    # ============================================================
+                    def _pipeline_to_summed(fp):
+                        """
+                        Input: fp [num_q_heads * head_dim] (post-RoPE, mean-pooled)
+                        Output:
+                          raw_scores: [num_q_heads, pool] in bfloat16 (paged_matmul output)
+                          per_head_softmax: [num_q_heads, pool] float32
+                          summed: [pool] float32 — ĐẠI LƯỢNG QUYẾT ĐỊNH TOP-K
+                        """
+                        qf = fp.to(retriever.dtype).view(num_q_heads, self.head_dim)
+                        raw = torch.empty(
+                            (num_q_heads, pool_size),
+                            device=q.device, dtype=torch.bfloat16,
+                        )
+                        paged_matmul(
+                            qf,
+                            retriever.token_fingerprints[self.layer_id],
+                            pool_indices,
+                            raw,
+                            pool_size,
+                            num_q_heads,
+                            num_kv_heads,
+                            self.head_dim,
+                        )
+                        per_head_softmax = torch.softmax(raw, dim=-1).float()
+                        summed = per_head_softmax.sum(dim=0)
+                        return raw.float(), per_head_softmax, summed
+
+                    def _build_rotated_fp(q_slice):
+                        if QUERY_ROTATE:
+                            pos_ids = torch.arange(
+                                N_Local, N_Local + q_slice.shape[0],
+                                device=q.device,
+                            )
+                            q_rot = retriever.rope_embedding(
+                                q_slice.view(q_slice.shape[0], -1, self.head_dim),
+                                pos_ids,
+                            ).view(q_slice.shape[0], -1)
+                        else:
+                            q_rot = q_slice.view(q_slice.shape[0], -1)
+                        return q_rot.mean(dim=0)
+
+                    for cl_start, cl_end in chunk_plan:
+                        cl_blocks = (cl_end - cl_start) // BASE_CHUNK
+                        if cl_blocks < 2:
+                            continue
+
+                        anchor_slice = q[cl_start:cl_start + BASE_CHUNK].float()
+                        last_start = cl_start + (cl_blocks - 1) * BASE_CHUNK
+                        last_slice = q[last_start:last_start + BASE_CHUNK].float()
+
+                        # Cosine pre/post RoPE (giữ lại từ v1 để continuity)
+                        a_mean_pre = anchor_slice.mean(dim=0)
+                        l_mean_pre = last_slice.mean(dim=0)
+                        cos_pre = torch.nn.functional.cosine_similarity(
+                            a_mean_pre.unsqueeze(0), l_mean_pre.unsqueeze(0), dim=-1
+                        ).item()
+
+                        a_fp = _build_rotated_fp(anchor_slice)
+                        l_fp = _build_rotated_fp(last_slice)
+                        cos_post = torch.nn.functional.cosine_similarity(
+                            a_fp.unsqueeze(0), l_fp.unsqueeze(0), dim=-1
+                        ).item()
+
+                        # ============================================================
+                        # Đo TẤT CẢ các bước pipeline cho anchor query
+                        # ============================================================
+                        raw_a, soft_a, sum_a = _pipeline_to_summed(a_fp)
+                        raw_l, soft_l, sum_l = _pipeline_to_summed(l_fp)
+
+                        # ---- B1. Raw score statistics (bước 4: paged_matmul output) ----
+                        # Để xem bf16 quantization có thật sự nghiêm trọng không
+                        raw_stats = {
+                            "max_abs": float(raw_a.abs().max()),
+                            "mean_abs": float(raw_a.abs().mean()),
+                            # bf16 spacing tại magnitude này (~ulp)
+                            "bf16_ulp_at_max": float(
+                                torch.tensor(raw_a.abs().max().item(),
+                                             dtype=torch.bfloat16).float().item()
+                                - torch.tensor(
+                                    raw_a.abs().max().item() * (1 - 1/256),
+                                    dtype=torch.bfloat16,
+                                ).float().item()
+                            ),
+                        }
+
+                        # ---- B2. Per-head softmax entropy (bước 5a) ----
+                        # Đo MỖI head xem có sink/sharp không
+                        eps = 1e-12
+                        per_head_entropy = -(soft_a * (soft_a + eps).log()).sum(dim=-1)
+                        per_head_entropy_norm = per_head_entropy / math.log(pool_size)
+                        # Đo "max prob" mỗi head — nếu cao ~ sink
+                        per_head_max_prob = soft_a.max(dim=-1).values
+
+                        # ---- B3. Cross-head divergence (bước 5b — chỗ ta bỏ qua) ----
+                        # Mỗi head vote argmax token nào? Nếu các head vote KHÁC token
+                        # khác nhau -> sum lại thành phẳng (đây là cái gây ra Layer 27)
+                        head_argmax = soft_a.argmax(dim=-1)  # [num_q_heads]
+                        unique_argmax = len(set(head_argmax.cpu().tolist()))
+                        # Tỉ lệ: bao nhiêu head vote vào top-100 chung của post-sum
+                        top100_pool = set(
+                            torch.topk(sum_a, min(100, pool_size)).indices.cpu().tolist()
+                        )
+                        heads_voting_top100 = sum(
+                            1 for h in range(num_q_heads)
+                            if head_argmax[h].item() in top100_pool
+                        )
+                        cross_head_divergence = {
+                            "unique_argmax_count": unique_argmax,  # /28
+                            "heads_voting_top100": heads_voting_top100,
+                            "pct_heads_aligned": heads_voting_top100 / num_q_heads,
+                        }
+
+                        # ---- B4. POST-SUM distribution (bước 6 — ĐẠI LƯỢNG CHÍNH) ----
+                        # Đây là cái thực sự quyết định top-K
+                        p_sum = sum_a / sum_a.sum()
+                        true_entropy_norm = float(
+                            -(p_sum * (p_sum + eps).log()).sum() / math.log(pool_size)
+                        )
+                        post_sum_max = float(sum_a.max())
+                        post_sum_mean = float(sum_a.mean())
+
+                        # ---- B5. Gap tại cutoff top-K (bước 7) ----
+                        actual_topk = min(TOP_K, pool_size)
+                        sorted_sum_a, _ = torch.sort(sum_a, descending=True)
+                        # Gap giữa token thứ K-1 và K (rìa cutoff)
+                        if actual_topk < pool_size:
+                            cutoff_val = float(sorted_sum_a[actual_topk - 1])
+                            gap_at_cutoff = float(
+                                sorted_sum_a[actual_topk - 1] - sorted_sum_a[actual_topk]
+                            )
+                        else:
+                            cutoff_val = float(sorted_sum_a[-1])
+                            gap_at_cutoff = 0.0
+
+                        # Vùng tranh chấp: token có score trong [cutoff - ε, cutoff + ε]
+                        # ε = 0.1% của range total
+                        score_range = float(sorted_sum_a[0] - sorted_sum_a[-1])
+                        contested_eps = max(score_range * 1e-3, 1e-9)
+                        contested_count = int(
+                            ((sum_a >= cutoff_val - contested_eps) &
+                             (sum_a <= cutoff_val + contested_eps)).sum()
+                        )
+
+                        # ---- B6. Tautology check: post-sum overlap (= recall) ----
+                        # Phải KHỚP với recall last-vs-anchor để xác nhận pipeline đúng
+                        top_a_set = set(torch.topk(sum_a, actual_topk).indices.cpu().tolist())
+                        top_l_set = set(torch.topk(sum_l, actual_topk).indices.cpu().tolist())
+                        post_sum_overlap = len(top_a_set & top_l_set) / len(top_a_set)
+
+                        # ---- B7. Anchor-vs-last divergence at sum level ----
+                        # Trước khi topk, hai vector sum khác nhau bao nhiêu?
+                        sum_cosine = float(torch.nn.functional.cosine_similarity(
+                            sum_a.unsqueeze(0), sum_l.unsqueeze(0), dim=-1
+                        ))
+                        sum_diff_norm = float((sum_a - sum_l).abs().mean())
+
+                        diagnostic_records.append({
+                            "cluster_size": cl_blocks,
+                            "pool_size": pool_size,
+                            "cos_pre_rope": cos_pre,
+                            "cos_post_rope": cos_post,
+                            # bước 4
+                            "raw_score": raw_stats,
+                            # bước 5a
+                            "per_head_entropy_norm_median": float(per_head_entropy_norm.median()),
+                            "per_head_max_prob_median": float(per_head_max_prob.median()),
+                            "per_head_max_prob_max": float(per_head_max_prob.max()),
+                            # bước 5b — KEY measurement
+                            "cross_head_divergence": cross_head_divergence,
+                            # bước 6 — KEY measurement
+                            "true_entropy_norm": true_entropy_norm,
+                            "post_sum_max": post_sum_max,
+                            "post_sum_mean": post_sum_mean,
+                            # bước 7 — KEY measurement
+                            "gap_at_cutoff": gap_at_cutoff,
+                            "cutoff_val": cutoff_val,
+                            "score_range": score_range,
+                            "contested_count": contested_count,
+                            # tautology check
+                            "post_sum_overlap": post_sum_overlap,
+                            "sum_cosine": sum_cosine,
+                            "sum_diff_norm": sum_diff_norm,
+                        })
+
+                if chunk_cosine_list or diagnostic_records:
+                    with open(DIAGNOSTIC_RECORD_PATH, "a", encoding="utf-8") as f:
+                        f.write(_json.dumps({
+                            "layer": self.layer_id,
+                            "chunk_cosines": chunk_cosine_list,
+                            "clusters": diagnostic_records,
+                        }) + "\n")
 
             # BƯỚC 2: Thực thi theo Plan
             for start, end in chunk_plan:
