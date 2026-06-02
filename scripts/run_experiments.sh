@@ -67,7 +67,7 @@ EOF
         --output_dir_path $output_dir \
         --world_size $world_size
 
-    python benchmark/infinitebench_eval.py --result-dir ${output_dir}
+    CUDA_VISIBLE_DEVICES=0 python benchmark/infinitebench_eval.py --result-dir ${output_dir}
 }
 
 # ==============================================================================
@@ -90,18 +90,30 @@ EOF
 
 # run_experiment "token-retrieval" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "true"
 
-run_experiment "sim-0.95-max-2048-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true"
+# run_experiment "sim-0.95-max-2048-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true"
 
-run_experiment "sim-0.95-max-2048-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false"
+# run_experiment "sim-0.95-max-2048-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false"
 
-run_experiment "sim-0.97-max-1024-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "true"
+# run_experiment "sim-0.97-max-1024-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "true"
 
-run_experiment "sim-0.97-max-1024-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "false"
+# run_experiment "sim-0.97-max-1024-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "false"
 
-run_experiment "sim-0.97-max-2048-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "true"
+# run_experiment "sim-0.97-max-2048-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "true"
 
-run_experiment "sim-0.97-max-2048-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "false"
+# run_experiment "sim-0.97-max-2048-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "false"
 
-run_experiment "sim-0.97-max-4096-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "true"
+run_experiment "sim-0.95-max-4096-devineh-true-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "true"
 
-run_experiment "sim-0.97-max-4096-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "false"
+run_experiment "sim-0.95-max-4096-devineh-true-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "false"
+
+run_experiment "sim-0.97-max-4096-devineh-true-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "true"
+
+run_experiment "sim-0.97-max-4096-devineh-true-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "false"
+
+run_experiment "sim-0.99-max-4096-devineh-true-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.99 4096 "true" "true"
+
+run_experiment "sim-0.99-max-4096-devineh-true-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.99 4096 "true" "false"
+
+# run_experiment "sim-0.97-max-4096-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "true"
+
+# run_experiment "sim-0.97-max-4096-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "false"
