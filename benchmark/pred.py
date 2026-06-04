@@ -100,7 +100,7 @@ def get_model_and_tokenizer(config, kernel_size):
         dtype=config.dtype,
         chunked_prefill_size=config.chunk_size,
         max_prefill_tokens=config.max_len,
-        mem_fraction_static=0.65,
+        mem_fraction_static=0.7,
         disable_cuda_graph=True,
         disable_regex_jump_forward=True,
         disable_radix_cache=True,
