@@ -496,26 +496,38 @@ class TokenRetriever:
                     scores.unsqueeze(0), kernel_size=KERNEL_SIZE, padding=(KERNEL_SIZE-1)//2, stride=1
                 ).squeeze(0)
             
-            # Lấy Top-K chung
-            topk_scores, topk_indices = torch.topk(scores, actual_topk, dim=-1)
-            
-            # Xử lý Adaptive Top-K (Chỉ dùng cho Ý 1 và Gốc)
+            # =========================================================
+            # ENTROPY-BASED ADAPTIVE TOP-K (PERPLEXITY MARGIN)
+            # =========================================================
             if ADAPTIVE_TOPK: 
-                target_sum = ATTENTION_THRESHOLD * scores.sum(dtype=torch.float32) + 1e-5
-                cumsum_scores = torch.cumsum(topk_scores, dim=0, dtype=torch.float32)
-                threshold_mask = cumsum_scores >= target_sum
+                scores_float = scores.float()
                 
-                max_val, max_idx = torch.max(threshold_mask, dim=0)
-                if max_val:
-                    adaptive_k = max_idx.item() + 1
-                else:
-                    adaptive_k = actual_topk 
+                # 1. Chuẩn hóa lại mảng scores thành phân bố xác suất hợp lệ (tổng = 1)
+                probs = scores_float / (scores_float.sum(dim=-1, keepdim=True) + 1e-12)
                 
-                adaptive_k = max(adaptive_k, 1)
-                final_indices = topk_indices[:adaptive_k]
+                # 2. Tính Entropy (O(N) - Rất nhanh, không cần Sort)
+                eps = 1e-12
+                entropy = -(probs * (probs + eps).log()).sum(dim=-1)
+                
+                # 3. Tính kích thước Token hiệu dụng (Effective Support Size)
+                k_effective = torch.exp(entropy).item()
+                
+                # 4. Áp dụng Hệ số an toàn (3.5) và Giới hạn K (Clamp)
+                k_dynamic = int(k_effective * 3.5)
+                
+                # Rào chắn bảo vệ: min_k = 32, max_k = 8192 (hoặc không vượt quá số token hiện có)
+                max_k_limit = min(8192, num_tokens)
+                min_k_limit = min(32, num_tokens)
+                k_dynamic = max(min_k_limit, min(k_dynamic, max_k_limit))
+                
+                # 5. Gọi Top-K với k_dynamic (Nhanh gấp nhiều lần so với Global Sort)
+                _, final_indices = torch.topk(scores, k_dynamic, dim=-1)
+                
             else:
-                final_indices = topk_indices
+                # Nếu tắt Adaptive, dùng nguyên Top-K tĩnh truyền vào
+                _, final_indices = torch.topk(scores, actual_topk, dim=-1)
             
+            # Sort lại vị trí (Position IDs) để đưa vào Attention
             sorted_topk_tokens = torch.sort(final_indices).values
 
         return sorted_topk_tokens

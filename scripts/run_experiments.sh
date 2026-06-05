@@ -36,7 +36,7 @@ model:
   n_local: 512
   top_k: $top_k_val
   max_n_tokens: 1048576
-  adaptive_topk: false
+  adaptive_topk: true
   attention_threshold: 0.9
   l2_norm_pooling: $l2_norm
   weighted_soft_vote: $weighted_vote
@@ -90,18 +90,18 @@ EOF
 
 # run_experiment "token-retrieval" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "true"
 
-run_experiment "sim-0.95-max-2048-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true"
+run_experiment "sim-0.95-max-4096-anchor-adaptive-no-balance-3" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "false"
 
-run_experiment "sim-0.95-max-2048-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false"
+# run_experiment "sim-0.95-max-2048-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false"
 
-run_experiment "sim-0.97-max-1024-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "true"
+# run_experiment "sim-0.97-max-1024-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "true"
 
-run_experiment "sim-0.97-max-1024-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "false"
+# run_experiment "sim-0.97-max-1024-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "false"
 
-run_experiment "sim-0.97-max-2048-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "true"
+# run_experiment "sim-0.97-max-2048-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "true"
 
-run_experiment "sim-0.97-max-2048-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "false"
+# run_experiment "sim-0.97-max-2048-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "false"
 
-run_experiment "sim-0.97-max-4096-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "true"
+# run_experiment "sim-0.97-max-4096-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "true"
 
-run_experiment "sim-0.97-max-4096-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "false"
+# run_experiment "sim-0.97-max-4096-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "false"
