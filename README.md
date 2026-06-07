@@ -201,3 +201,4 @@ bash scripts/run.sh llama3-8b-inst synthetic llama-token-retrieval 63333
 # bash run.sh model_name benchmark_name config_name port (choose an idle port)
 bash scripts/run.sh qwen2-7b-inst synthetic qwen-token-retrieval 63333
 ```
+

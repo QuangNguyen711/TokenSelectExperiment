@@ -65,6 +65,9 @@ SIM_THRESHOLD = 0.95
 MAX_DYNAMIC_CHUNK = 1024
 USE_DYNAMIC_CHUNKING = False
 DYNAMIC_BUDGET_BALANCING = True
+USE_CUMSUM_ADAPTIVE = False
+USE_HYBRID_ADAPTIVE = False
+CUMSUM_THRESHOLD = 0.95
 
 @contextmanager
 def cuda_timer(timer_name="Operation"):
@@ -490,43 +493,87 @@ class TokenRetriever:
             # Phân tán điểm (Tensor Parallelism) - Dùng chung cho Ý 1 và Gốc
             if dist.is_initialized():  # TP
                 dist.all_reduce(scores, op=dist.ReduceOp.SUM)
-            
+
             if KERNEL_SIZE > 0:
+                # ÉP POOLING GIỮ NGUYÊN ĐỘ DÀI cho MỌI kernel (chẵn lẫn lẻ).
+                # Pad bất đối xứng để L_out == L_in và out[i] = max quanh token i,
+                # tránh off-by-one khi KERNEL_SIZE chẵn (vd math_find=128).
+                total_pad = KERNEL_SIZE - 1
+                pad_left = total_pad // 2
+                pad_right = total_pad - pad_left
+                x = scores.unsqueeze(0).unsqueeze(0)  # [1, 1, L]
+                # Pad -inf: vùng đệm không bao giờ thắng trong max -> không lọt top-k.
+                x = torch.nn.functional.pad(x, (pad_left, pad_right), value=float("-inf"))
                 scores = torch.nn.functional.max_pool1d(
-                    scores.unsqueeze(0), kernel_size=KERNEL_SIZE, padding=(KERNEL_SIZE-1)//2, stride=1
-                ).squeeze(0)
-            
+                    x, kernel_size=KERNEL_SIZE, stride=1
+                ).squeeze(0).squeeze(0)
+
             # =========================================================
-            # ENTROPY-BASED ADAPTIVE TOP-K (PERPLEXITY MARGIN)
+            # DYNAMIC TOP-K (SHANNON / CUMSUM / HYBRID)
             # =========================================================
-            if ADAPTIVE_TOPK: 
+            if ADAPTIVE_TOPK or USE_CUMSUM_ADAPTIVE or USE_HYBRID_ADAPTIVE:
                 scores_float = scores.float()
-                
-                # 1. Chuẩn hóa lại mảng scores thành phân bố xác suất hợp lệ (tổng = 1)
+                # 1. Chuẩn hóa xác suất
                 probs = scores_float / (scores_float.sum(dim=-1, keepdim=True) + 1e-12)
-                
-                # 2. Tính Entropy (O(N) - Rất nhanh, không cần Sort)
-                eps = 1e-12
-                entropy = -(probs * (probs + eps).log()).sum(dim=-1)
-                
-                # 3. Tính kích thước Token hiệu dụng (Effective Support Size)
-                k_effective = torch.exp(entropy).item()
-                
-                # 4. Áp dụng Hệ số an toàn (3.5) và Giới hạn K (Clamp)
-                k_dynamic = int(k_effective * 3.5)
-                
-                # Rào chắn bảo vệ: min_k = 32, max_k = 8192 (hoặc không vượt quá số token hiện có)
-                max_k_limit = min(8192, num_tokens)
-                min_k_limit = min(32, num_tokens)
+
+                # CHIỀU DÀI THỰC TẾ CỦA TENSOR NGAY LÚC NÀY (dùng chung cho cả 3 nhánh)
+                available_tokens = probs.shape[-1]
+
+                if ADAPTIVE_TOPK:
+                    # --- 1. THUẦN SHANNON (Nhanh nhất) ---
+                    eps = 1e-12
+                    entropy = -(probs * (probs + eps).log()).sum(dim=-1)
+                    # Bác muốn bỏ hệ số an toàn thì ở nhánh thuần này sẽ bỏ
+                    k_dynamic = int(torch.exp(entropy).item())
+
+                elif USE_CUMSUM_ADAPTIVE:
+                    # --- 2. THUẦN CUMSUM (Chậm nhất vì luôn Sort) ---
+                    sorted_probs, _ = torch.sort(probs, descending=True)
+                    cum_probs = torch.cumsum(sorted_probs, dim=-1)
+                    mask = cum_probs >= CUMSUM_THRESHOLD
+                    k_dynamic = int(mask.int().argmax().item()) + 1 if mask.any() else available_tokens
+
+                elif USE_HYBRID_ADAPTIVE:
+                    # --- 3. HYBRID TỐI ƯU (Đánh nhanh rút gọn) ---
+                    eps = 1e-12
+                    entropy = -(probs * (probs + eps).log()).sum(dim=-1)
+
+                    # LƯU Ý: Phải có hệ số (VD: 1.5) làm MỒI NHỬ.
+                    k_shannon_guess = int(torch.exp(entropy).item() * 1.5)
+
+                    # Rào trần và Rào đáy dùng available_tokens (chiều dài thực sau pooling)
+                    max_k_allowed = min(8192, available_tokens)
+                    min_k_allowed = min(32, available_tokens)
+
+                    # Ép k_shannon_guess vào giữa 2 rào
+                    k_shannon_guess = max(min_k_allowed, min(k_shannon_guess, max_k_allowed))
+
+                    # Dùng topk nháp để check tổng khối lượng (nhanh hơn sort)
+                    topk_probs, _ = torch.topk(probs, k_shannon_guess, dim=-1)
+                    current_mass = topk_probs.sum().item()
+
+                    if current_mass >= CUMSUM_THRESHOLD:
+                        # Đoán trúng, gom đủ xác suất mà KHÔNG CẦN SORT.
+                        k_dynamic = k_shannon_guess
+                    else:
+                        # Phân bố quá phẳng: phải Cumsum vét đáy.
+                        sorted_probs, _ = torch.sort(probs, descending=True)
+                        cum_probs = torch.cumsum(sorted_probs, dim=-1)
+                        mask = cum_probs >= CUMSUM_THRESHOLD
+                        k_dynamic = int(mask.int().argmax().item()) + 1 if mask.any() else available_tokens
+
+                # --- RÀO CHẮN BẢO VỆ CUỐI CÙNG DÀNH CHO CẢ 3 NHÁNH ---
+                max_k_limit = min(8192, available_tokens)
+                min_k_limit = min(32, available_tokens)
                 k_dynamic = max(min_k_limit, min(k_dynamic, max_k_limit))
-                
-                # 5. Gọi Top-K với k_dynamic (Nhanh gấp nhiều lần so với Global Sort)
+
+                # Gọi Top-K chính thức
                 _, final_indices = torch.topk(scores, k_dynamic, dim=-1)
-                
+
             else:
-                # Nếu tắt Adaptive, dùng nguyên Top-K tĩnh truyền vào
+                # Nếu tắt Adaptive, dùng nguyên Top-K tĩnh
                 _, final_indices = torch.topk(scores, actual_topk, dim=-1)
-            
+
             # Sort lại vị trí (Position IDs) để đưa vào Attention
             sorted_topk_tokens = torch.sort(final_indices).values
 
@@ -1136,6 +1183,9 @@ def patch(
         max_dynamic_chunk=1024,
         use_dynamic_chunking=False,
         dynamic_budget_balancing=True,
+        use_cumsum_adaptive=False,
+        use_hybrid_adaptive=False,
+        cumsum_threshold=0.95,
 ):
     global ROPE_BASE
     global ROPE_SCALE
@@ -1161,6 +1211,9 @@ def patch(
     global MAX_DYNAMIC_CHUNK
     global USE_DYNAMIC_CHUNKING
     global DYNAMIC_BUDGET_BALANCING
+    global USE_CUMSUM_ADAPTIVE
+    global USE_HYBRID_ADAPTIVE
+    global CUMSUM_THRESHOLD
 
     ROPE_BASE = rope_base
     ROPE_SCALE = rope_scale
@@ -1193,6 +1246,10 @@ def patch(
     MAX_DYNAMIC_CHUNK = max_dynamic_chunk
     USE_DYNAMIC_CHUNKING = use_dynamic_chunking
     DYNAMIC_BUDGET_BALANCING = dynamic_budget_balancing
+
+    USE_CUMSUM_ADAPTIVE = use_cumsum_adaptive
+    USE_HYBRID_ADAPTIVE = use_hybrid_adaptive
+    CUMSUM_THRESHOLD = cumsum_threshold
 
     patch_input_metadata()
     patch_model_runner()
