@@ -28,7 +28,6 @@ from vllm.model_executor.model_loader.loader import (
 )
 from vllm.model_executor.model_loader.utils import set_default_torch_dtype
 import time
-import math
 
 _TRACKER_PREFILL_START = 0.0
 GLOBAL_TOTAL_TTFT = 0.0
@@ -199,13 +198,10 @@ def paged_matmul_kernel(
         token_ptr,  # [max_num_tokens, num_kv_heads, head_dim]
         indices_ptr,  # [num_relevant_tokens]
         scores_ptr,  # [num_heads, num_relevant_tokens]
-        # Variables
         num_relevant_tokens,
-        # Constants
         NUM_HEADS: tl.constexpr,
         NUM_KV_HEADS: tl.constexpr,
         HEAD_DIM: tl.constexpr,
-        SM_SCALE: tl.constexpr,
         BLOCK_SIZE_TOKENS: tl.constexpr = 128,
 ):
     """
@@ -251,7 +247,7 @@ def paged_matmul_kernel(
     tokens = tl.load(token_ptr + token_offsets, mask=mask_tokens[:, None], other=0.0)
 
     # Shape: [BLOCK_SIZE_TOKENS]
-    scores = tl.sum(query[None, :] * tokens, axis=1)* SM_SCALE
+    scores = tl.sum(query[None, :] * tokens, axis=1)
 
     # Shape: [num_heads, num_relevant_tokens]
     scores_offset = (
@@ -277,8 +273,6 @@ def paged_matmul(
                        ) // BLOCK_SIZE_TOKENS
     grid = (num_heads, num_token_blocks)
 
-    sm_scale = 1.0 / math.sqrt(head_dim)
-
     paged_matmul_kernel[grid](
         query_ptr=query,
         token_ptr=token,
@@ -288,7 +282,6 @@ def paged_matmul(
         NUM_HEADS=num_heads,
         NUM_KV_HEADS=num_kv_heads,
         HEAD_DIM=head_dim,
-        SM_SCALE=sm_scale,
         BLOCK_SIZE_TOKENS=BLOCK_SIZE_TOKENS,
         num_warps=4,
     )
