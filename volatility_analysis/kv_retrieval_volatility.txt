@@ -1,0 +1,371 @@
+=== DANH SÁCH CÁC CÂU BỊ BIẾN ĐỘNG (DATASET: kv_retrieval) ===
+Tổng số: 16 câu. Sắp xếp các câu gây tranh cãi nhất lên đầu.
+
+🔹 Dòng 100 | Số phương pháp trả lời ĐÚNG: 10/19
+   Đáp án chuẩn: ['db7b3305-4523-43ab-ac84-63f8a77d255c']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a77d255c".
+      [✅] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a77d255c".
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a77d255c".
+      [❌] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a7123258".
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a7d255c".
+      [❌] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a7123258".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a77d255c".
+      [✅] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a77d255c".
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a77d255c".
+      [❌] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a7123258".
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a7d255c".
+      [❌] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a7123258".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a77d255c".
+      [✅] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a77d255c".
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a77d255c".
+      [❌] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a7123258".
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a7d255c".
+      [❌] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a7123258".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "6560409b-9f7d-422c-af42-97fe97123258" is "db7b3305-4523-43ab-ac84-63f8a77d255c".
+--------------------------------------------------------------------------------
+🔹 Dòng 49 | Số phương pháp trả lời ĐÚNG: 12/19
+   Đáp án chuẩn: ['88841bb0-4979-424c-9d46-9d0ca5cb4a1d']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1b".
+      [❌] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1b".
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1f".
+      [✅] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1d".
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1d".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1d".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1d".
+      [❌] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1b".
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1f".
+      [✅] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1d".
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1d".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1d".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1d".
+      [❌] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1b".
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1f".
+      [✅] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1d".
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1d".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1d".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "bf4e6364-85b7-4397-b678-f832cc5432a6" is "88841bb0-4979-424c-9d46-9d0ca5cb4a1d".
+--------------------------------------------------------------------------------
+🔹 Dòng 70 | Số phương pháp trả lời ĐÚNG: 7/19
+   Đáp án chuẩn: ['7765de22-fd69-4251-882d-272af1196b01']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-fd69-4251-882d-272af1196b01".
+      [❌] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is not present in the provided JSON object.
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-c065-4d38-8f22-e3fe600247b4".
+      [❌] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-6f90-412a-903a-67a5e4a094cd".
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-ff69-4251-882d-272af1196b01".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-fd69-4251-882d-272af1196b01".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-fd69-4251-882d-272af1196b01".
+      [❌] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is not present in the provided JSON object.
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-c065-4d38-8f22-e3fe600247b4".
+      [❌] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-6f90-412a-903a-67a5e4a094cd".
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-ff69-4251-882d-272af1196b01".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-fd69-4251-882d-272af1196b01".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-fd69-4251-882d-272af1196b01".
+      [❌] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is not present in the provided JSON object.
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-c065-4d38-8f22-e3fe600247b4".
+      [❌] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-6f90-412a-903a-67a5e4a094cd".
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-ff69-4251-882d-272af1196b01".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-fd69-4251-882d-272af1196b01".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "5eea9150-c377-4a1b-a9eb-3840e8d73dd9" is "7765de22-fd69-4251-882d-272af1196b01".
+--------------------------------------------------------------------------------
+🔹 Dòng 84 | Số phương pháp trả lời ĐÚNG: 6/19
+   Đáp án chuẩn: ['3088bc1c-db24-4285-ad40-e002420425b7']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420bcb53".
+      [❌] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420bced4".
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420bced4".
+      [❌] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is not present in the provided JSON data.
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420b7c6".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420425b7".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420425b7".
+      [❌] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420bced4".
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420bced4".
+      [❌] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is not present in the provided JSON data.
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420b7c6".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420425b7".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420425b7".
+      [❌] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420bced4".
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420bced4".
+      [❌] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is not present in the provided JSON data.
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420b7c6".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420425b7".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "e06f6a4a-56f7-4712-90fb-15e4f70bcb53" is "3088bc1c-db24-4285-ad40-e002420425b7".
+--------------------------------------------------------------------------------
+🔹 Dòng 12 | Số phương pháp trả lời ĐÚNG: 15/19
+   Đáp án chuẩn: ['7150cfee-7760-43bf-a3c8-bf43cd04e4f3']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "8631d56f-f1eb-4acf-982b-42334f389c89".
+      [❌] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "8898eee9-ef0f-4f65-ac17-d44df8c67d82".
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [✅] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [❌] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "8898eee9-ef0f-4f65-ac17-d44df8c67d82".
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [✅] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [❌] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "8898eee9-ef0f-4f65-ac17-d44df8c67d82".
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [✅] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "72c03d96-7e3c-4566-8af1-054238f73f84" is "7150cfee-7760-43bf-a3c8-bf43cd04e4f3".
+--------------------------------------------------------------------------------
+🔹 Dòng 22 | Số phương pháp trả lời ĐÚNG: 15/19
+   Đáp án chuẩn: ['8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "97b74c60-4e46-4662-a3c8-c820739f238c".
+      [✅] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [❌] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "97b74c60-30ef-4662-a3c8-c820739f238c".
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [✅] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [❌] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "97b74c60-30ef-4662-a3c8-c820739f238c".
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [✅] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [❌] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "97b74c60-30ef-4662-a3c8-c820739f238c".
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "8cfab456-852b-4573-833e-d69fdc5ee5eb" is "8a6b64eb-60d4-4f11-b3cc-8c29ee47c20c".
+--------------------------------------------------------------------------------
+🔹 Dòng 58 | Số phương pháp trả lời ĐÚNG: 16/19
+   Đáp án chuẩn: ['ea33fc79-7cc8-4dc5-b4e9-1de769c13c54']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [✅] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [❌] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "69721be6-58b5-4f30-a998-89fdae4df172".
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [✅] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [❌] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "69721be6-58b5-4f30-a998-89fdae4df172".
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [✅] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [❌] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "69721be6-58b5-4f30-a998-89fdae4df172".
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "3e27194d-c332-4513-98e9-7059e1dff1b8" is "ea33fc79-7cc8-4dc5-b4e9-1de769c13c54".
+--------------------------------------------------------------------------------
+🔹 Dòng 64 | Số phương pháp trả lời ĐÚNG: 16/19
+   Đáp án chuẩn: ['60650cf1-a026-4489-bb85-5d4cf4c207f2']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [✅] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-5d4cf4c207f2".
+      [✅] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [✅] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-5d4cf4c207f2".
+      [✅] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [✅] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-5d4cf4c207f2".
+      [✅] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "2d570933-36d0-47fa-83e9-6ca917961f2b" is "60650cf1-a026-4489-bb85-5d4cf4c207f2".
+--------------------------------------------------------------------------------
+🔹 Dòng 65 | Số phương pháp trả lời ĐÚNG: 16/19
+   Đáp án chuẩn: ['0840a610-7fbb-4629-a11a-1029dff23cf9']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [✅] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [✅] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-a11a-1029-dff23cf9dc93".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [✅] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [✅] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-a11a-1029-dff23cf9dc93".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [✅] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [✅] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-a11a-1029-dff23cf9dc93".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "2306c478-762b-48fa-9ecd-520a159c0677" is "0840a610-7fbb-4629-a11a-1029dff23cf9".
+--------------------------------------------------------------------------------
+🔹 Dòng 69 | Số phương pháp trả lời ĐÚNG: 16/19
+   Đáp án chuẩn: ['f83b6104-a4f1-4b44-aaf4-517b5f43639d']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f831efa3-db96-41ec-8576-15360470888b".
+      [✅] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f831efa3-db96-41ec-8576-15360470888b".
+      [✅] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f83b6104-a4f1-4b44-aaf4-517b5f43639d".
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "a4ed60e8-7555-4039-9614-a6904435e2c1" is "f831efa3-db96-41ec-8576-15360470888b".
+--------------------------------------------------------------------------------
+🔹 Dòng 73 | Số phương pháp trả lời ĐÚNG: 16/19
+   Đáp án chuẩn: ['b7cf3443-180d-4678-8136-a8552c3cb56a']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4ad7-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4ad7-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4ad7-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "43455c0e-27b2-4139-89b1-d4f48e1bacae" is "b7cf3443-180d-4678-8136-a8552c3cb56a".
+--------------------------------------------------------------------------------
+🔹 Dòng 48 | Số phương pháp trả lời ĐÚNG: 18/19
+   Đáp án chuẩn: ['d67c8770-9733-4dc7-a6f8-d0a4d29b1cce']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1e88".
+      [✅] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "c26fdade-0e23-4c67-9f6e-b25c941645ea" is "d67c8770-9733-4dc7-a6f8-d0a4d29b1cce".
+--------------------------------------------------------------------------------
+🔹 Dòng 55 | Số phương pháp trả lời ĐÚNG: 18/19
+   Đáp án chuẩn: ['3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee39".
+      [✅] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "866cdd9e-c30f-4a95-a035-59e62dc3ddcc" is "3ad2dc4f-9cad-45b0-a7d0-a3e0e0beee41".
+--------------------------------------------------------------------------------
+🔹 Dòng 62 | Số phương pháp trả lời ĐÚNG: 18/19
+   Đáp án chuẩn: ['cf8f84cd-841b-4a57-a012-9dd0402af50a']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd04b182556".
+      [✅] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "d8d4dbee-6b2a-434e-a1b4-3f604b182556" is "cf8f84cd-841b-4a57-a012-9dd0402af50a".
+--------------------------------------------------------------------------------
+🔹 Dòng 72 | Số phương pháp trả lời ĐÚNG: 18/19
+   Đáp án chuẩn: ['88bcac84-8a20-4df0-8f45-e45dc40c108a']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-96ee-413db7be0e2c".
+      [✅] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "dddf6ee6-b91d-4df2-a6e8-1d53be9e91c9" is "88bcac84-8a20-4df0-8f45-e45dc40c108a".
+--------------------------------------------------------------------------------
+🔹 Dòng 92 | Số phương pháp trả lời ĐÚNG: 18/19
+   Đáp án chuẩn: ['86a45fd0-4a3a-457f-9e2a-de8841605abf']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a456f5-4a4e-4296-8e40-6f3b3410f1dd".
+      [✅] qwen-sim-0.95-max-1024-true-anchor: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.95-max-2048-true-anchor: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.95-max-4096-true-anchor: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.97-max-1024-true-anchor: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.97-max-2048-true-anchor: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.99-max-1024-true-anchor: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.99-max-2048-true-anchor: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.99-max-4096-true-anchor: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: The value associated with the specified key "55cc1fce-5e3e-4e8d-aea7-b5e2d032a730" is "86a45fd0-4a3a-457f-9e2a-de8841605abf".
+--------------------------------------------------------------------------------

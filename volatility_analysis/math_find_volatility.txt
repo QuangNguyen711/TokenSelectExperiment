@@ -1,0 +1,325 @@
+=== DANH SÁCH CÁC CÂU BỊ BIẾN ĐỘNG (DATASET: math_find) ===
+Tổng số: 14 câu. Sắp xếp các câu gây tranh cãi nhất lên đầu.
+
+🔹 Dòng 2 | Số phương pháp trả lời ĐÚNG: 10/19
+   Đáp án chuẩn: [87]
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: 87
+      [✅] qwen-sim-0.95-max-1024-true-anchor: 87
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: 87
+      [❌] qwen-sim-0.95-max-2048-true-anchor: 88
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: 88
+      [✅] qwen-sim-0.95-max-4096-true-anchor: 87
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: 88
+      [✅] qwen-sim-0.97-max-1024-true-anchor: 87
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: 87
+      [❌] qwen-sim-0.97-max-2048-true-anchor: 88
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: 88
+      [✅] qwen-sim-0.97-max-4096-true-anchor: 87
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: 88
+      [✅] qwen-sim-0.99-max-1024-true-anchor: 87
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: 87
+      [❌] qwen-sim-0.99-max-2048-true-anchor: 88
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: 88
+      [✅] qwen-sim-0.99-max-4096-true-anchor: 87
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: 88
+--------------------------------------------------------------------------------
+🔹 Dòng 32 | Số phương pháp trả lời ĐÚNG: 9/19
+   Đáp án chuẩn: [19]
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: 20
+      [❌] qwen-sim-0.95-max-1024-true-anchor: 20
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: 19
+      [✅] qwen-sim-0.95-max-2048-true-anchor: 19
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: 20
+      [✅] qwen-sim-0.95-max-4096-true-anchor: 19
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: 20
+      [❌] qwen-sim-0.97-max-1024-true-anchor: 20
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: 19
+      [✅] qwen-sim-0.97-max-2048-true-anchor: 19
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: 20
+      [✅] qwen-sim-0.97-max-4096-true-anchor: 19
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: 20
+      [❌] qwen-sim-0.99-max-1024-true-anchor: 20
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: 19
+      [✅] qwen-sim-0.99-max-2048-true-anchor: 19
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: 20
+      [✅] qwen-sim-0.99-max-4096-true-anchor: 19
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: 20
+--------------------------------------------------------------------------------
+🔹 Dòng 51 | Số phương pháp trả lời ĐÚNG: 9/19
+   Đáp án chuẩn: [12]
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: 13
+      [✅] qwen-sim-0.95-max-1024-true-anchor: 12
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: 12
+      [❌] qwen-sim-0.95-max-2048-true-anchor: 13
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: 13
+      [❌] qwen-sim-0.95-max-4096-true-anchor: 13
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: 12
+      [✅] qwen-sim-0.97-max-1024-true-anchor: 12
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: 12
+      [❌] qwen-sim-0.97-max-2048-true-anchor: 13
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: 13
+      [❌] qwen-sim-0.97-max-4096-true-anchor: 13
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: 12
+      [✅] qwen-sim-0.99-max-1024-true-anchor: 12
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: 12
+      [❌] qwen-sim-0.99-max-2048-true-anchor: 13
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: 13
+      [❌] qwen-sim-0.99-max-4096-true-anchor: 13
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: 12
+--------------------------------------------------------------------------------
+🔹 Dòng 56 | Số phương pháp trả lời ĐÚNG: 10/19
+   Đáp án chuẩn: [97]
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: 97
+      [❌] qwen-sim-0.95-max-1024-true-anchor: 96
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: 97
+      [✅] qwen-sim-0.95-max-2048-true-anchor: 97
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: 96
+      [✅] qwen-sim-0.95-max-4096-true-anchor: 97
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: 976
+      [❌] qwen-sim-0.97-max-1024-true-anchor: 96
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: 97
+      [✅] qwen-sim-0.97-max-2048-true-anchor: 97
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: 96
+      [✅] qwen-sim-0.97-max-4096-true-anchor: 97
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: 976
+      [❌] qwen-sim-0.99-max-1024-true-anchor: 96
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: 97
+      [✅] qwen-sim-0.99-max-2048-true-anchor: 97
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: 96
+      [✅] qwen-sim-0.99-max-4096-true-anchor: 97
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: 976
+--------------------------------------------------------------------------------
+🔹 Dòng 61 | Số phương pháp trả lời ĐÚNG: 12/19
+   Đáp án chuẩn: [82]
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: 83
+      [❌] qwen-sim-0.95-max-1024-true-anchor: 83
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: 82
+      [❌] qwen-sim-0.95-max-2048-true-anchor: 83
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: 82
+      [✅] qwen-sim-0.95-max-4096-true-anchor: 82
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: 82
+      [❌] qwen-sim-0.97-max-1024-true-anchor: 83
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: 82
+      [❌] qwen-sim-0.97-max-2048-true-anchor: 83
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: 82
+      [✅] qwen-sim-0.97-max-4096-true-anchor: 82
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: 82
+      [❌] qwen-sim-0.99-max-1024-true-anchor: 83
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: 82
+      [❌] qwen-sim-0.99-max-2048-true-anchor: 83
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: 82
+      [✅] qwen-sim-0.99-max-4096-true-anchor: 82
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: 82
+--------------------------------------------------------------------------------
+🔹 Dòng 81 | Số phương pháp trả lời ĐÚNG: 14/19
+   Đáp án chuẩn: [94]
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: 9255
+      [✅] qwen-sim-0.95-max-1024-true-anchor: 94
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: 94
+      [✅] qwen-sim-0.95-max-2048-true-anchor: 94
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: 94
+      [✅] qwen-sim-0.95-max-4096-true-anchor: 94
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: 960
+      [✅] qwen-sim-0.97-max-1024-true-anchor: 94
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: 94
+      [✅] qwen-sim-0.97-max-2048-true-anchor: 94
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: 94
+      [✅] qwen-sim-0.97-max-4096-true-anchor: 94
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: 960
+      [✅] qwen-sim-0.99-max-1024-true-anchor: 94
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: 9491
+      [✅] qwen-sim-0.99-max-2048-true-anchor: 94
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: 94
+      [✅] qwen-sim-0.99-max-4096-true-anchor: 94
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: 960
+--------------------------------------------------------------------------------
+🔹 Dòng 15 | Số phương pháp trả lời ĐÚNG: 15/19
+   Đáp án chuẩn: [97]
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: 97
+      [❌] qwen-sim-0.95-max-1024-true-anchor: 9731
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: 97
+      [✅] qwen-sim-0.95-max-2048-true-anchor: 97
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: 97
+      [✅] qwen-sim-0.95-max-4096-true-anchor: 97
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: 97
+      [❌] qwen-sim-0.97-max-1024-true-anchor: 9731
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: 97
+      [✅] qwen-sim-0.97-max-2048-true-anchor: 97
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: 97
+      [✅] qwen-sim-0.97-max-4096-true-anchor: 97
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: 97
+      [❌] qwen-sim-0.99-max-1024-true-anchor: 9731
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: 97
+      [✅] qwen-sim-0.99-max-2048-true-anchor: 97
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: 97
+      [✅] qwen-sim-0.99-max-4096-true-anchor: 97
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: 96
+--------------------------------------------------------------------------------
+🔹 Dòng 29 | Số phương pháp trả lời ĐÚNG: 15/19
+   Đáp án chuẩn: [91]
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: 91
+      [✅] qwen-sim-0.95-max-1024-true-anchor: 91
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: 91
+      [❌] qwen-sim-0.95-max-2048-true-anchor: 89
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: 91
+      [✅] qwen-sim-0.95-max-4096-true-anchor: 91
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: 91
+      [✅] qwen-sim-0.97-max-1024-true-anchor: 91
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: 91
+      [❌] qwen-sim-0.97-max-2048-true-anchor: 89
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: 91
+      [✅] qwen-sim-0.97-max-4096-true-anchor: 91
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: 91
+      [❌] qwen-sim-0.99-max-1024-true-anchor: 8879
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: 91
+      [❌] qwen-sim-0.99-max-2048-true-anchor: 89
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: 91
+      [✅] qwen-sim-0.99-max-4096-true-anchor: 91
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: 91
+--------------------------------------------------------------------------------
+🔹 Dòng 84 | Số phương pháp trả lời ĐÚNG: 4/19
+   Đáp án chuẩn: [5]
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: 5
+      [❌] qwen-sim-0.95-max-1024-true-anchor: 7
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: 7
+      [❌] qwen-sim-0.95-max-2048-true-anchor: 7
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: 7
+      [❌] qwen-sim-0.95-max-4096-true-anchor: 7
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: 5
+      [❌] qwen-sim-0.97-max-1024-true-anchor: 7
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: 7
+      [❌] qwen-sim-0.97-max-2048-true-anchor: 7
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: 7
+      [❌] qwen-sim-0.97-max-4096-true-anchor: 7
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: 5
+      [❌] qwen-sim-0.99-max-1024-true-anchor: 7
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: 7
+      [❌] qwen-sim-0.99-max-2048-true-anchor: 7
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: 7
+      [❌] qwen-sim-0.99-max-4096-true-anchor: 7
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: 5
+--------------------------------------------------------------------------------
+🔹 Dòng 94 | Số phương pháp trả lời ĐÚNG: 4/19
+   Đáp án chuẩn: [88]
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: 89
+      [❌] qwen-sim-0.95-max-1024-true-anchor: 44
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: 44
+      [❌] qwen-sim-0.95-max-2048-true-anchor: 44
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: 88
+      [❌] qwen-sim-0.95-max-4096-true-anchor: 46
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: 44
+      [❌] qwen-sim-0.97-max-1024-true-anchor: 44
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: 44
+      [❌] qwen-sim-0.97-max-2048-true-anchor: 44
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: 88
+      [❌] qwen-sim-0.97-max-4096-true-anchor: 46
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: 44
+      [❌] qwen-sim-0.99-max-1024-true-anchor: 44
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: 44
+      [❌] qwen-sim-0.99-max-2048-true-anchor: 44
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: 88
+      [✅] qwen-sim-0.99-max-4096-true-anchor: 88
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: 44
+--------------------------------------------------------------------------------
+🔹 Dòng 4 | Số phương pháp trả lời ĐÚNG: 3/19
+   Đáp án chuẩn: [78]
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: 79
+      [❌] qwen-sim-0.95-max-1024-true-anchor: 79
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: 78
+      [❌] qwen-sim-0.95-max-2048-true-anchor: 79
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: 79
+      [❌] qwen-sim-0.95-max-4096-true-anchor: 76
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: 76
+      [❌] qwen-sim-0.97-max-1024-true-anchor: 79
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: 78
+      [❌] qwen-sim-0.97-max-2048-true-anchor: 79
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: 79
+      [❌] qwen-sim-0.97-max-4096-true-anchor: 76
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: 76
+      [❌] qwen-sim-0.99-max-1024-true-anchor: 79
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: 78
+      [❌] qwen-sim-0.99-max-2048-true-anchor: 79
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: 79
+      [❌] qwen-sim-0.99-max-4096-true-anchor: 79
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: 76
+--------------------------------------------------------------------------------
+🔹 Dòng 42 | Số phương pháp trả lời ĐÚNG: 3/19
+   Đáp án chuẩn: [6]
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: 7
+      [❌] qwen-sim-0.95-max-1024-true-anchor: 7
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: 7
+      [❌] qwen-sim-0.95-max-2048-true-anchor: 7
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: 6
+      [❌] qwen-sim-0.95-max-4096-true-anchor: 7
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: 7
+      [❌] qwen-sim-0.97-max-1024-true-anchor: 7
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: 7
+      [❌] qwen-sim-0.97-max-2048-true-anchor: 7
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: 6
+      [❌] qwen-sim-0.97-max-4096-true-anchor: 7
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: 7
+      [❌] qwen-sim-0.99-max-1024-true-anchor: 7
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: 7
+      [❌] qwen-sim-0.99-max-2048-true-anchor: 7
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: 6
+      [❌] qwen-sim-0.99-max-4096-true-anchor: 7
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: 7
+--------------------------------------------------------------------------------
+🔹 Dòng 71 | Số phương pháp trả lời ĐÚNG: 16/19
+   Đáp án chuẩn: [96]
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: 96
+      [✅] qwen-sim-0.95-max-1024-true-anchor: 96
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: 96
+      [❌] qwen-sim-0.95-max-2048-true-anchor: 968
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: 96
+      [✅] qwen-sim-0.95-max-4096-true-anchor: 96
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: 96
+      [✅] qwen-sim-0.97-max-1024-true-anchor: 96
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: 96
+      [❌] qwen-sim-0.97-max-2048-true-anchor: 968
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: 96
+      [✅] qwen-sim-0.97-max-4096-true-anchor: 96
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: 96
+      [✅] qwen-sim-0.99-max-1024-true-anchor: 96
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: 96
+      [❌] qwen-sim-0.99-max-2048-true-anchor: 968
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: 96
+      [✅] qwen-sim-0.99-max-4096-true-anchor: 96
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: 96
+--------------------------------------------------------------------------------
+🔹 Dòng 3 | Số phương pháp trả lời ĐÚNG: 17/19
+   Đáp án chuẩn: [82]
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: 82
+      [✅] qwen-sim-0.95-max-1024-true-anchor: 82
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: 82
+      [✅] qwen-sim-0.95-max-2048-true-anchor: 82
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: 82
+      [❌] qwen-sim-0.95-max-4096-true-anchor: 90
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: 82
+      [✅] qwen-sim-0.97-max-1024-true-anchor: 82
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: 82
+      [✅] qwen-sim-0.97-max-2048-true-anchor: 82
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: 82
+      [❌] qwen-sim-0.97-max-4096-true-anchor: 90
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: 82
+      [✅] qwen-sim-0.99-max-1024-true-anchor: 82
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: 82
+      [✅] qwen-sim-0.99-max-2048-true-anchor: 82
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: 82
+      [✅] qwen-sim-0.99-max-4096-true-anchor: 82
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: 82
+--------------------------------------------------------------------------------

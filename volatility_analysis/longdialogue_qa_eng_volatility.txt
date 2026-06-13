@@ -1,0 +1,601 @@
+=== DANH SÁCH CÁC CÂU BỊ BIẾN ĐỘNG (DATASET: longdialogue_qa_eng) ===
+Tổng số: 26 câu. Sắp xếp các câu gây tranh cãi nhất lên đầu.
+
+🔹 Dòng 30 | Số phương pháp trả lời ĐÚNG: 10/19
+   Đáp án chuẩn: ['LOU']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: Lou
+      [❌] qwen-sim-0.95-max-1024-true-anchor: $$MASK$$
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: $$MASK$$: Lou
+      [✅] qwen-sim-0.95-max-2048-true-anchor: $$MASK$$: Lou
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: $$MASK$$: Lou
+      [✅] qwen-sim-0.95-max-4096-true-anchor: $$MASK$$: Lou
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Melanie Daniels
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: $$MASK$$: Lou
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Curtis
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: Curtis
+      [✅] qwen-sim-0.97-max-4096-true-anchor: $$MASK$$: Lou
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.99-max-1024-true-anchor: $$MASK$$
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: $$MASK$$: Lou
+      [✅] qwen-sim-0.99-max-2048-true-anchor: $$MASK$$: Lou
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: $$MASK$$
+      [✅] qwen-sim-0.99-max-4096-true-anchor: $$MASK$$: Lou
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: $$MASK$$
+--------------------------------------------------------------------------------
+🔹 Dòng 84 | Số phương pháp trả lời ĐÚNG: 10/19
+   Đáp án chuẩn: ['BERLIN', 'JOHN BERLIN', 'JOHN']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: JENNIFER
+      [✅] qwen-sim-0.95-max-1024-true-anchor: $$MASK$$: BERLIN
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: $$MASK$$: Tom
+      [✅] qwen-sim-0.95-max-2048-true-anchor: John Berlin
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: John Berlin
+      [❌] qwen-sim-0.95-max-4096-true-anchor: $$MASK$$: Summer
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: The character most likely represented by "$$MASK$$" in the script is Tom.
+      [✅] qwen-sim-0.97-max-1024-true-anchor: $$MASK$$: BERLIN
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: $$MASK$$: BERLIN
+      [✅] qwen-sim-0.97-max-2048-true-anchor: John Berlin
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: John Berlin
+      [❌] qwen-sim-0.97-max-4096-true-anchor: $$MASK$$: Summer
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: $$MASK$$: Summer
+      [✅] qwen-sim-0.99-max-1024-true-anchor: Sergeant Berlin
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: Sergeant Berlin
+      [❌] qwen-sim-0.99-max-2048-true-anchor: $$MASK$$: ROSS
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: JENNIFER
+      [✅] qwen-sim-0.99-max-4096-true-anchor: $$MASK$$: BERLIN
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: JENNIFER
+--------------------------------------------------------------------------------
+🔹 Dòng 14 | Số phương pháp trả lời ĐÚNG: 8/19
+   Đáp án chuẩn: ['MAYA']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: Mark Boal
+      [❌] qwen-sim-0.95-max-1024-true-anchor: Maria Marais
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: Mark Boal
+      [✅] qwen-sim-0.95-max-2048-true-anchor: Maya
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: Maya
+      [❌] qwen-sim-0.95-max-4096-true-anchor: John Waters
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: Cecil B. DeMented
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Mark Boal
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: Maria Marais
+      [✅] qwen-sim-0.97-max-2048-true-anchor: Maya
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: Maya
+      [❌] qwen-sim-0.97-max-4096-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: Cecil B. DeMented
+      [✅] qwen-sim-0.99-max-1024-true-anchor: Maya
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: Doc
+      [✅] qwen-sim-0.99-max-2048-true-anchor: Maya
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: Maya
+      [✅] qwen-sim-0.99-max-4096-true-anchor: Maya
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: Maria Marais
+--------------------------------------------------------------------------------
+🔹 Dòng 31 | Số phương pháp trả lời ĐÚNG: 8/19
+   Đáp án chuẩn: ['SUMMER']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: $$MASK$$: Summer
+      [❌] qwen-sim-0.95-max-1024-true-anchor: $$MASK$$: Tom
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: $$MASK$$
+      [✅] qwen-sim-0.95-max-2048-true-anchor: Summer
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: $$MASK$$: Summer
+      [✅] qwen-sim-0.95-max-4096-true-anchor: $$MASK$$: Summer
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: $$MASK$$: Tom
+      [❌] qwen-sim-0.97-max-1024-true-anchor: $$MASK$$: Tom
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Jennifer Eight
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: $$MASK$$: Summer
+      [❌] qwen-sim-0.97-max-4096-true-anchor: Paul
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: The character most likely represented by "$$MASK$$" in the script is Tom Hansen.
+      [✅] qwen-sim-0.99-max-1024-true-anchor: $$MASK$$: Summer
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: $$MASK$$: Tom
+      [✅] qwen-sim-0.99-max-2048-true-anchor: $$MASK$$: Summer
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: $$MASK$$: Summer
+      [❌] qwen-sim-0.99-max-4096-true-anchor: $$ROSS$$
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: The character most likely represented by "$$MASK$$" in the script is Tom Hansen.
+--------------------------------------------------------------------------------
+🔹 Dòng 32 | Số phương pháp trả lời ĐÚNG: 8/19
+   Đáp án chuẩn: ['BILLY']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: Billy
+      [❌] qwen-sim-0.95-max-1024-true-anchor: Peter Brand
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: Billy
+      [❌] qwen-sim-0.95-max-2048-true-anchor: Peter Brand
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: Peter Brand
+      [✅] qwen-sim-0.95-max-4096-true-anchor: Billy
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: The character most likely represented by "$$MASK$$" is Dante.
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Peter Brand
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: Billy
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Peter Brand
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: Peter Brand
+      [✅] qwen-sim-0.97-max-4096-true-anchor: Billy
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: Billy
+      [✅] qwen-sim-0.99-max-1024-true-anchor: Billy
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: Peter
+      [❌] qwen-sim-0.99-max-2048-true-anchor: Peter Brand
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: Peter Brand
+      [❌] qwen-sim-0.99-max-4096-true-anchor: Peter Brand
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: Billy
+--------------------------------------------------------------------------------
+🔹 Dòng 49 | Số phương pháp trả lời ĐÚNG: 7/19
+   Đáp án chuẩn: ['CINDY', 'CINDY PERIERA']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: Frankie
+      [✅] qwen-sim-0.95-max-1024-true-anchor: CINDY
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: Blue Valentine
+      [❌] qwen-sim-0.95-max-2048-true-anchor: Blue Valentine
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: CINDY
+      [❌] qwen-sim-0.95-max-4096-true-anchor: Blue Valentine
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: Blue Valentine
+      [✅] qwen-sim-0.97-max-1024-true-anchor: CINDY
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: Blue Valentine
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Blue Valentine
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: CINDY
+      [❌] qwen-sim-0.97-max-4096-true-anchor: Blue Valentine
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: Blue Valentine
+      [✅] qwen-sim-0.99-max-1024-true-anchor: CINDY
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: Frankie
+      [❌] qwen-sim-0.99-max-2048-true-anchor: Frankie
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: Blue Valentine
+      [✅] qwen-sim-0.99-max-4096-true-anchor: CINDY
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: CINDY
+--------------------------------------------------------------------------------
+🔹 Dòng 67 | Số phương pháp trả lời ĐÚNG: 12/19
+   Đáp án chuẩn: ['KAREN', 'KAREN RICHARDS']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: CINDY
+      [❌] qwen-sim-0.95-max-1024-true-anchor: Marty
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: Karen
+      [✅] qwen-sim-0.95-max-2048-true-anchor: Karen
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: Karen
+      [❌] qwen-sim-0.95-max-4096-true-anchor: Marty
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: Marty
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Marty
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: Karen
+      [✅] qwen-sim-0.97-max-2048-true-anchor: Karen
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: Karen
+      [❌] qwen-sim-0.97-max-4096-true-anchor: Marty
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: The character most likely represented by "$$MASK$$" is Karen.
+      [❌] qwen-sim-0.99-max-1024-true-anchor: CINDY
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: Karen
+      [✅] qwen-sim-0.99-max-2048-true-anchor: Karen
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: Karen
+      [✅] qwen-sim-0.99-max-4096-true-anchor: Karen
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: Karen
+--------------------------------------------------------------------------------
+🔹 Dòng 20 | Số phương pháp trả lời ĐÚNG: 6/19
+   Đáp án chuẩn: ['MILLS', 'David Mills']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: Somerset
+      [❌] qwen-sim-0.95-max-1024-true-anchor: Molly
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: David Mills
+      [❌] qwen-sim-0.95-max-2048-true-anchor: Stephen
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: David Mills
+      [❌] qwen-sim-0.95-max-4096-true-anchor: Stephen
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: Stephen
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Molly
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Stephen
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: Molly
+      [❌] qwen-sim-0.97-max-4096-true-anchor: Stephen
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: Hal Barwood
+      [✅] qwen-sim-0.99-max-1024-true-anchor: David Mills
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: Stephen
+      [✅] qwen-sim-0.99-max-2048-true-anchor: MILLS
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: David Mills
+      [✅] qwen-sim-0.99-max-4096-true-anchor: David Mills
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: $$MASK$$
+--------------------------------------------------------------------------------
+🔹 Dòng 23 | Số phương pháp trả lời ĐÚNG: 13/19
+   Đáp án chuẩn: ['NEIL']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: Neil
+      [✅] qwen-sim-0.95-max-1024-true-anchor: Neil
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: Neil
+      [❌] qwen-sim-0.95-max-2048-true-anchor: Eady
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: Neil
+      [❌] qwen-sim-0.95-max-4096-true-anchor: Sidney
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: $$MASK$$
+      [✅] qwen-sim-0.97-max-1024-true-anchor: Neil
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: Neil
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Sidney
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: Neil
+      [❌] qwen-sim-0.97-max-4096-true-anchor: Sidney Prescott
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: Neil
+      [✅] qwen-sim-0.99-max-1024-true-anchor: Neil
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: Neil
+      [✅] qwen-sim-0.99-max-2048-true-anchor: Neil
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: Sidney Prescott
+      [✅] qwen-sim-0.99-max-4096-true-anchor: Neil
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: Neil
+--------------------------------------------------------------------------------
+🔹 Dòng 48 | Số phương pháp trả lời ĐÚNG: 5/19
+   Đáp án chuẩn: ['CLAUDIA']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: Claudia
+      [❌] qwen-sim-0.95-max-1024-true-anchor: Linda
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: Linda
+      [✅] qwen-sim-0.95-max-2048-true-anchor: Claudia
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: Linda
+      [❌] qwen-sim-0.95-max-4096-true-anchor: Frank TJ Mackey
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: Linda
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Linda
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: Claudia
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Linda
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: Stanley
+      [❌] qwen-sim-0.97-max-4096-true-anchor: Frank TJ Mackey
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: Linda
+      [✅] qwen-sim-0.99-max-1024-true-anchor: Claudia
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: Linda
+      [✅] qwen-sim-0.99-max-2048-true-anchor: Claudia
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: Linda
+      [❌] qwen-sim-0.99-max-4096-true-anchor: Frank TJ Mackey
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: The character most likely represented by "$$MASK$$" in the script is Frank TJ Mackey.
+--------------------------------------------------------------------------------
+🔹 Dòng 93 | Số phương pháp trả lời ĐÚNG: 14/19
+   Đáp án chuẩn: ['WALTER', 'WALTER VALE']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: Walter Vale
+      [✅] qwen-sim-0.95-max-1024-true-anchor: Walter Vale
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: Walter Vale
+      [❌] qwen-sim-0.95-max-2048-true-anchor: Jake
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: Walter Vale
+      [✅] qwen-sim-0.95-max-4096-true-anchor: Walter Vale
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: Walter Vale
+      [✅] qwen-sim-0.97-max-1024-true-anchor: Walter Vale
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: Walter Vale
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Jake
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: William Moore
+      [✅] qwen-sim-0.97-max-4096-true-anchor: Walter Vale
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: Walter Vale
+      [✅] qwen-sim-0.99-max-1024-true-anchor: Walter Vale
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: Walter Vale
+      [❌] qwen-sim-0.99-max-2048-true-anchor: Jake
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: William Moore
+      [✅] qwen-sim-0.99-max-4096-true-anchor: Walter Vale
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: Walter Vale
+--------------------------------------------------------------------------------
+🔹 Dòng 98 | Số phương pháp trả lời ĐÚNG: 5/19
+   Đáp án chuẩn: ['MASON']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: MOM
+      [❌] qwen-sim-0.95-max-1024-true-anchor: MOM
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: MASON
+      [❌] qwen-sim-0.95-max-2048-true-anchor: MOM
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: MOM
+      [❌] qwen-sim-0.95-max-4096-true-anchor: MOM
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: MASON
+      [❌] qwen-sim-0.97-max-1024-true-anchor: MOM
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: MOM
+      [❌] qwen-sim-0.97-max-2048-true-anchor: MOM
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: MOM
+      [✅] qwen-sim-0.97-max-4096-true-anchor: MASON
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: MASON
+      [❌] qwen-sim-0.99-max-1024-true-anchor: MOM
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: MOM
+      [❌] qwen-sim-0.99-max-2048-true-anchor: MOM
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: MOM
+      [❌] qwen-sim-0.99-max-4096-true-anchor: MOM
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: MASON
+--------------------------------------------------------------------------------
+🔹 Dòng 76 | Số phương pháp trả lời ĐÚNG: 16/19
+   Đáp án chuẩn: ['KAFKA']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: Kafka
+      [✅] qwen-sim-0.95-max-1024-true-anchor: Kafka
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: Kafka
+      [✅] qwen-sim-0.95-max-2048-true-anchor: KAFKA
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: KAFKA
+      [✅] qwen-sim-0.95-max-4096-true-anchor: KAFKA
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: Cole
+      [✅] qwen-sim-0.97-max-1024-true-anchor: KAFKA
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: Kafka
+      [✅] qwen-sim-0.97-max-2048-true-anchor: KAFKA
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: KAFKA
+      [✅] qwen-sim-0.97-max-4096-true-anchor: KAFKA
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: Cole
+      [✅] qwen-sim-0.99-max-1024-true-anchor: Kafka
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: Kafka
+      [✅] qwen-sim-0.99-max-2048-true-anchor: Kafka
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: KAFKA
+      [✅] qwen-sim-0.99-max-4096-true-anchor: KAFKA
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: Cole
+--------------------------------------------------------------------------------
+🔹 Dòng 6 | Số phương pháp trả lời ĐÚNG: 2/19
+   Đáp án chuẩn: ['BOND', 'JAMES BOND']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: Sidney
+      [❌] qwen-sim-0.95-max-1024-true-anchor: Sidney
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: Sidney
+      [❌] qwen-sim-0.95-max-2048-true-anchor: Sidney
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: $$MASK$$
+      [✅] qwen-sim-0.95-max-4096-true-anchor: Bond
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: Allen Ginsberg
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Sidney
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: Allen
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Sidney
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: Allen Ginsberg
+      [✅] qwen-sim-0.97-max-4096-true-anchor: Bond
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: Allen Ginsberg
+      [❌] qwen-sim-0.99-max-1024-true-anchor: Sidney
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: Sidney
+      [❌] qwen-sim-0.99-max-2048-true-anchor: Allen Ginsberg
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.99-max-4096-true-anchor: John Krokidas
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: Allen Ginsberg
+--------------------------------------------------------------------------------
+🔹 Dòng 52 | Số phương pháp trả lời ĐÚNG: 2/19
+   Đáp án chuẩn: ['PAUL', 'PAUL D. GARNER', 'Paul D.']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: Mary Burke
+      [❌] qwen-sim-0.95-max-1024-true-anchor: Denver
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: Beloved
+      [✅] qwen-sim-0.95-max-2048-true-anchor: Paul D.
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: $$MASK$$: Sethe
+      [❌] qwen-sim-0.95-max-4096-true-anchor: Mary Burke
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: Beloved
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Beloved
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: Beloved
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Denver
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: Beloved
+      [❌] qwen-sim-0.97-max-4096-true-anchor: Beloved
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: Beloved
+      [❌] qwen-sim-0.99-max-1024-true-anchor: Beloved
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: Beloved
+      [❌] qwen-sim-0.99-max-2048-true-anchor: Beloved
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: Beloved
+      [✅] qwen-sim-0.99-max-4096-true-anchor: Paul D.
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: Beloved
+--------------------------------------------------------------------------------
+🔹 Dòng 86 | Số phương pháp trả lời ĐÚNG: 2/19
+   Đáp án chuẩn: ['FLEURY']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: KINGDOM
+      [❌] qwen-sim-0.95-max-1024-true-anchor: KINGDOM
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: KINGDOM
+      [✅] qwen-sim-0.95-max-2048-true-anchor: $$MASK$$: Fleury
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: KINGDOM
+      [❌] qwen-sim-0.95-max-4096-true-anchor: KINGDOM
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: KINGDOM
+      [❌] qwen-sim-0.97-max-1024-true-anchor: KINGDOM
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: KINGDOM
+      [✅] qwen-sim-0.97-max-2048-true-anchor: $$MASK$$: Fleury
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: KINGDOM
+      [❌] qwen-sim-0.97-max-4096-true-anchor: KINGDOM
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: KINGDOM
+      [❌] qwen-sim-0.99-max-1024-true-anchor: KINGDOM
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: KINGDOM
+      [❌] qwen-sim-0.99-max-2048-true-anchor: KINGDOM
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: KINGDOM
+      [❌] qwen-sim-0.99-max-4096-true-anchor: KINGDOM
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: KINGDOM
+--------------------------------------------------------------------------------
+🔹 Dòng 100 | Số phương pháp trả lời ĐÚNG: 2/19
+   Đáp án chuẩn: ['ROSARIO DIAZ']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: Julie
+      [❌] qwen-sim-0.95-max-1024-true-anchor: BOBBY
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: Bobby
+      [❌] qwen-sim-0.95-max-2048-true-anchor: Julie
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: Ratso
+      [❌] qwen-sim-0.95-max-4096-true-anchor: Julie
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: Julie
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Bobby
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: Bobby
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Julie
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: Ratso
+      [✅] qwen-sim-0.97-max-4096-true-anchor: ROSARIO DIAZ
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: $$BURT GRUSINSKY$$
+      [❌] qwen-sim-0.99-max-1024-true-anchor: Ratso
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: BOBBY
+      [✅] qwen-sim-0.99-max-2048-true-anchor: Rosario Diaz
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: Julie
+      [❌] qwen-sim-0.99-max-4096-true-anchor: BOBBY GREEN
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: Julie
+--------------------------------------------------------------------------------
+🔹 Dòng 5 | Số phương pháp trả lời ĐÚNG: 1/19
+   Đáp án chuẩn: ['HARVEY', 'HARVEY PEKAR']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: $$MASK$$
+      [❌] qwen-sim-0.95-max-1024-true-anchor: Graham
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.95-max-2048-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.95-max-4096-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: Graham
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Graham
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.97-max-2048-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.97-max-4096-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: Graham Dalton
+      [❌] qwen-sim-0.99-max-1024-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.99-max-2048-true-anchor: Graham Dalton
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: $$MASK$$
+      [✅] qwen-sim-0.99-max-4096-true-anchor: Harvey
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: $$MASK$$
+--------------------------------------------------------------------------------
+🔹 Dòng 10 | Số phương pháp trả lời ĐÚNG: 1/19
+   Đáp án chuẩn: ['HILDY', 'Hildy Johnson']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: Hildy
+      [❌] qwen-sim-0.95-max-1024-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.95-max-2048-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.95-max-4096-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.97-max-1024-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.97-max-2048-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.97-max-4096-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.99-max-1024-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.99-max-2048-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.99-max-4096-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: $$MASK$$
+--------------------------------------------------------------------------------
+🔹 Dòng 16 | Số phương pháp trả lời ĐÚNG: 1/19
+   Đáp án chuẩn: ['MICKEY', 'Mickey Sachs']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: Lee
+      [❌] qwen-sim-0.95-max-1024-true-anchor: Lee
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: Lee
+      [❌] qwen-sim-0.95-max-2048-true-anchor: Lee
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: Lee
+      [❌] qwen-sim-0.95-max-4096-true-anchor: Lee
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: Lee
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Lee
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: Lee
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Lee
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: Lee
+      [❌] qwen-sim-0.97-max-4096-true-anchor: Lee
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: Mickey
+      [❌] qwen-sim-0.99-max-1024-true-anchor: Lee
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: Lee
+      [❌] qwen-sim-0.99-max-2048-true-anchor: Lee
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: Lee
+      [❌] qwen-sim-0.99-max-4096-true-anchor: Elektra
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: Lee
+--------------------------------------------------------------------------------
+🔹 Dòng 42 | Số phương pháp trả lời ĐÚNG: 1/19
+   Đáp án chuẩn: ['ETHAN', 'ETHAN HUNT']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: $$MASK$$: Judit
+      [❌] qwen-sim-0.95-max-1024-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: $$MASK$$: Judit
+      [❌] qwen-sim-0.95-max-2048-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.95-max-4096-true-anchor: $$MASK$$: Judit
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: $$JUDIT$$
+      [❌] qwen-sim-0.97-max-1024-true-anchor: $$MASK$$
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: $$MASK$$: Ethan Hunt
+      [❌] qwen-sim-0.97-max-2048-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: JUDIT
+      [❌] qwen-sim-0.97-max-4096-true-anchor: Harry
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: $$HARRY$$
+      [❌] qwen-sim-0.99-max-1024-true-anchor: $$MASK$$: Judit
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: $$MASK$$: Judit
+      [❌] qwen-sim-0.99-max-2048-true-anchor: $$MASK$$: Judit
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: WITNESS
+      [❌] qwen-sim-0.99-max-4096-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: $$MASK$$
+--------------------------------------------------------------------------------
+🔹 Dòng 47 | Số phương pháp trả lời ĐÚNG: 1/19
+   Đáp án chuẩn: ['CAROL']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: John Ansel
+      [❌] qwen-sim-0.95-max-1024-true-anchor: John Lee Hancock
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: John Lee Hancock
+      [❌] qwen-sim-0.95-max-2048-true-anchor: Sally
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: Red
+      [❌] qwen-sim-0.95-max-4096-true-anchor: Red
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: Based on the context and the interactions in the script, the character most likely to be referred to as "$$MASK$$" is Carol. The scriptwriter uses
+      [❌] qwen-sim-0.97-max-1024-true-anchor: John Lee Hancock
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: John Lee Hancock
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Sally
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: Red
+      [❌] qwen-sim-0.97-max-4096-true-anchor: Red
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: Based on the context and the interactions in the script, the character most likely to be referred to as "$$MASK$$" is Beth. The scriptwriter uses
+      [❌] qwen-sim-0.99-max-1024-true-anchor: John Lee Hancock
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: John Lee Hancock
+      [❌] qwen-sim-0.99-max-2048-true-anchor: Red
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: John Lee Hancock
+      [❌] qwen-sim-0.99-max-4096-true-anchor: John Lee Hancock
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: Based on the context and the interactions in the script, the character most likely to be referred to as "$$MASK$$" is Beth. The scriptwriter uses
+--------------------------------------------------------------------------------
+🔹 Dòng 56 | Số phương pháp trả lời ĐÚNG: 1/19
+   Đáp án chuẩn: ['FAIT', 'TONY FAIT']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: John O'Brien
+      [❌] qwen-sim-0.95-max-1024-true-anchor: Carole Eastman
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: John O'Brien
+      [❌] qwen-sim-0.95-max-2048-true-anchor: Carole Eastman
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: John O'Brien
+      [❌] qwen-sim-0.95-max-4096-true-anchor: Carole Eastman
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: Joan O'Brien
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Carole Eastman
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: $$MASK$$: Fait
+      [❌] qwen-sim-0.97-max-2048-true-anchor: Carole Eastman
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: Joann Keltner
+      [❌] qwen-sim-0.97-max-4096-true-anchor: Carlo
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: Joan O'Brien
+      [❌] qwen-sim-0.99-max-1024-true-anchor: Carole Eastman
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.99-max-2048-true-anchor: Carole Eastman
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: Carole Eastman
+      [❌] qwen-sim-0.99-max-4096-true-anchor: Carole Eastman
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: John O'Brien
+--------------------------------------------------------------------------------
+🔹 Dòng 74 | Số phương pháp trả lời ĐÚNG: 1/19
+   Đáp án chuẩn: ['MAURICE']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: $$MASK$$: Amber
+      [❌] qwen-sim-0.95-max-1024-true-anchor: Gollum
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: Gollum
+      [❌] qwen-sim-0.95-max-2048-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.95-max-4096-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.97-max-1024-true-anchor: Joey
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.97-max-2048-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.97-max-4096-true-anchor: Jack Horner
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: Jack Horner
+      [❌] qwen-sim-0.99-max-1024-true-anchor: Joey
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: $$MASK$$
+      [✅] qwen-sim-0.99-max-2048-true-anchor: Maurice
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: $$MASK$$
+      [❌] qwen-sim-0.99-max-4096-true-anchor: $$MASK$$
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: $$MASK$$
+--------------------------------------------------------------------------------
+🔹 Dòng 91 | Số phương pháp trả lời ĐÚNG: 1/19
+   Đáp án chuẩn: ['FRY', 'CAROLYN FRY']
+   Kết quả từng phương pháp:
+      [❌] qwen-token-retrieval: David Twohy
+      [❌] qwen-sim-0.95-max-1024-true-anchor: David Twohy
+      [❌] qwen-sim-0.95-max-1024-true-anchor-no-balance: David Twohy
+      [❌] qwen-sim-0.95-max-2048-true-anchor: David Twohy
+      [❌] qwen-sim-0.95-max-2048-true-anchor-no-balance: David Twohy
+      [❌] qwen-sim-0.95-max-4096-true-anchor: David Twohy
+      [❌] qwen-sim-0.95-max-4096-true-anchor-no-balance: David Twohy
+      [❌] qwen-sim-0.97-max-1024-true-anchor: David Twohy
+      [❌] qwen-sim-0.97-max-1024-true-anchor-no-balance: David Twohy
+      [❌] qwen-sim-0.97-max-2048-true-anchor: David Twohy
+      [❌] qwen-sim-0.97-max-2048-true-anchor-no-balance: Milady de Winter
+      [✅] qwen-sim-0.97-max-4096-true-anchor: The character most likely represented by "$$MASK$$" in the script is Carolyn Fry.
+      [❌] qwen-sim-0.97-max-4096-true-anchor-no-balance: David Twohy
+      [❌] qwen-sim-0.99-max-1024-true-anchor: David Twohy
+      [❌] qwen-sim-0.99-max-1024-true-anchor-no-balance: David Twohy
+      [❌] qwen-sim-0.99-max-2048-true-anchor: David Twohy
+      [❌] qwen-sim-0.99-max-2048-true-anchor-no-balance: David Twohy
+      [❌] qwen-sim-0.99-max-4096-true-anchor: David Twohy
+      [❌] qwen-sim-0.99-max-4096-true-anchor-no-balance: The character most likely represented by "$$MASK$$" in the script is Charlie Croker.
+--------------------------------------------------------------------------------
+🔹 Dòng 94 | Số phương pháp trả lời ĐÚNG: 18/19
+   Đáp án chuẩn: ['JUNO']
+   Kết quả từng phương pháp:
+      [✅] qwen-token-retrieval: Juno
+      [✅] qwen-sim-0.95-max-1024-true-anchor: Juno
+      [✅] qwen-sim-0.95-max-1024-true-anchor-no-balance: Juno
+      [✅] qwen-sim-0.95-max-2048-true-anchor: Juno
+      [✅] qwen-sim-0.95-max-2048-true-anchor-no-balance: JUNO
+      [❌] qwen-sim-0.95-max-4096-true-anchor: Rachel
+      [✅] qwen-sim-0.95-max-4096-true-anchor-no-balance: JUNO
+      [✅] qwen-sim-0.97-max-1024-true-anchor: Juno
+      [✅] qwen-sim-0.97-max-1024-true-anchor-no-balance: Juno
+      [✅] qwen-sim-0.97-max-2048-true-anchor: Juno
+      [✅] qwen-sim-0.97-max-2048-true-anchor-no-balance: Juno
+      [✅] qwen-sim-0.97-max-4096-true-anchor: JUNO
+      [✅] qwen-sim-0.97-max-4096-true-anchor-no-balance: JUNO
+      [✅] qwen-sim-0.99-max-1024-true-anchor: Juno
+      [✅] qwen-sim-0.99-max-1024-true-anchor-no-balance: Juno
+      [✅] qwen-sim-0.99-max-2048-true-anchor: Juno
+      [✅] qwen-sim-0.99-max-2048-true-anchor-no-balance: Juno
+      [✅] qwen-sim-0.99-max-4096-true-anchor: Juno
+      [✅] qwen-sim-0.99-max-4096-true-anchor-no-balance: JUNO
+--------------------------------------------------------------------------------

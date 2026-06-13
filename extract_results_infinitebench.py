@@ -13,6 +13,8 @@ def extract_and_analyze(base_dir="result_release_ttft/infinitbench"):
 
     # Đọc dữ liệu
     for method in methods:
+        if "true" not in method.lower():
+            continue
         exp_dir = os.path.join(base_dir, method)
         res_file = os.path.join(exp_dir, "result.txt")
         time_file = os.path.join(exp_dir, "dataset_timing.json")
@@ -56,6 +58,8 @@ def extract_and_analyze(base_dir="result_release_ttft/infinitbench"):
 
         # Lặp qua từng phương pháp (Method) để tạo các hàng
         for method in method_list:
+            if "true" not in method.lower():
+                continue
             row = [f"**{method}**"]
             
             # Lặp qua từng tập dữ liệu (Dataset) để tạo các cột
