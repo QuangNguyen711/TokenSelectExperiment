@@ -1,0 +1,4 @@
+longdialogue_qa_eng, 10.0
+kv_retrieval, 98.0
+math_find, 22.0
+code_debug, 28.0

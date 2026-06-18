@@ -447,7 +447,7 @@ if __name__ == "__main__":
 
         data_list = list(data)
         random.seed(42)
-        data = random.sample(data_list, min(100, len(data_list)))
+        data = random.sample(data_list, min(1, len(data_list)))
 
         out_path = os.path.join(output_dir_path, f"{dname}.jsonl")
         # if multiprocessing:

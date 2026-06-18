@@ -1,6 +1,6 @@
 # File: scripts/run_experiments.sh
 
-#!/bin/bash
+#!/bin/sh
 
 config_path="config/qwen-token-retrieval.yaml"
 world_size=1
@@ -8,29 +8,25 @@ datasets="kv_retrieval,longdialogue_qa_eng,math_find,code_debug,passkey,number_s
 
 run_experiment() {
     local exp_name=$1
-    local use_shannon=$2
-    local use_cumsum=$3
-    local use_hybrid=$4
-    local thresh=$5
+    local l2_norm=$2
+    local weighted_vote=$3
+    local union_sets=$4
+    local top_k_val=$5
+    local dynamic_capacity=$6
+    local head_wise_adaptive=$7
+    local energy_mode=${8:-"both"}
+    local p_chunk_size=${9:-512}
+    local sim_thresh=${10:-0.90}
+    local max_chunk=${11:-1024}
+    local use_dynamic=${12:-"false"}
+    local budget_balancing=${13:-"true"}
 
     local output_dir="result_release_ttft/infinitbench/qwen-${exp_name}"
 
-    # ==========================================================
-    # SKIP NẾU ĐÃ CÓ KẾT QUẢ
-    # ==========================================================
-    if [ -d "$output_dir" ]; then
-        echo "⏭️  SKIP: $exp_name"
-        echo "    Found existing directory: $output_dir"
-        echo
-        return 0
-    fi
+    export CURRENT_EXP=$exp_name 
 
-    export CURRENT_EXP=$exp_name
-
-    # ==========================================================
-    # GHI ĐÈ CONFIG
-    # ==========================================================
-    cat << EOF > "$config_path"
+    # Ghi đè file config (Thêm dòng dcu_energy_mode)
+    cat << EOF > $config_path
 model:
   type: token-retrieval
   path: Qwen/Qwen2-7B-Instruct
@@ -38,92 +34,74 @@ model:
   rope_scale: 1
   n_init: 128
   n_local: 512
-  top_k: 8192
+  top_k: $top_k_val
   max_n_tokens: 1048576
-
-  adaptive_topk: $use_shannon
-  use_cumsum_adaptive: $use_cumsum
-  use_hybrid_adaptive: $use_hybrid
-  cumsum_threshold: $thresh
-
+  adaptive_topk: false
   attention_threshold: 0.9
-  l2_norm_pooling: false
-  weighted_soft_vote: false
-  union_of_sets: false
-  dynamic_capacity_union: false
-  head_wise_adaptive: false
-  dcu_energy_mode: "both"
-  prefill_chunk_size: 512
-  sim_threshold: 0.95
-  max_dynamic_chunk: 1024
-  use_dynamic_chunking: true
-  dynamic_budget_balancing: true
+  l2_norm_pooling: $l2_norm
+  weighted_soft_vote: $weighted_vote
+  union_of_sets: $union_sets
+  dynamic_capacity_union: $dynamic_capacity
+  head_wise_adaptive: $head_wise_adaptive
+  dcu_energy_mode: "$energy_mode"
+  prefill_chunk_size: $p_chunk_size
+  sim_threshold: $sim_thresh
+  max_dynamic_chunk: $max_chunk
+  use_dynamic_chunking: $use_dynamic
+  dynamic_budget_balancing: $budget_balancing
 
 max_len: 1048576
-chunk_size: 8192
+chunk_size: 16384
 conv_type: qwen
 truncation: suffix
 dtype: bfloat16
 EOF
 
-    # ==========================================================
-    # DỌN PROCESS CŨ
-    # ==========================================================
-    pkill -f pt_main_thread 2>/dev/null
-    sleep 2
-
-    echo "=================================================================="
-    echo "🚀 BẮT ĐẦU CHẠY THỰC NGHIỆM: $exp_name"
-    echo "🚀 Threshold: $thresh"
-    echo "🚀 Output: $output_dir"
-    echo "=================================================================="
+    # Dọn dẹp process cũ
+    pkill -f pt_main_thread
+    sleep 2 
 
     bash scripts/multiprocessing-benchmark.sh \
-        --config_path "$config_path" \
-        --datasets "$datasets" \
-        --output_dir_path "$output_dir" \
-        --world_size "$world_size"
+        --config_path $config_path \
+        --datasets $datasets \
+        --output_dir_path $output_dir \
+        --world_size $world_size
 
-    echo
-    echo "📊 Evaluating..."
-    python benchmark/infinitebench_eval.py --result-dir "$output_dir"
-
-    echo
-    echo "✅ Finished: $exp_name"
-    echo
+    python benchmark/infinitebench_eval.py --result-dir ${output_dir}
 }
 
-# ==========================================================
-# THRESHOLDS
-# ==========================================================
+# ==============================================================================
+# CÁC KỊCH BẢN THỬ NGHIỆM
+# Cấu trúc tham số:
+# run_experiment <Tên> <L2> <Weight> <Union> <TopK> <DCU> <Adaptive> <EnergyMode> <PrefillChunk> <Sim_Threshold> <Max_Chunk_Size> <Use_Dynamic_Chunking> <Budget_Balancing>
+# ==============================================================================
 
-THRESHOLDS=(0.95 0.97 0.99)
+# Kịch bản A: TokenSelect Gốc (Tắt gộp chunk)
+# run_experiment "baseline-512" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "true"
 
-for thresh in "${THRESHOLDS[@]}"; do
+# # Kịch bản B: Gộp Chunk Động (Bật gộp chunk)
+# run_experiment "dynamic-0.95-max-1024" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "true"
 
-    # ------------------------------------------------------
-    # PURE CUMSUM
-    # ------------------------------------------------------
-    run_experiment \
-        "search-thresh-${thresh}-pure-cumsum" \
-        "false" \
-        "true" \
-        "false" \
-        "$thresh"
+# # Kịch bản C: Gộp Chunk 2048 + L2Norm
+# run_experiment "dynamic-0.95-max-2048-l2" "true" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true"
 
-    # ------------------------------------------------------
-    # HYBRID
-    # ------------------------------------------------------
-    run_experiment \
-        "search-thresh-${thresh}-hybrid" \
-        "false" \
-        "false" \
-        "true" \
-        "$thresh"
+# Kịch bản D: Gộp Chunk 2048 + Không Bù Trừ Năng Lượng
+# run_experiment "dynamic-0.95-max-2048-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false"
 
-done
+# run_experiment "token-retrieval" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "true"
 
-echo
-echo "=========================================================="
-echo "🎉 TẤT CẢ THỰC NGHIỆM ĐÃ HOÀN THÀNH!"
-echo "=========================================================="
+# run_experiment "sim-0.95-max-2048-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true"
+
+# run_experiment "sim-0.95-max-2048-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false"
+
+# run_experiment "sim-0.97-max-1024-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "true"
+
+# run_experiment "sim-0.97-max-1024-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "false"
+
+# run_experiment "sim-0.97-max-2048-anchor" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "true"
+
+# run_experiment "sim-0.97-max-2048-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "false"
+
+run_experiment "sim-0.7-max-4096-cs-1-no-balance-test" "false" "false" "false" 8192 "false" "false" "both" 1 0.7 4096 "true" "false"
+
+# run_experiment "sim-0.97-max-4096-anchor-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "false"

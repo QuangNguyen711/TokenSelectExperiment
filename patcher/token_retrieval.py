@@ -950,43 +950,36 @@ def patch_model():
             BASE_CHUNK = PREFILL_CHUNK_SIZE
             chunk_plan = []
 
-            if USE_DYNAMIC_CHUNKING and MAX_DYNAMIC_CHUNK > BASE_CHUNK:
-                # BƯỚC 1: Tính Vector trung bình cho các block
+            if USE_DYNAMIC_CHUNKING:
                 with torch.no_grad():
-                    num_blocks = seq_len // BASE_CHUNK
-                    if num_blocks > 0:
-                        q_trunc = q[:num_blocks * BASE_CHUNK].float()
-                        q_blocks_mean = q_trunc.view(num_blocks, BASE_CHUNK, -1).mean(dim=1)
-                        # Normalize sẵn để tính cosine similarity bằng tích vô hướng (dot product) cho nhanh
-                        q_blocks_mean = torch.nn.functional.normalize(q_blocks_mean, p=2, dim=-1)
-                    else:
-                        q_blocks_mean = None
+                    # Normalize MỘT lần toàn context
+                    q_tokens_n = torch.nn.functional.normalize(
+                        q.float().view(seq_len, -1), p=2, dim=-1
+                    )
 
                 current_pos = 0
-                block_idx = 0
-
                 while current_pos < seq_len:
-                    step = BASE_CHUNK
-                    anchor_idx = block_idx
-                    
-                    # Cuộn tuyết bằng Anchor: So sánh block tiếp theo trực tiếp với Anchor
-                    while (block_idx + 1) < num_blocks and step < MAX_DYNAMIC_CHUNK:
-                        next_idx = block_idx + 1
-                        # Tính cosine similarity (đã normalize nên chỉ cần dot product)
-                        sim = torch.dot(q_blocks_mean[anchor_idx], q_blocks_mean[next_idx]).item()
-                        
-                        if sim >= SIM_THRESHOLD:
-                            step += BASE_CHUNK
-                            block_idx += 1
-                        else:
-                            break # Khác Anchor -> Ngắt Chunk lập tức để tránh Topic Drift
+                    anchor_vec = q_tokens_n[current_pos]                  # vector anchor
+                    window_end = min(current_pos + MAX_DYNAMIC_CHUNK, seq_len)
 
-                    start = current_pos
-                    end = min(current_pos + step, seq_len)
-                    chunk_plan.append((start, end))
+                    # MỘT matmul: anchor vs cả cửa sổ (GPU song song, KHÔNG vòng token)
+                    sims = q_tokens_n[current_pos:window_end] @ anchor_vec   # [win_len]
 
-                    current_pos = end
-                    block_idx += 1
+                    # Token đầu tiên rớt ngưỡng = ranh giới. sims[0]=1.0 (anchor vs anchor)
+                    below = sims < SIM_THRESHOLD
+                    below[0] = False                                     # anchor luôn thuộc cluster
+
+                    if below.any():
+                        rel_cut = int(below.int().argmax().item())       # CHỈ 1 .item() / cluster
+                        end_pos = current_pos + rel_cut
+                    else:
+                        end_pos = window_end                             # cả cửa sổ cùng cluster
+
+                    if end_pos <= current_pos:
+                        end_pos = current_pos + 1
+
+                    chunk_plan.append((current_pos, end_pos))
+                    current_pos = end_pos
             else:
                 # Fallback về chạy cơ bản nếu ko bật Dynamic
                 num_chunks = ceil(seq_len / BASE_CHUNK)
