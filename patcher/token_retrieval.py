@@ -1070,16 +1070,29 @@ def patch_model():
                                     }) + "\n")
             
             # =================================================================
-            # DIAGNOSTIC LOG v2.2 (MINIMAL OVERLAP ONLY - TỐI ƯU TỐC ĐỘ)
+            # DIAGNOSTIC LOG v2.3 (FULL METRICS + OVERLAP ANALYSIS)
             # =================================================================
             if DIAGNOSTIC_RECORD_PATH is not None:
                 import json as _json
+                import math
+
                 retriever = input_metadata.token_retriever
                 num_tokens_before = retriever.num_tokens[self.layer_id]
 
-                diagnostic_records = []
+                # ===== A. Chunk-level cosine (consecutive blocks) =====
+                chunk_cosine_list = []
+                num_blocks_local = seq_len // BASE_CHUNK
+                if num_blocks_local >= 2:
+                    with torch.no_grad():
+                        q_trunc = q[:num_blocks_local * BASE_CHUNK].float()
+                        q_blocks = q_trunc.view(num_blocks_local, BASE_CHUNK, -1).mean(dim=1)
+                        q_blocks_n = torch.nn.functional.normalize(q_blocks, p=2, dim=-1)
+                        chunk_cosine = (q_blocks_n[:-1] * q_blocks_n[1:]).sum(dim=-1)
+                        chunk_cosine_list = chunk_cosine.cpu().tolist()
 
+                diagnostic_records = []
                 pool_ok = num_tokens_before > N_INIT
+                
                 if pool_ok:
                     pool_indices = retriever.token_indices[
                         self.layer_id, N_INIT:num_tokens_before
@@ -1091,11 +1104,12 @@ def patch_model():
                     pool_size = pool_indices.shape[0]
                     num_q_heads = self.tp_q_head_num
                     num_kv_heads = self.tp_k_head_num
-                    
                     actual_topk = min(TOP_K, pool_size)
 
-                    # Hàm tối giản: Chỉ tính và trả về đúng mảng SUM
-                    def _pipeline_to_summed_minimal(fp):
+                    # ============================================================
+                    # Helper: Full Pipeline
+                    # ============================================================
+                    def _pipeline_to_summed(fp):
                         qf = fp.to(retriever.dtype).view(num_q_heads, self.head_dim)
                         raw = torch.empty(
                             (num_q_heads, pool_size),
@@ -1112,7 +1126,8 @@ def patch_model():
                             self.head_dim,
                         )
                         per_head_softmax = torch.softmax(raw.float(), dim=-1)
-                        return per_head_softmax.sum(dim=0)
+                        summed = per_head_softmax.sum(dim=0)
+                        return raw.float(), per_head_softmax, summed
 
                     def _build_rotated_fp(q_slice):
                         if QUERY_ROTATE:
@@ -1133,45 +1148,158 @@ def patch_model():
                         if cl_blocks < 2:
                             continue
 
-                        # 1. Tính phân bố của Mean Query cho toàn cụm (cluster)
+                        anchor_slice = q[cl_start:cl_start + BASE_CHUNK].float()
+                        last_start = cl_start + (cl_blocks - 1) * BASE_CHUNK
+                        last_slice = q[last_start:last_start + BASE_CHUNK].float()
+
+                        # Cosine pre/post RoPE
+                        a_mean_pre = anchor_slice.mean(dim=0)
+                        l_mean_pre = last_slice.mean(dim=0)
+                        cos_pre = torch.nn.functional.cosine_similarity(
+                            a_mean_pre.unsqueeze(0), l_mean_pre.unsqueeze(0), dim=-1
+                        ).item()
+
+                        a_fp = _build_rotated_fp(anchor_slice)
+                        l_fp = _build_rotated_fp(last_slice)
+                        cos_post = torch.nn.functional.cosine_similarity(
+                            a_fp.unsqueeze(0), l_fp.unsqueeze(0), dim=-1
+                        ).item()
+
+                        # Pipeline chi tiết cho anchor
+                        raw_a, soft_a, sum_a = _pipeline_to_summed(a_fp)
+                        _, _, sum_l = _pipeline_to_summed(l_fp)
+
+                        # ============================================================
+                        # ĐO OVERLAP & PROBABILITY MASS (Mean vs Sub-chunks)
+                        # ============================================================
                         mean_slice = q[cl_start:cl_end].float()
                         m_fp = _build_rotated_fp(mean_slice)
-                        sum_m = _pipeline_to_summed_minimal(m_fp)
+                        _, _, sum_m = _pipeline_to_summed(m_fp)
                         T_mean = set(torch.topk(sum_m, actual_topk).indices.cpu().tolist())
                         
                         prob_mass_list = []
                         count_overlap_list = []
                         
-                        # 2. Duyệt qua TỪNG CHUNK trong cụm để so với Mean
+                        # Khởi tạo Dictionary để lưu TTHR cho nhiều mốc %
+                        tthr_lists = {1: [], 2: [], 5: [], 10: [], 20: [], 40: [], 60: [], 80: []} 
+                        
                         for j in range(cl_blocks):
                             s_ = cl_start + j * BASE_CHUNK
                             e_ = s_ + BASE_CHUNK
                             sub_fp = _build_rotated_fp(q[s_:e_].float())
                             
-                            sum_sub = _pipeline_to_summed_minimal(sub_fp)
-                            T_sub = set(torch.topk(sum_sub, actual_topk).indices.cpu().tolist())
+                            _, _, sum_sub = _pipeline_to_summed(sub_fp)
+                            
+                            # Lấy danh sách indices đã được sort theo điểm giảm dần
+                            sub_topk = torch.topk(sum_sub, actual_topk)
+                            T_sub_list = sub_topk.indices.cpu().tolist()
+                            T_sub = set(T_sub_list)
                             
                             overlap_set = T_mean & T_sub
                             
-                            p_sub = sum_sub / sum_sub.sum()
+                            p_sub = sum_sub / (sum_sub.sum() + 1e-12)
                             mass = sum(p_sub[idx].item() for idx in overlap_set)
                             prob_mass_list.append(mass)
                             
                             overlap_ratio = len(overlap_set) / len(T_sub) if len(T_sub) > 0 else 0
                             count_overlap_list.append(overlap_ratio)
+
+                            # --- TÍNH TOP-TIER HIT RATE CHO CÁC MỐC ---
+                            for pct in [1, 2, 5, 10, 20, 40, 60, 80]:
+                                k_elite = max(1, int(actual_topk * (pct / 100.0)))
+                                T_sub_elite = set(T_sub_list[:k_elite])
+                                tthr = len(T_mean & T_sub_elite) / k_elite
+                                tthr_lists[pct].append(tthr)
                             
-                        # 3. Ghi nhận log tối giản
+                        avg_prob_mass = sum(prob_mass_list) / len(prob_mass_list) if prob_mass_list else 0
+                        avg_count_overlap = sum(count_overlap_list) / len(count_overlap_list) if count_overlap_list else 0
+                        
+                        # Tính trung bình TTHR cho từng mốc
+                        avg_tthr = {pct: (sum(lst) / len(lst) if lst else 0) for pct, lst in tthr_lists.items()}
+
+                        # ============================================================
+                        # TỔNG HỢP CÁC CHỈ SỐ ĐỂ GHI LOG
+                        # ============================================================
+                        raw_stats = {
+                            "max_abs": float(raw_a.abs().max()),
+                            "mean_abs": float(raw_a.abs().mean()),
+                            "bf16_ulp_at_max": float(
+                                torch.tensor(raw_a.abs().max().item(), dtype=torch.bfloat16).float().item()
+                                - torch.tensor(raw_a.abs().max().item() * (1 - 1/256), dtype=torch.bfloat16).float().item()
+                            ),
+                        }
+
+                        eps = 1e-12
+                        per_head_entropy = -(soft_a * (soft_a + eps).log()).sum(dim=-1)
+                        per_head_entropy_norm = per_head_entropy / math.log(max(2, pool_size))
+                        per_head_max_prob = soft_a.max(dim=-1).values
+
+                        head_argmax = soft_a.argmax(dim=-1)
+                        unique_argmax = len(set(head_argmax.cpu().tolist()))
+                        top100_pool = set(torch.topk(sum_a, min(100, pool_size)).indices.cpu().tolist())
+                        heads_voting_top100 = sum(1 for h in range(num_q_heads) if head_argmax[h].item() in top100_pool)
+                        cross_head_divergence = {
+                            "unique_argmax_count": unique_argmax,
+                            "heads_voting_top100": heads_voting_top100,
+                            "pct_heads_aligned": heads_voting_top100 / num_q_heads,
+                        }
+
+                        p_sum = sum_a / (sum_a.sum() + eps)
+                        true_entropy_norm = float(-(p_sum * (p_sum + eps).log()).sum() / math.log(max(2, pool_size)))
+                        post_sum_max = float(sum_a.max())
+                        post_sum_mean = float(sum_a.mean())
+
+                        sorted_sum_a, _ = torch.sort(sum_a, descending=True)
+                        if actual_topk < pool_size:
+                            cutoff_val = float(sorted_sum_a[actual_topk - 1])
+                            gap_at_cutoff = float(sorted_sum_a[actual_topk - 1] - sorted_sum_a[actual_topk])
+                        else:
+                            cutoff_val = float(sorted_sum_a[-1])
+                            gap_at_cutoff = 0.0
+
+                        score_range = float(sorted_sum_a[0] - sorted_sum_a[-1])
+                        contested_eps = max(score_range * 1e-3, 1e-9)
+                        contested_count = int(((sum_a >= cutoff_val - contested_eps) & (sum_a <= cutoff_val + contested_eps)).sum())
+
+                        sum_cosine = float(torch.nn.functional.cosine_similarity(sum_a.unsqueeze(0), sum_l.unsqueeze(0), dim=-1))
+                        sum_diff_norm = float((sum_a - sum_l).abs().mean())
+
                         diagnostic_records.append({
                             "cluster_size": cl_blocks,
                             "pool_size": pool_size,
-                            "post_sum_overlap": sum(count_overlap_list) / len(count_overlap_list) if count_overlap_list else 0, 
-                            "prob_mass_overlap": sum(prob_mass_list) / len(prob_mass_list) if prob_mass_list else 0,    
+                            "cos_pre_rope": cos_pre,
+                            "cos_post_rope": cos_post,
+                            "raw_score": raw_stats,
+                            "per_head_entropy_norm_median": float(per_head_entropy_norm.median()),
+                            "per_head_max_prob_median": float(per_head_max_prob.median()),
+                            "per_head_max_prob_max": float(per_head_max_prob.max()),
+                            "cross_head_divergence": cross_head_divergence,
+                            "true_entropy_norm": true_entropy_norm,
+                            "post_sum_max": post_sum_max,
+                            "post_sum_mean": post_sum_mean,
+                            "gap_at_cutoff": gap_at_cutoff,
+                            "cutoff_val": cutoff_val,
+                            "score_range": score_range,
+                            "contested_count": contested_count,
+                            "post_sum_overlap": avg_count_overlap, 
+                            "prob_mass_overlap": avg_prob_mass,
+                            "tthr_1": avg_tthr[1],
+                            "tthr_2": avg_tthr[2],
+                            "tthr_5": avg_tthr[5],
+                            "tthr_10": avg_tthr[10],
+                            "tthr_20": avg_tthr[20],
+                            "tthr_40": avg_tthr[40],
+                            "tthr_60": avg_tthr[60],
+                            "tthr_80": avg_tthr[80],
+                            "sum_cosine": sum_cosine,
+                            "sum_diff_norm": sum_diff_norm,
                         })
 
-                if diagnostic_records:
+                if chunk_cosine_list or diagnostic_records:
                     with open(DIAGNOSTIC_RECORD_PATH, "a", encoding="utf-8") as f:
                         f.write(_json.dumps({
                             "layer": self.layer_id,
+                            "chunk_cosines": chunk_cosine_list,
                             "clusters": diagnostic_records,
                         }) + "\n")
 
