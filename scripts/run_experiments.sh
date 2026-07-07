@@ -88,62 +88,46 @@ EOF
 # <Max_Chunk_Size> <Use_Dynamic_Chunking> <Budget_Balancing> <Use_Adaptive_TopK> <Use_Cumsum_Adaptive> <Use_Hybrid_Adaptive> <Cumsum_Threshold> <N_Tail> <PPL_Mode>
 # ==============================================================================
 
-# Kịch bản A: TokenSelect Gốc (Tắt gộp chunk)
-# run_experiment "baseline-512" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "true"
 
-# # Kịch bản B: Gộp Chunk Động (Bật gộp chunk)
-# run_experiment "dynamic-0.95-max-1024" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "true"
-
-# # Kịch bản C: Gộp Chunk 2048 + L2Norm
-# run_experiment "dynamic-0.95-max-2048-l2" "true" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true"
-
-# Kịch bản D: Gộp Chunk 2048 + Không Bù Trừ Năng Lượng
-# run_experiment "dynamic-0.95-max-2048-no-balance" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false"
-
-# run_experiment "token-retrieval" "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "true"
-
-# run_experiment "sim-0.95-max-1024-adaptive-15-no-balance"           "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "false" "true" "false" "false" 0.99
-
-# run_experiment "sim-0.95-max-2048-adaptive-15-no-balance"           "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false" "true" "false" "false" 0.99
-
-# run_experiment "sim-0.95-max-4096-adaptive-15-no-balance"           "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "false" "true" "false" "false" 0.99
-
-# run_experiment "sim-0.97-max-1024-adaptive-15-no-balance"           "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "false" "true" "false" "false" 0.99
-
-# run_experiment "sim-0.97-max-2048-adaptive-15-no-balance"           "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "false" "true" "false" "false" 0.99
-
-# run_experiment "sim-0.97-max-4096-adaptive-15-no-balance"           "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "false" "true" "false" "false" 0.99
-
-# run_experiment "sim-0.99-max-1024-cumsum-0.99-no-balance"           "false" "false" "false" 8192 "false" "false" "both" 512 0.99 1024 "true" "false" "false" "true" "false" 0.99
-
-# run_experiment "sim-0.99-max-1024-adaptive-15-no-balance-min-norm"  "false" "false" "false" 8192 "false" "false" "both" 512 0.99 1024 "true" "false" "true" "false" "false" 0.99
-
-# run_experiment "sim-0.99-max-2048-adaptive-15-no-balance-min-norm"  "false" "false" "false" 8192 "false" "false" "both" 512 0.99 2048 "true" "false" "true" "false" "false" 0.99
-
-# run_experiment "sim-0.99-max-4096-adaptive-15-no-balance-min-norm"  "false" "false" "false" 8192 "false" "false" "both" 512 0.99 4096 "true" "false" "true" "false" "false" 0.99
+# run_experiment "token-retrieval"                                    "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "false" "false" "false" "false" 0.99
 
 # run_experiment "sim-0.95-max-1024-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "false" "false" "false" "false" 0.99
 
+# run_experiment "sim-0.95-max-1024-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "true" "false" "false" "false" 0.99
+
 # run_experiment "sim-0.95-max-2048-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false" "false" "false" "false" 0.99
+
+# run_experiment "sim-0.95-max-2048-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true" "false" "false" "false" 0.99
 
 # run_experiment "sim-0.95-max-4096-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "false" "false" "false" "false" 0.99
 
+# run_experiment "sim-0.95-max-4096-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "true" "false" "false" "false" 0.99
+
 # run_experiment "sim-0.97-max-1024-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "false" "false" "false" "false" 0.99
+
+# run_experiment "sim-0.97-max-1024-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "true" "false" "false" "false" 0.99
 
 # run_experiment "sim-0.97-max-2048-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "false" "false" "false" "false" 0.99
 
+# run_experiment "sim-0.97-max-2048-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "true" "false" "false" "false" 0.99
+
 # run_experiment "sim-0.97-max-4096-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "false" "false" "false" "false" 0.99
+
+# run_experiment "sim-0.97-max-4096-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "true" "false" "false" "false" 0.99
 
 # run_experiment "sim-0.99-max-1024-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.99 1024 "true" "false" "false" "false" "false" 0.99
 
+# run_experiment "sim-0.99-max-1024-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.99 1024 "true" "true" "false" "false" "false" 0.99
+
 # run_experiment "sim-0.99-max-2048-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.99 2048 "true" "false" "false" "false" "false" 0.99
+
+# run_experiment "sim-0.99-max-2048-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.99 2048 "true" "true" "false" "false" "false" 0.99
 
 # run_experiment "sim-0.99-max-4096-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.99 4096 "true" "false" "false" "false" "false" 0.99
 
 # run_experiment "sim-0.99-max-4096-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.99 4096 "true" "true" "false" "false" "false" 0.99
 
-# # exp1: Σ exp(H_h)  (adaptive_topk)
-# run_experiment "sumppl-add-4096-test"                                    "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true"  "false" "false" 0.95
+# run_experiment "sumppl-add-4096"                                    "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true"  "false" "false" 0.95
 
 # run_experiment "sumppl-tail-4096"                                   "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.95 4096 "sum"
 
@@ -159,31 +143,24 @@ EOF
 
 # run_experiment "token-retrieval-4096"                               "false" "false" "false" 4096 "false" "false" "both" 512 0.99 4096 "false" "false" "false" "false" "false" 0.99
 
-# run_experiment "ppl-tail-4096"                                      "false" "false" "false" 8192 "false" "true" "both" 512 0.95 4096 "false" "false" "false" "false" "false" 0.95 4096
-
-# run_experiment "ppl-tail-0"                                         "false" "false" "false" 8192 "false" "true" "both" 512 0.95 4096 "false" "false" "false" "false" "false" 0.95 0
-
-# run_experiment "ppl-tail-256"                                       "false" "false" "false" 8192 "false" "true" "both" 512 0.95 4096 "false" "false" "false" "false" "false" 0.95 256
-
-# run_experiment "ppl-tail-1024"                                      "false" "false" "false" 8192 "false" "true" "both" 512 0.95 4096 "false" "false" "false" "false" "false" 0.95 1024
-
-# run_experiment "ppl-tail-2048"                                      "false" "false" "false" 8192 "false" "true" "both" 512 0.95 4096 "false" "false" "false" "false" "false" 0.95 2048
-
-# exp2: head-wise cumsum union θ=0.9
-# run_experiment "headunion-0.9"                                      "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "false" "true"  "false" 0.9
-
-# exp3: head-wise cumsum union θ=0.99
-# run_experiment "headunion-0.99"                                     "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "false" "true"  "false" 0.99
-
-# run_experiment "normal_testing"                                     "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "false" "false" "false" 0.95 4096 "fixed"
+# run_experiment "layer-wise-top-k"                                   "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "false" "false" "false" 0.95 4096 "fixed"
 
 # run_experiment "thresh-1e7"                                         "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.0000001 4096 "thresh"
+
 # run_experiment "thresh-1e8"                                         "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.00000001 4096 "thresh"
+
 # run_experiment "thresh-1e9"                                         "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.000000001 4096 "thresh"
-# run_experiment "thresh-1e10"                                         "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.0000000001 4096 "thresh"
-# run_experiment "thresh-1e11"                                         "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.00000000001 4096 "thresh"
-# run_experiment "thresh-1e12"                                         "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.000000000001 4096 "thresh"
-# run_experiment "thresh-1e13"                                         "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.0000000000001 4096 "thresh"
-# run_experiment "thresh-1e14"                                         "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.00000000000001 4096 "thresh"
+
+# run_experiment "thresh-1e10"                                        "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.0000000001 4096 "thresh"
+
+# run_experiment "thresh-1e11"                                        "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.00000000001 4096 "thresh"
+
+# run_experiment "thresh-1e12"                                        "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.000000000001 4096 "thresh"
+
+# run_experiment "thresh-1e13"                                        "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.0000000000001 4096 "thresh"
+
+# run_experiment "thresh-1e14"                                        "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.00000000000001 4096 "thresh"
+
 run_experiment "thresh-1e15"                                         "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.000000000000001 4096 "thresh"
+
 run_experiment "thresh-1e16"                                         "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.0000000000000001 4096 "thresh"
