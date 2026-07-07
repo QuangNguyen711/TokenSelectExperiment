@@ -92,6 +92,8 @@ def get_model_and_tokenizer(config, kernel_size):
             use_cumsum_adaptive=getattr(config.model, 'use_cumsum_adaptive', False),
             use_hybrid_adaptive=getattr(config.model, 'use_hybrid_adaptive', False),
             cumsum_threshold=getattr(config.model, 'cumsum_threshold', 0.95),
+            n_tail=getattr(config.model, 'n_tail', 2048),
+            ppl_mode=getattr(config.model, 'ppl_mode', 'sum'),
         )
     else:
         raise NotImplementedError()
@@ -426,6 +428,9 @@ if __name__ == "__main__":
     # predict on each dataset
     for dataset in datasets:
         dname = dataset
+        # os.environ["SINK_DATASET"] = dname
+        # # SINK_LOG_DIR set 1 lần là đủ; đặt ở đây cho chắc
+        # os.environ["SINK_LOG_DIR"] = os.path.join(output_dir_path, "sink_logs")
         if dataset in [
             "passkey",
             "number_string",
@@ -463,6 +468,10 @@ if __name__ == "__main__":
             os.remove(ttft_record_path)
         
         tr.TTFT_RECORD_PATH = ttft_record_path
+        # gap_record_path = os.path.join(output_dir_path, f"{dname}.gap.log")
+        # if os.path.exists(gap_record_path):
+        #     os.remove(gap_record_path)
+        # tr.GAP_RECORD_PATH = gap_record_path
         model, tokenizer = get_model_and_tokenizer(config, kernel_size)
 
         # --- RESET ĐỒNG HỒ TRƯỚC KHI CHẠY DATASET ---
