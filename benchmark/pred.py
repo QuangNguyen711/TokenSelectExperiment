@@ -31,6 +31,9 @@ def load_ttft_total(record_path: str) -> float:
                 total += float(line)
     return total
 
+E2E_RECORD_PATH = None
+
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config_path", required=True)
@@ -40,6 +43,8 @@ def parse_args():
     parser.add_argument("--world_size", type=int, default=None)
     parser.add_argument("--verbose", action="store_true")
     parser.add_argument("--tp_size", type=int, default=1)
+    parser.add_argument("--num_samples", type=int, default=None,
+                        help="Giới hạn số sample mỗi dataset (mặc định: chạy toàn bộ)")
     args, extra_args = parser.parse_known_args()
     config = OmegaConf.load(args.config_path)
     cli_config = OmegaConf.from_cli(extra_args)
@@ -49,6 +54,7 @@ def parse_args():
     config.world_size = args.world_size
     config.tp_size = args.tp_size
     config.verbose = args.verbose
+    config.num_samples = args.num_samples
     if not hasattr(config.model, "tokenizer_path"):
         config.model.tokenizer_path = config.model.path
     if not hasattr(config, "truncation"):
@@ -377,6 +383,7 @@ def get_pred(
             "temperature": 0,
         }
 
+        _t0 = time.time()
         output = requests.post(
             model.url + "/generate",
             json={
@@ -385,6 +392,10 @@ def get_pred(
             },
         )
         output = output.json()["text"]
+        # TTFT chỉ đo phần prefill; ghi thêm e2e để thấy được phần decode.
+        if E2E_RECORD_PATH:
+            with open(E2E_RECORD_PATH, "a", encoding="utf-8") as f:
+                f.write(f"{time.time() - _t0}\n")
 
         pred = post_process(output, model_name, dataset)
         preds.append(
@@ -456,6 +467,8 @@ if __name__ == "__main__":
         random.seed(42)
         # data = random.sample(data_list, min(100, len(data_list)))
         data = data_list
+        if getattr(config, "num_samples", None):
+            data = data[: config.num_samples]
 
         out_path = os.path.join(output_dir_path, f"{dname}.jsonl")
         # if multiprocessing:
@@ -471,6 +484,13 @@ if __name__ == "__main__":
             os.remove(ttft_record_path)
         
         tr.TTFT_RECORD_PATH = ttft_record_path
+        skip_record_path = os.path.join(output_dir_path, f"{dname}.skip.log")
+        if os.path.exists(skip_record_path):
+            os.remove(skip_record_path)
+        tr.SKIP_RECORD_PATH = skip_record_path
+        E2E_RECORD_PATH = os.path.join(output_dir_path, f"{dname}.e2e.log")
+        if os.path.exists(E2E_RECORD_PATH):
+            os.remove(E2E_RECORD_PATH)
         # gap_record_path = os.path.join(output_dir_path, f"{dname}.gap.log")
         # if os.path.exists(gap_record_path):
         #     os.remove(gap_record_path)

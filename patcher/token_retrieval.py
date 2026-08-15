@@ -70,6 +70,7 @@ _TRACKER_PREFILL_START = 0.0
 GLOBAL_TOTAL_TTFT = 0.0
 TTFT_RECORD_PATH = None
 GAP_RECORD_PATH = None
+SKIP_RECORD_PATH = None
 
 
 def record_ttft(ttft: float):
@@ -226,13 +227,16 @@ class ReqToTokenRetriever:
                     and QUERY_CACHE
                     and self.current_token_retriever.retrieval_count > 0
             ):
-                print("skip_count:", self.current_token_retriever.skip_count)
-                print("retrieval_count:", self.current_token_retriever.retrieval_count)
-                print(
-                    "skip_rate:",
-                    self.current_token_retriever.skip_count
-                    / self.current_token_retriever.retrieval_count,
-                )
+                skip = self.current_token_retriever.skip_count
+                total = self.current_token_retriever.retrieval_count
+                print("skip_count:", skip)
+                print("retrieval_count:", total)
+                print("skip_rate:", skip / total)
+                # Server chạy trong tiến trình con nên stdout thường không được thu lại;
+                # ghi thêm ra file để còn kiểm chứng cache có hoạt động thật hay không.
+                if SKIP_RECORD_PATH:
+                    with open(SKIP_RECORD_PATH, "a", encoding="utf-8") as f:
+                        f.write(f"{skip} {total}\n")
             self.current_token_retriever = TokenRetriever(**self.kwargs)
         return self.current_token_retriever
 
@@ -378,11 +382,9 @@ class TokenRetriever:
             dtype=self.dtype,
         )
 
-        self.topk_indices_cache = torch.empty(
-            (self.num_layers, TOP_K),
-            device=self.device,
-            dtype=torch.int64,
-        )
+        # Selection Cache (chỉ dùng ở decode). Lưu dạng list vì số token được chọn
+        # thay đổi theo layer khi bật adaptive top-k -> không thể dùng buffer cố định [L, TOP_K].
+        self.topk_indices_cache = [None for _ in range(self.num_layers)]
 
         self.similarity_threshold = torch.tensor(
             [QUERY_CACHE_SIM_THRESHOLD for _ in range(self.num_layers)], device=self.device, dtype=self.dtype
@@ -716,7 +718,7 @@ class TokenRetriever:
 
         return sorted_topk_tokens
 
-    def retrieval_indices(self, query, layer_id, n_init, n_local, topk):
+    def retrieval_indices(self, query, layer_id, n_init, n_local, topk, is_decode=False):
         current_num_tokens = self.num_tokens[layer_id]
         if n_init + topk + n_local >= current_num_tokens:
             return None
@@ -760,39 +762,22 @@ class TokenRetriever:
             #     # giữ hướng anchor, ép độ dài về norm nhỏ nhất
             #     query_fingerprints = query_fingerprints * (min_norm / anchor_norm)
 
-        if QUERY_CACHE:
-            if (
-                    self.is_first_query[layer_id]
-                    or torch.cosine_similarity(
-                self.query_fingerprints_cache[layer_id], query_fingerprints, dim=0
+        # Selection Cache CHỈ áp cho decode. Prefill đã có Dynamic Chunking lo việc
+        # tái sử dụng kết quả chọn token, bật cache ở đó vừa chậm vừa nhiễu thí nghiệm.
+        use_query_cache = QUERY_CACHE and is_decode
+
+        cache_hit = False
+        if use_query_cache and not self.is_first_query[layer_id]:
+            cache_hit = bool(
+                torch.cosine_similarity(
+                    self.query_fingerprints_cache[layer_id], query_fingerprints, dim=0
+                )
+                >= self.similarity_threshold[layer_id]
             )
-                    < self.similarity_threshold[layer_id]
-            ):
-                token_fingerprints = self.token_fingerprints[layer_id][
-                    self.token_indices[
-                    layer_id, n_init: self.num_tokens[layer_id] - n_local
-                    ]
-                ]
-                token_fingerprints = token_fingerprints.view(
-                    token_fingerprints.shape[0], -1
-                )
-                # đã gather sẵn theo self.token_indices ở trên -> indices là identity
-                gathered_indices = torch.arange(
-                    token_fingerprints.shape[0], device=self.device, dtype=torch.int32
-                )
 
-                topk_tokens = (
-                        self.get_topk_tokens(query_fingerprints, token_fingerprints, topk, gathered_indices, layer_id=layer_id, chunk_size=query.shape[0])
-                        + n_init
-                )
-                self.topk_indices_cache[layer_id] = topk_tokens
-                self.query_fingerprints_cache[layer_id] = query_fingerprints
-                self.is_first_query[layer_id] = False
-            else:
-                topk_tokens = self.topk_indices_cache[layer_id]
-                self.skip_count += 1
-            self.retrieval_count += 1
-
+        if cache_hit:
+            topk_tokens = self.topk_indices_cache[layer_id]
+            self.skip_count += 1
         else:
             relevant_indices = self.token_indices[
                                layer_id, n_init: current_num_tokens - n_local
@@ -807,6 +792,14 @@ class TokenRetriever:
                     )
                     + n_init
             )
+
+            if use_query_cache:
+                self.topk_indices_cache[layer_id] = topk_tokens
+                self.query_fingerprints_cache[layer_id] = query_fingerprints
+                self.is_first_query[layer_id] = False
+
+        if use_query_cache:
+            self.retrieval_count += 1
 
         retrieved_tokens = torch.cat(
             [
@@ -1169,7 +1162,8 @@ def patch_model():
                     current_top_k = TOP_K
 
                 retrieved_indices = input_metadata.token_retriever.retrieval_indices(
-                    q[start:end].contiguous(), self.layer_id, N_INIT, current_n_local, current_top_k
+                    q[start:end].contiguous(), self.layer_id, N_INIT, current_n_local, current_top_k,
+                    is_decode=False,
                 )
                 
                 retrieved_indptr = prefill_wrapper_paged._paged_kv_indptr_buf.clone()
@@ -1220,7 +1214,7 @@ def patch_model():
                 self.store_kv_cache(k, v, input_metadata)
 
             retrieved_indices = input_metadata.token_retriever.retrieval_indices(q.contiguous(), self.layer_id, N_INIT,
-                                                                                 N_Local, TOP_K)
+                                                                                 N_Local, TOP_K, is_decode=True)
             if retrieved_indices is not None:
                 # Adaptive Top-K làm số lượng indices thay đổi theo layer. 
                 # Ta cần reset FlashInfer wrapper nếu độ dài bị lệch so với buffer hiện tại.
