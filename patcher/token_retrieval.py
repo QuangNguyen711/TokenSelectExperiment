@@ -52,6 +52,7 @@ N_Local = -1
 PREFILL_CHUNK_SIZE = -1
 QUERY_ROTATE = False
 QUERY_CACHE = False
+QUERY_CACHE_SIM_THRESHOLD = 0.9  # ngưỡng cosine riêng cho Selection Cache (decode), tách khỏi SIM_THRESHOLD (Dynamic Chunking prefill)
 KERNEL_SIZE=-1
 ADAPTIVE_TOPK = False
 ATTENTION_THRESHOLD = 0.9
@@ -332,14 +333,12 @@ class TokenRetriever:
             dtype=self.dtype,
         )
 
-        self.topk_indices_cache = torch.empty(
-            (self.num_layers, TOP_K),
-            device=self.device,
-            dtype=torch.int64,
-        )
+        # Selection Cache (chỉ dùng ở decode). Lưu dạng list vì số token được chọn
+        # thay đổi theo layer khi bật adaptive top-k -> không thể dùng buffer cố định [L, TOP_K].
+        self.topk_indices_cache = [None for _ in range(self.num_layers)]
 
         self.similarity_threshold = torch.tensor(
-            [0.9 for _ in range(self.num_layers)], device=self.device, dtype=self.dtype
+            [QUERY_CACHE_SIM_THRESHOLD for _ in range(self.num_layers)], device=self.device, dtype=self.dtype
         )
 
         self.skip_count = 0
@@ -520,7 +519,7 @@ class TokenRetriever:
 
         return sorted_topk_tokens
 
-    def retrieval_indices(self, query, layer_id, n_init, n_local, topk):
+    def retrieval_indices(self, query, layer_id, n_init, n_local, topk, is_decode=False):
         current_num_tokens = self.num_tokens[layer_id]
         if n_init + topk + n_local >= current_num_tokens:
             return None
@@ -546,35 +545,22 @@ class TokenRetriever:
             # --- ORIGINAL PAPER: Mean Pooling ---
             query_fingerprints = torch.mean(query, dim=0)
 
-        if QUERY_CACHE:
-            if (
-                    self.is_first_query[layer_id]
-                    or torch.cosine_similarity(
-                self.query_fingerprints_cache[layer_id], query_fingerprints
+        # Selection Cache CHỈ áp cho decode. Prefill đã có Dynamic Chunking lo việc
+        # tái sử dụng kết quả chọn token, bật cache ở đó vừa chậm vừa nhiễu thí nghiệm.
+        use_query_cache = QUERY_CACHE and is_decode
+
+        cache_hit = False
+        if use_query_cache and not self.is_first_query[layer_id]:
+            cache_hit = bool(
+                torch.cosine_similarity(
+                    self.query_fingerprints_cache[layer_id], query_fingerprints, dim=0
+                )
+                >= self.similarity_threshold[layer_id]
             )
-                    < self.similarity_threshold[layer_id]
-            ):
-                token_fingerprints = self.token_fingerprints[layer_id][
-                    self.token_indices[
-                    layer_id, n_init: self.num_tokens[layer_id] - n_local
-                    ]
-                ]
-                token_fingerprints = token_fingerprints.view(
-                    token_fingerprints.shape[0], -1
-                )
 
-                topk_tokens = (
-                        self.get_topk_tokens(query_fingerprints, token_fingerprints, topk)
-                        + n_init
-                )
-                self.topk_indices_cache[layer_id] = topk_tokens
-                self.query_fingerprints_cache[layer_id] = query_fingerprints
-                self.is_first_query[layer_id] = False
-            else:
-                topk_tokens = self.topk_indices_cache[layer_id]
-                self.skip_count += 1
-            self.retrieval_count += 1
-
+        if cache_hit:
+            topk_tokens = self.topk_indices_cache[layer_id]
+            self.skip_count += 1
         else:
             relevant_indices = self.token_indices[
                                layer_id, n_init: current_num_tokens - n_local
@@ -587,6 +573,14 @@ class TokenRetriever:
                     )
                     + n_init
             )
+
+            if use_query_cache:
+                self.topk_indices_cache[layer_id] = topk_tokens
+                self.query_fingerprints_cache[layer_id] = query_fingerprints
+                self.is_first_query[layer_id] = False
+
+        if use_query_cache:
+            self.retrieval_count += 1
 
         retrieved_tokens = torch.cat(
             [
@@ -949,7 +943,8 @@ def patch_model():
                     current_top_k = TOP_K
 
                 retrieved_indices = input_metadata.token_retriever.retrieval_indices(
-                    q[start:end].contiguous(), self.layer_id, N_INIT, current_n_local, current_top_k
+                    q[start:end].contiguous(), self.layer_id, N_INIT, current_n_local, current_top_k,
+                    is_decode=False,
                 )
                 
                 retrieved_indptr = prefill_wrapper_paged._paged_kv_indptr_buf.clone()
@@ -1000,7 +995,7 @@ def patch_model():
                 self.store_kv_cache(k, v, input_metadata)
 
             retrieved_indices = input_metadata.token_retriever.retrieval_indices(q.contiguous(), self.layer_id, N_INIT,
-                                                                                 N_Local, TOP_K)
+                                                                                 N_Local, TOP_K, is_decode=True)
             if retrieved_indices is not None:
                 # Adaptive Top-K làm số lượng indices thay đổi theo layer. 
                 # Ta cần reset FlashInfer wrapper nếu độ dài bị lệch so với buffer hiện tại.
@@ -1124,6 +1119,8 @@ def patch(
         sim_threshold=0.95,
         max_dynamic_chunk=1024,
         use_dynamic_chunking=False,
+        query_cache=False,
+        query_cache_sim_threshold=0.9,
         dynamic_budget_balancing=True,
 ):
     global ROPE_BASE
@@ -1135,6 +1132,7 @@ def patch(
     global N_Local
     global QUERY_ROTATE
     global QUERY_CACHE
+    global QUERY_CACHE_SIM_THRESHOLD
     global PREFILL_CHUNK_SIZE
     global KERNEL_SIZE
     global ADAPTIVE_TOPK
@@ -1176,7 +1174,8 @@ def patch(
 
     QUERY_ROTATE = True
     PREFILL_CHUNK_SIZE = prefill_chunk_size
-    QUERY_CACHE = False
+    QUERY_CACHE = query_cache
+    QUERY_CACHE_SIM_THRESHOLD = query_cache_sim_threshold
 
     SIM_THRESHOLD = sim_threshold
     MAX_DYNAMIC_CHUNK = max_dynamic_chunk
