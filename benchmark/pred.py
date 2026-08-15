@@ -105,7 +105,7 @@ def get_model_and_tokenizer(config, kernel_size):
         dtype=config.dtype,
         chunked_prefill_size=config.chunk_size,
         max_prefill_tokens=config.max_len,
-        mem_fraction_static=0.7,
+        mem_fraction_static=0.85,
         disable_cuda_graph=True,
         disable_regex_jump_forward=True,
         disable_radix_cache=True,
@@ -156,7 +156,7 @@ def load_infinite_bench(path, data_name) -> str:
     fin = open(os.path.join(path, data_name + ".jsonl"), "r")
     lines = fin.readlines()
     fin.close()
-    data = [json.loads(line) for line in lines]
+    data = [json.loads(line, strict=False) for line in lines]
 
     def get_answer(inp: dict):
         if data_name in ["code_debug", "longbook_choice_eng"]:
@@ -452,7 +452,8 @@ if __name__ == "__main__":
 
         data_list = list(data)
         random.seed(42)
-        data = random.sample(data_list, min(100, len(data_list)))
+        # data = random.sample(data_list, min(100, len(data_list)))
+        data = data_list
 
         out_path = os.path.join(output_dir_path, f"{dname}.jsonl")
         # if multiprocessing:

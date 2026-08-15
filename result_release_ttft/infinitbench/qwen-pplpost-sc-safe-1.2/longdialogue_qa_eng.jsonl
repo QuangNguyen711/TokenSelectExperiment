@@ -1,0 +1,200 @@
+{"pred": "WINK", "answers": ["ACE", "ACE ROTHSTEIN"], "all_classes": null, "length": 67337, "token_length": 104530}
+{"pred": "WINK", "answers": ["GAGGI", "Remo", "remo Gaggi"], "all_classes": null, "length": 67339, "token_length": 104460}
+{"pred": "Lou Ivon", "answers": ["JIM", "JIM GARRISON", "GARRISON"], "all_classes": null, "length": 86046, "token_length": 124698}
+{"pred": "Lou Ivon", "answers": ["BILL", "BILL BROUSSARD", "BROUSSARD"], "all_classes": null, "length": 86046, "token_length": 124680}
+{"pred": "Marcy Dawson", "answers": ["FARROUHK"], "all_classes": null, "length": 83169, "token_length": 115790}
+{"pred": "VIVIAN", "answers": ["EDWARD"], "all_classes": null, "length": 77227, "token_length": 113313}
+{"pred": "Bob Guza", "answers": ["HAMMOND"], "all_classes": null, "length": 69914, "token_length": 110971}
+{"pred": "Steve", "answers": ["DAVID", "DAVID WILLS"], "all_classes": null, "length": 70373, "token_length": 105627}
+{"pred": "Elektra", "answers": ["MICKEY", "Mickey Sachs"], "all_classes": null, "length": 68244, "token_length": 107055}
+{"pred": "NED", "answers": ["OIL MAN"], "all_classes": null, "length": 70659, "token_length": 115397}
+{"pred": "MRS. VOORHEES", "answers": ["TONY", "TONY MONTANA"], "all_classes": null, "length": 70659, "token_length": 115396}
+{"pred": "Claudia", "answers": ["CLAUDIA"], "all_classes": null, "length": 72379, "token_length": 108402}
+{"pred": "INT. COTTAGE - NIGHT - DAY\nCONTINUED: (2)\nHECTOR: I'm not making sense, am I? Well, let", "answers": ["BETSY"], "all_classes": null, "length": 74728, "token_length": 108591}
+{"pred": "Hector", "answers": ["HECTOR"], "all_classes": null, "length": 74777, "token_length": 108634}
+{"pred": "Michael", "answers": ["CLEMENZA", "Peter Clemenza"], "all_classes": null, "length": 76982, "token_length": 110434}
+{"pred": "Elle Driver", "answers": ["PLAGUE"], "all_classes": null, "length": 75688, "token_length": 109730}
+{"pred": "Elle Driver", "answers": ["THE BRIDE"], "all_classes": null, "length": 75687, "token_length": 109730}
+{"pred": "Lisa", "answers": ["RAMON"], "all_classes": null, "length": 68355, "token_length": 102489}
+{"pred": "Lisa", "answers": ["LISA", "LISA COHEN"], "all_classes": null, "length": 68355, "token_length": 102489}
+{"pred": "Mikael Blomkvist", "answers": ["KATIE"], "all_classes": null, "length": 65655, "token_length": 104564}
+{"pred": "$$MASK$$", "answers": ["BLOMKVIST", "Mikael Blomkvist"], "all_classes": null, "length": 65655, "token_length": 104562}
+{"pred": "Brock Lovett", "answers": ["DOUG", "DOUG BUKOWSKI"], "all_classes": null, "length": 83306, "token_length": 120102}
+{"pred": "Chris", "answers": ["SALIERI"], "all_classes": null, "length": 69134, "token_length": 104927}
+{"pred": "Chris", "answers": ["JONAH KING"], "all_classes": null, "length": 69133, "token_length": 104928}
+{"pred": "Michelle", "answers": ["BRUCE", "Bruce Baldwin"], "all_classes": null, "length": 62208, "token_length": 96603}
+{"pred": "WILLIE", "answers": ["ENDICOTT"], "all_classes": null, "length": 62208, "token_length": 96602}
+{"pred": "$$MASK$$", "answers": ["HILDY", "Hildy Johnson"], "all_classes": null, "length": 62208, "token_length": 96602}
+{"pred": "Michelle", "answers": ["BURNS", "Walter", "Walter BURNS"], "all_classes": null, "length": 62205, "token_length": 96397}
+{"pred": "Maxine", "answers": ["MARTHA"], "all_classes": null, "length": 72946, "token_length": 108967}
+{"pred": "MOM", "answers": ["MASON"], "all_classes": null, "length": 61447, "token_length": 92985}
+{"pred": "MOM", "answers": ["DAD"], "all_classes": null, "length": 61446, "token_length": 92981}
+{"pred": "Lincoln Six-Echo", "answers": ["DR. SANGER", "HENRY SANGER", "DR. HENRY SANGER"], "all_classes": null, "length": 74151, "token_length": 110543}
+{"pred": "Sidney", "answers": ["HUNSECKER"], "all_classes": null, "length": 73453, "token_length": 110774}
+{"pred": "Sidney", "answers": ["PRIMATE PETE", "PETE"], "all_classes": null, "length": 73450, "token_length": 110766}
+{"pred": "$$MASK$$", "answers": ["KELLY"], "all_classes": null, "length": 73453, "token_length": 110777}
+{"pred": "STAR TREK", "answers": ["NICKY"], "all_classes": null, "length": 64250, "token_length": 103917}
+{"pred": "Lester Bangs", "answers": ["DA MAYOR"], "all_classes": null, "length": 65776, "token_length": 102132}
+{"pred": "MISTER SEÑOR LOVE DADDY", "answers": ["DARRYL"], "all_classes": null, "length": 65777, "token_length": 102132}
+{"pred": "$$MASK$$: Elaine", "answers": ["ESTRELLA"], "all_classes": null, "length": 65777, "token_length": 102131}
+{"pred": "BROOKE", "answers": ["ANNIE", "ANNIE MACLEAN"], "all_classes": null, "length": 74661, "token_length": 105363}
+{"pred": "PAM", "answers": ["INEZ"], "all_classes": null, "length": 66740, "token_length": 99937}
+{"pred": "Zelda Fitzgerald", "answers": ["PHIL"], "all_classes": null, "length": 66740, "token_length": 99934}
+{"pred": "Rebecca", "answers": ["BRUWER", "MELANIE BRUWER"], "all_classes": null, "length": 77357, "token_length": 114213}
+{"pred": "Melanie Bruwer", "answers": ["CLOETE"], "all_classes": null, "length": 77357, "token_length": 114212}
+{"pred": "Verna", "answers": ["PRIEST"], "all_classes": null, "length": 77357, "token_length": 114214}
+{"pred": "Lisa", "answers": ["HEDONIA"], "all_classes": null, "length": 74096, "token_length": 111763}
+{"pred": "LORNA", "answers": ["GWEN"], "all_classes": null, "length": 65032, "token_length": 100827}
+{"pred": "Louise", "answers": ["SAMANTHA"], "all_classes": null, "length": 65030, "token_length": 100820}
+{"pred": "Adam Sandler", "answers": ["WARDEN", "MILTON WARDEN"], "all_classes": null, "length": 71693, "token_length": 104133}
+{"pred": "Amy Klein", "answers": ["PINHEAD"], "all_classes": null, "length": 70950, "token_length": 106797}
+{"pred": "Max Cherry", "answers": ["NICOLET", "RAY NICOLET"], "all_classes": null, "length": 71359, "token_length": 105378}
+{"pred": "Fantastic Mr. Fox", "answers": ["JACKIE", "JACKIE BROWN"], "all_classes": null, "length": 71359, "token_length": 105378}
+{"pred": "JURASSIC PARK III", "answers": ["RUSTY"], "all_classes": null, "length": 66055, "token_length": 104433}
+{"pred": "Ellie", "answers": ["TESS"], "all_classes": null, "length": 66058, "token_length": 104442}
+{"pred": "$$MASK$$", "answers": ["ROY"], "all_classes": null, "length": 72699, "token_length": 110540}
+{"pred": "Joe", "answers": ["QUINCE"], "all_classes": null, "length": 65985, "token_length": 99609}
+{"pred": "Cara Mason", "answers": ["JOE", "JOE Black"], "all_classes": null, "length": 65985, "token_length": 99610}
+{"pred": "Woody Allen", "answers": ["ALLISON"], "all_classes": null, "length": 65985, "token_length": 99610}
+{"pred": "ISHMAEL", "answers": ["HELEN", "HELEN CHAMBERS"], "all_classes": null, "length": 69862, "token_length": 104553}
+{"pred": "MOLLY", "answers": ["MILLS", "David Mills"], "all_classes": null, "length": 71137, "token_length": 105562}
+{"pred": "MILLS", "answers": ["TYRIAN"], "all_classes": null, "length": 71137, "token_length": 105561}
+{"pred": "MOLLY", "answers": ["STEPHEN", "Stephen Meyers"], "all_classes": null, "length": 71137, "token_length": 105562}
+{"pred": "$$MASK$$", "answers": ["BOND", "JAMES BOND"], "all_classes": null, "length": 70844, "token_length": 107962}
+{"pred": "John Krokidas", "answers": ["HARMSWAY", "ELLIOT HARMSWAY"], "all_classes": null, "length": 70858, "token_length": 107970}
+{"pred": "Sidney", "answers": ["MR. PINK"], "all_classes": null, "length": 70857, "token_length": 107970}
+{"pred": "$$MASK$$", "answers": ["NICOLE"], "all_classes": null, "length": 62905, "token_length": 97462}
+{"pred": "JOHN LEE HANCOCK", "answers": ["ALISON", "Ally Jones", "Ally"], "all_classes": null, "length": 62905, "token_length": 97462}
+{"pred": "Red", "answers": ["CAROL"], "all_classes": null, "length": 62905, "token_length": 97462}
+{"pred": "Harvey", "answers": ["ANN", "ANN BISHOP MILLANEY"], "all_classes": null, "length": 70505, "token_length": 103604}
+{"pred": "Graham", "answers": ["LELAND"], "all_classes": null, "length": 70505, "token_length": 103603}
+{"pred": "$$MASK$$: Susan Alexander", "answers": ["HARVEY", "HARVEY PEKAR"], "all_classes": null, "length": 70505, "token_length": 103600}
+{"pred": "Peter", "answers": ["BILLY"], "all_classes": null, "length": 68393, "token_length": 105056}
+{"pred": "Etan Cohen", "answers": ["CLAUDIA", "CLAUDIA JENSSEN,"], "all_classes": null, "length": 68393, "token_length": 105055}
+{"pred": "Etan Cohen", "answers": ["KAY"], "all_classes": null, "length": 68393, "token_length": 105056}
+{"pred": "Dana", "answers": ["DAVE"], "all_classes": null, "length": 73904, "token_length": 108673}
+{"pred": "Lisa", "answers": ["LISA"], "all_classes": null, "length": 73904, "token_length": 108673}
+{"pred": "AMERICAN MILKSHAKE", "answers": ["QUAIL", "Douglas Quail"], "all_classes": null, "length": 67496, "token_length": 103137}
+{"pred": "TILLEY", "answers": ["SAM", "SAM PICKLES"], "all_classes": null, "length": 67493, "token_length": 103128}
+{"pred": "Skeeter", "answers": ["JOHNNY", "JOHNNY FOOTE"], "all_classes": null, "length": 63916, "token_length": 98931}
+{"pred": "Aibileen", "answers": ["CHARLOTTE", "CHARLOTTE BOUDREAU CANTELLE PHELAN"], "all_classes": null, "length": 63916, "token_length": 98933}
+{"pred": "Matt", "answers": ["ELIZABETH", "ELIZABETH LEEFOLT"], "all_classes": null, "length": 63916, "token_length": 98931}
+{"pred": "Mike Myers", "answers": ["BUDDY"], "all_classes": null, "length": 66758, "token_length": 101147}
+{"pred": "Mike Myers", "answers": ["AUSTIN", "AUSTIN POWERS"], "all_classes": null, "length": 66759, "token_length": 101145}
+{"pred": "$$MASK$$", "answers": ["EDUARDO", "EDUARDO SAVERIN"], "all_classes": null, "length": 66758, "token_length": 101141}
+{"pred": "FENWICK", "answers": ["JENNIFER", "JENNIFER HILLS"], "all_classes": null, "length": 79057, "token_length": 122788}
+{"pred": "FENWICK", "answers": ["JOHNNY"], "all_classes": null, "length": 79057, "token_length": 122787}
+{"pred": "THREEPIO", "answers": ["SAMUEL"], "all_classes": null, "length": 76033, "token_length": 108793}
+{"pred": "HAN", "answers": ["MOTTI", "Admiral Motti"], "all_classes": null, "length": 76033, "token_length": 108792}
+{"pred": "JEZZIE", "answers": ["STU", "STUART SHEPARD"], "all_classes": null, "length": 70266, "token_length": 102637}
+{"pred": "Éowyn", "answers": ["MAURICE"], "all_classes": null, "length": 72553, "token_length": 109369}
+{"pred": "JOHN", "answers": ["BESTLER", "HEINRICH BESTLER"], "all_classes": null, "length": 71696, "token_length": 105323}
+{"pred": "JOHN FAIT", "answers": ["HELMUT", "HELMUT DORQUE"], "all_classes": null, "length": 71696, "token_length": 105322}
+{"pred": "Carole Eastman", "answers": ["FAIT", "TONY FAIT"], "all_classes": null, "length": 71696, "token_length": 105323}
+{"pred": "Ted Elliott", "answers": ["ECKER", "COMMANDER BILL ECKER"], "all_classes": null, "length": 70987, "token_length": 108002}
+{"pred": "$$MASK$$: Elizabeth Swann", "answers": ["DAVY JONES"], "all_classes": null, "length": 70986, "token_length": 107999}
+{"pred": "$$MASK$$: WILL TURNER", "answers": ["BOBBY", "Bobby Kennedy"], "all_classes": null, "length": 70987, "token_length": 108001}
+{"pred": "Mary Burke", "answers": ["PAUL", "PAUL D. GARNER", "Paul D."], "all_classes": null, "length": 71254, "token_length": 103431}
+{"pred": "Paul D.", "answers": ["STAMP PAID"], "all_classes": null, "length": 71253, "token_length": 103429}
+{"pred": "JULIAN", "answers": ["BABY SUGGS"], "all_classes": null, "length": 71253, "token_length": 103428}
+{"pred": "Beloved", "answers": ["DENVER"], "all_classes": null, "length": 71254, "token_length": 103431}
+{"pred": "Karen", "answers": ["ZED"], "all_classes": null, "length": 67779, "token_length": 99214}
+{"pred": "Ricky Tan", "answers": ["ISABELLA", "ISABELLA MOLINA"], "all_classes": null, "length": 66594, "token_length": 101560}
+{"pred": "Lee", "answers": ["CARTER"], "all_classes": null, "length": 66594, "token_length": 101560}
+{"pred": "Steve Tesich", "answers": ["PETE MUSANE"], "all_classes": null, "length": 72671, "token_length": 113895}
+{"pred": "Cyril", "answers": ["DAVE"], "all_classes": null, "length": 72670, "token_length": 113894}
+{"pred": "Mary", "answers": ["JOEL", "JOEL REYNOLDS"], "all_classes": null, "length": 72672, "token_length": 113898}
+{"pred": "Nic", "answers": ["WEISS"], "all_classes": null, "length": 62758, "token_length": 98348}
+{"pred": "Nic", "answers": ["SHERMAN", "Sherman McCoy"], "all_classes": null, "length": 62867, "token_length": 98631}
+{"pred": "Nic", "answers": ["LUIS"], "all_classes": null, "length": 62860, "token_length": 98611}
+{"pred": "Tan", "answers": ["PETER", "Peter Fallow"], "all_classes": null, "length": 62776, "token_length": 98329}
+{"pred": "SILENCE", "answers": ["MISSION CONTROL"], "all_classes": null, "length": 68075, "token_length": 111329}
+{"pred": "Oliver", "answers": ["OLIVER", "OLIVER FIELDS"], "all_classes": null, "length": 70920, "token_length": 109667}
+{"pred": "Heroine", "answers": ["COACH"], "all_classes": null, "length": 72738, "token_length": 110944}
+{"pred": "HICCUP", "answers": ["SAM", "SAM LOWRY"], "all_classes": null, "length": 72738, "token_length": 110945}
+{"pred": "Samantha", "answers": ["LOU"], "all_classes": null, "length": 72182, "token_length": 106919}
+{"pred": "Alison", "answers": ["STEVE CARELL"], "all_classes": null, "length": 67447, "token_length": 103136}
+{"pred": "CINDY", "answers": ["KAREN", "KAREN RICHARDS"], "all_classes": null, "length": 71579, "token_length": 105405}
+{"pred": "CINDY", "answers": ["CINDY", "CINDY PERIERA"], "all_classes": null, "length": 71579, "token_length": 105404}
+{"pred": "GLADYS LEEMAN", "answers": ["GLADYS", "GLADYS LEEMAN"], "all_classes": null, "length": 68882, "token_length": 110578}
+{"pred": "Mike", "answers": ["MR. JOHNSON"], "all_classes": null, "length": 68538, "token_length": 101815}
+{"pred": "$$MASK$$: Clare", "answers": ["LINNEA"], "all_classes": null, "length": 72399, "token_length": 114743}
+{"pred": "Mike", "answers": ["BASQUIAT", "JEAN MICHEL BASQUIAT"], "all_classes": null, "length": 65167, "token_length": 99149}
+{"pred": "Trent", "answers": ["SECURITY CHIEF"], "all_classes": null, "length": 65166, "token_length": 99148}
+{"pred": "Mike", "answers": ["CHRISTY"], "all_classes": null, "length": 65164, "token_length": 99140}
+{"pred": "William Moore", "answers": ["WALTER", "WALTER VALE"], "all_classes": null, "length": 74257, "token_length": 114171}
+{"pred": "TUPAC SHAKUR", "answers": ["REGGIE"], "all_classes": null, "length": 69171, "token_length": 105059}
+{"pred": "Reggie", "answers": ["LEONARD", "LEONARD FISHER"], "all_classes": null, "length": 69171, "token_length": 105059}
+{"pred": "Driver", "answers": ["TYLER", "Tyler Durden"], "all_classes": null, "length": 70227, "token_length": 105494}
+{"pred": "Leo Bloom", "answers": ["BIALYSTOCK"], "all_classes": null, "length": 63500, "token_length": 105264}
+{"pred": "Rachel", "answers": ["BLOOM", "LEO BLOOM"], "all_classes": null, "length": 63500, "token_length": 105265}
+{"pred": "Leo Bloom", "answers": ["RACHEL", "RACHEL KELLY"], "all_classes": null, "length": 63500, "token_length": 105265}
+{"pred": "Juno", "answers": ["JUNO"], "all_classes": null, "length": 63500, "token_length": 105265}
+{"pred": "HARLEY PEYTON", "answers": ["D'ARTAGNAN"], "all_classes": null, "length": 69011, "token_length": 108253}
+{"pred": "Charlie", "answers": ["LOUIS", "King Louis XIII", "Louis XIII"], "all_classes": null, "length": 69008, "token_length": 108240}
+{"pred": "HARLEY PEYTON", "answers": ["FRY", "CAROLYN FRY"], "all_classes": null, "length": 69017, "token_length": 108274}
+{"pred": "Charlie", "answers": ["FIRST CAVALIER"], "all_classes": null, "length": 68999, "token_length": 108208}
+{"pred": "$$MASK$$", "answers": ["TITO"], "all_classes": null, "length": 67521, "token_length": 99059}
+{"pred": "$$MASK$$: Cheryl", "answers": ["NICK"], "all_classes": null, "length": 67521, "token_length": 99059}
+{"pred": "Dulcea", "answers": ["WILLIAM"], "all_classes": null, "length": 65038, "token_length": 100112}
+{"pred": "$$MASK$$", "answers": ["KIT"], "all_classes": null, "length": 71251, "token_length": 106345}
+{"pred": "Malcolm X", "answers": ["BETTY"], "all_classes": null, "length": 73745, "token_length": 108278}
+{"pred": "$$MASK$$: Treves", "answers": ["ADRIAN"], "all_classes": null, "length": 69999, "token_length": 104470}
+{"pred": "QUEEN ELIZABETH II", "answers": ["ANGEL"], "all_classes": null, "length": 69999, "token_length": 104472}
+{"pred": "$$MASK$$: Treves", "answers": ["DAN RATHER"], "all_classes": null, "length": 69998, "token_length": 104469}
+{"pred": "Jack Buggit", "answers": ["QUOYLE"], "all_classes": null, "length": 68737, "token_length": 105960}
+{"pred": "Jack", "answers": ["DMITRI"], "all_classes": null, "length": 68737, "token_length": 105960}
+{"pred": "Mary Horowitz", "answers": ["STARLING", "CLARICE STARLING"], "all_classes": null, "length": 74191, "token_length": 118533}
+{"pred": "Mary Horowitz", "answers": ["BARNEY"], "all_classes": null, "length": 74191, "token_length": 118533}
+{"pred": "NINA", "answers": ["EVERETT"], "all_classes": null, "length": 73870, "token_length": 110871}
+{"pred": "ROSS", "answers": ["BERLIN", "JOHN BERLIN", "JOHN"], "all_classes": null, "length": 74548, "token_length": 108211}
+{"pred": "$$MASK$$: Summer", "answers": ["SUMMER"], "all_classes": null, "length": 74549, "token_length": 108216}
+{"pred": "Maya", "answers": ["MAYA"], "all_classes": null, "length": 73336, "token_length": 112005}
+{"pred": "Serial Mom", "answers": ["PANES", "LEVI PANES"], "all_classes": null, "length": 70401, "token_length": 109600}
+{"pred": "JANE", "answers": ["RIEDENSCHNEIDER", "Freddy Riedenschneider"], "all_classes": null, "length": 69422, "token_length": 107355}
+{"pred": "JANE", "answers": ["FRANK"], "all_classes": null, "length": 69414, "token_length": 107326}
+{"pred": "Ali", "answers": ["ALI", "Ali Van Versh"], "all_classes": null, "length": 70481, "token_length": 106217}
+{"pred": "Marylin", "answers": ["SUGE", "SUGE KNIGHT"], "all_classes": null, "length": 70481, "token_length": 106217}
+{"pred": "BEVERLY", "answers": ["RAOUL"], "all_classes": null, "length": 68917, "token_length": 105897}
+{"pred": "VIOLET", "answers": ["PETER", "Peter Vincent"], "all_classes": null, "length": 68925, "token_length": 105914}
+{"pred": "VIOLET", "answers": ["JEAN"], "all_classes": null, "length": 68920, "token_length": 105900}
+{"pred": "Josephine", "answers": ["WYATT", "Wyatt Earp"], "all_classes": null, "length": 74661, "token_length": 111204}
+{"pred": "INT. THE CHALET/BIG HOUSE - CONTINUOUS", "answers": ["MATTIE"], "all_classes": null, "length": 74661, "token_length": 111203}
+{"pred": "JO", "answers": ["AUFIDIUS", "TULLUS AUFIDIUS"], "all_classes": null, "length": 68289, "token_length": 103857}
+{"pred": "$$MASK$$", "answers": ["JO"], "all_classes": null, "length": 68289, "token_length": 103860}
+{"pred": "KAFKA", "answers": ["KAFKA"], "all_classes": null, "length": 72993, "token_length": 110592}
+{"pred": "SARA", "answers": ["HARRY", "HARRY TASKER"], "all_classes": null, "length": 74102, "token_length": 109373}
+{"pred": "Michael", "answers": ["SONNY", "SONNY CORLEONE"], "all_classes": null, "length": 73190, "token_length": 112253}
+{"pred": "Michael", "answers": ["DON CORLEONE"], "all_classes": null, "length": 73189, "token_length": 112253}
+{"pred": "KYM", "answers": ["ABBY"], "all_classes": null, "length": 70849, "token_length": 105250}
+{"pred": "KINGDOM", "answers": ["FLEURY"], "all_classes": null, "length": 73876, "token_length": 115785}
+{"pred": "Anthony Waller", "answers": ["TEN BEARS"], "all_classes": null, "length": 84105, "token_length": 114097}
+{"pred": "Willcox Hillyer", "answers": ["KATE"], "all_classes": null, "length": 74394, "token_length": 110106}
+{"pred": "BURT GRUSINSKY", "answers": ["TYRELL", "TYRELL MARTIN"], "all_classes": null, "length": 73753, "token_length": 114224}
+{"pred": "BURT GRUSINSKY", "answers": ["BOBBY GREEN"], "all_classes": null, "length": 73750, "token_length": 114217}
+{"pred": "Ratso", "answers": ["ROSARIO DIAZ"], "all_classes": null, "length": 73752, "token_length": 114222}
+{"pred": "Vanessa", "answers": ["LEON", "Count Leon d'Algout"], "all_classes": null, "length": 70608, "token_length": 104518}
+{"pred": "Elizabeth", "answers": ["ED"], "all_classes": null, "length": 69924, "token_length": 109010}
+{"pred": "Amy", "answers": ["GARRETT"], "all_classes": null, "length": 69924, "token_length": 109008}
+{"pred": "Margaret", "answers": ["CHARLIE", "CHARLIE MacCORRY"], "all_classes": null, "length": 68845, "token_length": 104892}
+{"pred": "RENAI", "answers": ["DYSON", "MILES DYSON"], "all_classes": null, "length": 81799, "token_length": 117832}
+{"pred": "BLACK RAIN", "answers": ["VOSEN", "NOAH VOSEN"], "all_classes": null, "length": 74112, "token_length": 115548}
+{"pred": "Mark Whitacre", "answers": ["MILLER"], "all_classes": null, "length": 74114, "token_length": 115555}
+{"pred": "ELAINE", "answers": ["ETHAN", "ETHAN HUNT"], "all_classes": null, "length": 82623, "token_length": 118412}
+{"pred": "Loki", "answers": ["SERENDIPITY"], "all_classes": null, "length": 74795, "token_length": 107905}
+{"pred": "Michelle", "answers": ["ELAINE"], "all_classes": null, "length": 69128, "token_length": 108181}
+{"pred": "KARA", "answers": ["LOOMIS", "SAMUEL J. LOOMIS"], "all_classes": null, "length": 71239, "token_length": 113818}
+{"pred": "ROGER", "answers": ["OLIVE"], "all_classes": null, "length": 82847, "token_length": 118432}
+{"pred": "Lisa", "answers": ["FRANK", "Frank Baker"], "all_classes": null, "length": 65619, "token_length": 99121}
+{"pred": "Claire", "answers": ["TAUPIN", "RICHARD TAUPIN"], "all_classes": null, "length": 67607, "token_length": 108125}
+{"pred": "$$MASK$$: Brenna", "answers": ["GENERAL HAIG"], "all_classes": null, "length": 67606, "token_length": 108126}
+{"pred": "MILTON", "answers": ["MILTON", "JOHN MILTON"], "all_classes": null, "length": 65975, "token_length": 106424}
+{"pred": "LILLY", "answers": ["LEONOR"], "all_classes": null, "length": 71662, "token_length": 103857}
+{"pred": "Celeste", "answers": ["NEFF"], "all_classes": null, "length": 71514, "token_length": 105872}
+{"pred": "Amy", "answers": ["BECK"], "all_classes": null, "length": 76970, "token_length": 116792}
+{"pred": "Joan", "answers": ["CATHERINE", "Catherine Tramell"], "all_classes": null, "length": 69924, "token_length": 106546}
+{"pred": "Catherine Tramell", "answers": ["JOAN"], "all_classes": null, "length": 69911, "token_length": 106515}
+{"pred": "Neil", "answers": ["HANNA"], "all_classes": null, "length": 69968, "token_length": 111164}
+{"pred": "Neil", "answers": ["NEIL"], "all_classes": null, "length": 69968, "token_length": 111165}
+{"pred": "Neil", "answers": ["BREEDAN"], "all_classes": null, "length": 69972, "token_length": 111153}
+{"pred": "$$MASK$$", "answers": ["THE GANG"], "all_classes": null, "length": 64293, "token_length": 104655}

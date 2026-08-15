@@ -13,16 +13,23 @@ def extract_and_analyze(base_dir="result_release_ttft/infinitbench"):
 
     # Đọc dữ liệu
     for method in methods:
+        if "qwen-sim" not in method and "qwen-token-retrieval" not in method:
+            continue
         exp_dir = os.path.join(base_dir, method)
         res_file = os.path.join(exp_dir, "result.txt")
         time_file = os.path.join(exp_dir, "dataset_timing.json")
 
+        length_mapping = {}
         if os.path.exists(res_file):
             with open(res_file, 'r') as f:
                 for line in f:
                     if ',' in line:
                         parts = line.strip().split(',')
                         ds = parts[0].strip()
+                        ds_file = os.path.join(exp_dir, f"{ds}.jsonl")
+                        with open(ds_file, 'r') as df:
+                            lines = df.readlines()
+                            length_mapping[ds] = len(lines)
                         score = float(parts[1].strip())
                         if ds not in acc_data: acc_data[ds] = {}
                         acc_data[ds][method] = score
@@ -33,7 +40,7 @@ def extract_and_analyze(base_dir="result_release_ttft/infinitbench"):
                     timing = json.load(f)
                     for ds, t in timing.items():
                         if ds not in lat_data: lat_data[ds] = {}
-                        lat_data[ds][method] = float(t/100)
+                        lat_data[ds][method] = float(t/length_mapping.get(ds, 1))  # Chia cho số lượng dòng để chuẩn hóa
                 except json.JSONDecodeError:
                     pass
 
@@ -56,6 +63,8 @@ def extract_and_analyze(base_dir="result_release_ttft/infinitbench"):
 
         # Lặp qua từng phương pháp (Method) để tạo các hàng
         for method in method_list:
+            if "qwen-sim" not in method and "qwen-token-retrieval" not in method:
+                continue
             row = [f"**{method}**"]
             
             # Lặp qua từng tập dữ liệu (Dataset) để tạo các cột

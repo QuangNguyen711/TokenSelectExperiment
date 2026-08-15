@@ -89,45 +89,45 @@ EOF
 # ==============================================================================
 
 
-# run_experiment "token-retrieval"                                    "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "false" "false" "false" "false" 0.99
+# run_experiment "token-retrieval"                                    "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "false" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.95-max-1024-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "false" "false" "false" "false" 0.99
+# run_experiment "sim-0.95-max-1024-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "false" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.95-max-1024-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "true" "false" "false" "false" 0.99
+# run_experiment "sim-0.95-max-1024-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "true" "true" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.95-max-2048-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false" "false" "false" "false" 0.99
+# run_experiment "sim-0.95-max-2048-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "false" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.95-max-2048-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true" "false" "false" "false" 0.99
+# run_experiment "sim-0.95-max-2048-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.95 2048 "true" "true" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.95-max-4096-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "false" "false" "false" "false" 0.99
+# run_experiment "sim-0.95-max-4096-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "false" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.95-max-4096-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "true" "false" "false" "false" 0.99
+# run_experiment "sim-0.95-max-4096-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "true" "true" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.97-max-1024-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "false" "false" "false" "false" 0.99
+# run_experiment "sim-0.97-max-1024-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "false" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.97-max-1024-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "true" "false" "false" "false" 0.99
+# run_experiment "sim-0.97-max-1024-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.97 1024 "true" "true" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.97-max-2048-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "false" "false" "false" "false" 0.99
+# run_experiment "sim-0.97-max-2048-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "false" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.97-max-2048-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "true" "false" "false" "false" 0.99
+# run_experiment "sim-0.97-max-2048-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "true" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.97-max-4096-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "false" "false" "false" "false" 0.99
+# run_experiment "sim-0.97-max-4096-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "false" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.97-max-4096-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "true" "false" "false" "false" 0.99
+# run_experiment "sim-0.97-max-4096-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.97 4096 "true" "true" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.99-max-1024-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.99 1024 "true" "false" "false" "false" "false" 0.99
+# run_experiment "sim-0.99-max-1024-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.99 1024 "true" "false" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.99-max-1024-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.99 1024 "true" "true" "false" "false" "false" 0.99
+# run_experiment "sim-0.99-max-1024-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.99 1024 "true" "true" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.99-max-2048-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.99 2048 "true" "false" "false" "false" "false" 0.99
+# run_experiment "sim-0.99-max-2048-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.99 2048 "true" "false" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.99-max-2048-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.99 2048 "true" "true" "false" "false" "false" 0.99
+# run_experiment "sim-0.99-max-2048-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.99 2048 "true" "true" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.99-max-4096-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.99 4096 "true" "false" "false" "false" "false" 0.99
+# run_experiment "sim-0.99-max-4096-no-balance"                       "false" "false" "false" 8192 "false" "false" "both" 512 0.99 4096 "true" "false" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sim-0.99-max-4096-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.99 4096 "true" "true" "false" "false" "false" 0.99
+# run_experiment "sim-0.99-max-4096-balance"                          "false" "false" "false" 8192 "false" "false" "both" 512 0.99 4096 "true" "true" "false" "false" "false" 0.99 0 "sum"
 
-# run_experiment "sumppl-add-4096"                                    "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true"  "false" "false" 0.95
+# run_experiment "sumppl-add-4096"                                    "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true"  "false" "false" 0.95 0 "sum"
 
 # run_experiment "sumppl-tail-4096"                                   "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.95 4096 "sum"
 
@@ -141,7 +141,7 @@ EOF
 
 # run_experiment "pplpost-tail-5120"                                  "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.95 5120 "post"
 
-# run_experiment "token-retrieval-4096"                               "false" "false" "false" 4096 "false" "false" "both" 512 0.99 4096 "false" "false" "false" "false" "false" 0.99
+# run_experiment "token-retrieval-4096"                               "false" "false" "false" 4096 "false" "false" "both" 512 0.99 4096 "false" "false" "false" "false" "false" 0.99 0 "sum"
 
 # run_experiment "layer-wise-top-k"                                   "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "false" "false" "false" 0.95 4096 "fixed"
 
@@ -161,6 +161,21 @@ EOF
 
 # run_experiment "thresh-1e14"                                        "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.00000000000001 4096 "thresh"
 
-run_experiment "thresh-1e15"                                         "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.000000000000001 4096 "thresh"
+# run_experiment "thresh-1e15"                                        "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.000000000000001 4096 "thresh"
 
-run_experiment "thresh-1e16"                                         "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.0000000000000001 4096 "thresh"
+# run_experiment "thresh-1e16"                                        "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 0.0000000000000001 4096 "thresh"
+
+# run_experiment "pplpost-sc-safe-2000"                               "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 2000 0 "post"
+# run_experiment "pplpost-sc-safe-1.0"                                "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 1.0 0 "post"
+# run_experiment "pplpost-sc-safe-1.2"                                "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 1.2 0 "post"
+# run_experiment "pplpost-sc-safe-1.5"                                "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 1.5 0 "post"
+# run_experiment "pplpost-sc-safe-1.6"                                "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 1.6 0 "post"
+# run_experiment "pplpost-sc-safe-1.8"                                "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 1.8 0 "post"
+# run_experiment "pplpost-sc-safe-2.0"                                "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 2.0 0 "post"
+
+# run_experiment "cvg-probe"                                          "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "false" "false" "false" 0.95 4096 "sum"
+# run_experiment "cvg-probe-SCR"                                      "false" "false" "false" 8192 "false" "false" "both" 512 0.99 4096 "true" "false" "false" "false" "false" 0.95 4096 "sum"
+
+# run_experiment "unioncoll-1sp2"                                     "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 2 4096 "unioncoll"
+# run_experiment "unioncoll-1sp3"                                     "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 3 4096 "unioncoll"
+run_experiment "unioncoll-1sp1"                                     "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 1 4096 "unioncoll"

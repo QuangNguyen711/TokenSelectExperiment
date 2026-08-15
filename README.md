@@ -46,10 +46,17 @@ git clone https://github.com/QuangNguyen711/TokenSelectExperiment.git
 cd TokenSelectExperiment/
 ```
 
+```bash
+apt update
+apt install -y curl build-essential git tmux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
+```
+
 2. **Create and activate virtual environment:**
 ```bash
 uv venv --python 3.10 --seed
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+source .venv/bin/activate
 
 export PATH="/data/bin:$PATH"
 git config --global --add safe.directory /data/TokenSelectExperiment
@@ -91,6 +98,10 @@ uv pip install --python .venv/bin/python wonderwords
 uv pip install --python .venv/bin/python tenacity
 uv pip install --python .venv/bin/python beautifulsoup4 html2text
 uv pip install --python .venv/bin/python scipy
+```
+
+```bash
+pkill -f "benchmark/pred.py"
 ```
 
 **Note:** Make sure your `requirements.txt` includes all necessary dependencies. See the repository for the complete requirements list.

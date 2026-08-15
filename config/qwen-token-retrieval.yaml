@@ -22,9 +22,9 @@ model:
   dynamic_budget_balancing: false
   use_cumsum_adaptive: false
   use_hybrid_adaptive: false
-  cumsum_threshold: 0.0000000000000001
+  cumsum_threshold: 1
   n_tail: 4096
-  ppl_mode: thresh
+  ppl_mode: unioncoll
 
 max_len: 1048576
 chunk_size: 8192

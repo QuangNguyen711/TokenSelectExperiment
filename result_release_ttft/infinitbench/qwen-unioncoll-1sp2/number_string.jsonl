@@ -1,0 +1,590 @@
+{"pred": "The sequence of digits is 3000077442.", "answers": ["3000077442"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4443311551.", "answers": ["4443311551"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2200012222.", "answers": ["2200012222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5888333388.", "answers": ["5888333388"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1113377727.", "answers": ["1113377727"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5559488877.", "answers": ["5559488877"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2294440888.", "answers": ["2294440888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7761111199.", "answers": ["7761111199"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2223333352.", "answers": ["2223333352"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5533005556.", "answers": ["5533005556"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n3888888800", "answers": ["3888888800"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n3331111116", "answers": ["3331111116"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n6627111999", "answers": ["6627111999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n9992619999", "answers": ["9992619999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n4422113333\n\nThis sequence is repeated throughout the text, starting at the", "answers": ["4422113333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1884222277.", "answers": ["1884222277"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2111003335", "answers": ["2111003335"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n8889949997\n\nThis sequence was asked to be remembered as part of the", "answers": ["8889949997"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2366677555\n\nThis sequence is repeated multiple times throughout the text, but", "answers": ["2366677555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7770008844.", "answers": ["7770008844"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 5117311111", "answers": ["5117311111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2888111885\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["2888111885"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n8888889111\n\nThis sequence is repeated multiple times throughout the text, but", "answers": ["8888889111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n1114600008", "answers": ["1114600008"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8888885511.", "answers": ["8888885511"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 2663333113", "answers": ["2663333113"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n4440577799\n\nThis sequence is mentioned at the end of the text after", "answers": ["4440577799"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n5556666662\n\nThis sequence is mentioned at the end of the text after", "answers": ["5556666662"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n7663332229", "answers": ["7663332229"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n8888552888", "answers": ["8888552888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n6666628846\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["6666628846"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8888111111.", "answers": ["8888111111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n5520008877\n\nThis sequence starts appearing repeatedly throughout the text, embedded within", "answers": ["5520008877"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2222741666\n\nThis sequence starts appearing after the initial descriptive text about colors", "answers": ["2222741666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 2644444477", "answers": ["2644444477"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n8779999553\n\nThis sequence is mentioned at the end of the text after", "answers": ["8779999553"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1000099000.", "answers": ["1000099000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 9930666888.", "answers": ["9930666888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2222215588\n\nThis sequence is repeated multiple times throughout the text, but", "answers": ["2222215588"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 7911666555", "answers": ["7911666555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n3111779999\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["3111779999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 1111130081.", "answers": ["1111130081"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8117555777.", "answers": ["8117555777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 4311111944", "answers": ["4311111944"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 9433744444", "answers": ["9433744444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2220066002.", "answers": ["2220066002"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7743333339.", "answers": ["7743333339"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 5577887777.", "answers": ["5577887777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2222442776\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["2222442776"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n1199333661\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["1199333661"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7775666444.", "answers": ["7775666444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n5552000062", "answers": ["5552000062"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7883336000.", "answers": ["7883336000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n0000222711\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["0000222711"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1111309977.", "answers": ["1111309977"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2220041177.", "answers": ["2220041177"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8555000699.", "answers": ["8555000699"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n9922291110\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["9922291110"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1277111155.", "answers": ["1277111155"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2280555555.", "answers": ["2280555555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n5688855599\n\nThis sequence repeats multiple times within the provided text.", "answers": ["5688855599"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 4955559999.", "answers": ["4955559999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1111088225.", "answers": ["1111088225"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 5566222290.", "answers": ["5566222290"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 3555544446", "answers": ["3555544446"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n8884422221\n\nThis sequence appears multiple times, embedded within the irrelevant text", "answers": ["8884422221"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n0000666938", "answers": ["0000666938"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 9997001888.", "answers": ["9997001888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5556654449.", "answers": ["5556654449"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: 4413577777", "answers": ["4413577777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 7773773344.", "answers": ["7773773344"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7666664443.", "answers": ["7666664443"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n0333320006\n\nThis sequence repeats multiple times within the provided text.", "answers": ["0333320006"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 2444155556.", "answers": ["2444155556"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8866681155.", "answers": ["8866681155"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8888889771.", "answers": ["8888889771"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 6557772333.", "answers": ["6557772333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 6663379999.", "answers": ["6663379999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n5622222622\n\nThis sequence repeats multiple times, eventually leading to the final", "answers": ["5622222622"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n7774440477", "answers": ["7774440477"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n0006668533\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["0006668533"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 9927741111.", "answers": ["9927741111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n9886666635", "answers": ["9886666635"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4444288338.", "answers": ["4444288338"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8166655511.", "answers": ["8166655511"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8887115444.", "answers": ["8887115444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 3000029977.", "answers": ["3000029977"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4411122282.", "answers": ["4411122282"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1111169466.", "answers": ["1111169466"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9555990088.", "answers": ["9555990088"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n5597771118\n\nThis sequence appears multiple times, embedded within the irrelevant text", "answers": ["5597771118"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n1443391111\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["1443391111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 8046666664.", "answers": ["8046666664"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2222221137\n\nThis sequence is repeated throughout the text, eventually leading to", "answers": ["2222221137"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n8815556999", "answers": ["8815556999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1118000011.", "answers": ["1118000011"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n3311555330\n\nThis sequence is mentioned at the very end of the text", "answers": ["3311555330"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n5611122211\n\nThis sequence appears multiple times throughout the text, repeated over", "answers": ["5611122211"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 5111251111.", "answers": ["5111251111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9999912211.", "answers": ["9999912211"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n5666661150\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["5666661150"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2229993311\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["2229993311"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n1339993355\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["1339993355"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1155533633.", "answers": ["1155533633"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n6660099924", "answers": ["6660099924"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n5249999992", "answers": ["5249999992"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2651111111.", "answers": ["2651111111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2251770000", "answers": ["2251770000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 4444477933.", "answers": ["4444477933"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n4999996177", "answers": ["4999996177"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n8844005554", "answers": ["8844005554"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2266664499.", "answers": ["2266664499"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n4444544255\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["4444544255"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 5112229333.", "answers": ["5112229333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n3000955555\n\nThis sequence appears multiple times, embedded within the irrelevant text", "answers": ["3000955555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n4888854444", "answers": ["4888854444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8822333333.", "answers": ["8822333333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2444722000", "answers": ["2444722000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n7754444495\n\nThis sequence was mentioned at the very end of the provided", "answers": ["7754444495"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 4888223333.", "answers": ["4888223333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3335556511.", "answers": ["3335556511"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7333388839.", "answers": ["7333388839"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 0000888866.", "answers": ["0000888866"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n4427786666", "answers": ["4427786666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 7777740888.", "answers": ["7777740888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6884477777.", "answers": ["6884477777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n7444000622", "answers": ["7444000622"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n4441131999", "answers": ["4441131999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n8888823365\n\nThis sequence appears multiple times throughout the text, likely inserted", "answers": ["8888823365"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 6669997800.", "answers": ["6669997800"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n5555396111", "answers": ["5555396111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: 2255534444", "answers": ["2255534444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n0000224994", "answers": ["0000224994"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n9922223177\n\nThis sequence repeats multiple times, but it is the key", "answers": ["9922223177"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n7877788333\n\nThis sequence appears multiple times, embedded within the irrelevant text", "answers": ["7877788333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5499999980.", "answers": ["5499999980"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n3333888424", "answers": ["3333888424"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n8865555555", "answers": ["8865555555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n1177311888", "answers": ["1177311888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n6668823555\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["6668823555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n8999333444", "answers": ["8999333444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 6657777799.", "answers": ["6657777799"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8828889999.", "answers": ["8828889999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n8888100013", "answers": ["8888100013"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 2000033333", "answers": ["2000033333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2663333999.", "answers": ["2663333999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n3311774411\n\nThis sequence is mentioned at the very end of the provided", "answers": ["3311774411"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n9944466666\n\nThis sequence appears at the end of the response when the", "answers": ["9944466666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7773399222.", "answers": ["7773399222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n7718555577", "answers": ["7718555577"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3555559377.", "answers": ["3555559377"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 2225535588.", "answers": ["2225535588"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n4991111113\n\nThis sequence is mentioned at the very end of the provided", "answers": ["4991111113"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n1115555003\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["1115555003"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n3333339850", "answers": ["3333339850"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n7144444006", "answers": ["7144444006"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n5552277748", "answers": ["5552277748"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n7000047779", "answers": ["7000047779"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n5555558809", "answers": ["5555558809"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 6666666641.", "answers": ["6666666641"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n8111988888", "answers": ["8111988888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 4441190088.", "answers": ["4441190088"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 4422222155.", "answers": ["4422222155"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n6333008833\n\nThis sequence appears multiple times throughout the text, repeated several", "answers": ["6333008833"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2266699977.", "answers": ["2266699977"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 6633335446.", "answers": ["6633335446"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 4445556664.", "answers": ["4445556664"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n7771119220\n\nThis sequence appears multiple times throughout the text, embedded within", "answers": ["7771119220"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n3144488333", "answers": ["3144488333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n3990066668", "answers": ["3990066668"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n9990310000", "answers": ["9990310000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: 1266111111.", "answers": ["1266111111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 6333366617.", "answers": ["6333366617"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1555555355.", "answers": ["1555555355"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 0555554822", "answers": ["0555554822"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1331115222.", "answers": ["1331115222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 0444444200", "answers": ["0444444200"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n0255788888", "answers": ["0255788888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 6833777000.", "answers": ["6833777000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n9999422688", "answers": ["9999422688"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n0000002566", "answers": ["0000002566"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n3444477743\n\nThis sequence repeats multiple times within the text, embedded within", "answers": ["3444477743"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 5566550088.", "answers": ["5566550088"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 0099333337", "answers": ["0099333337"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 6699920055.", "answers": ["6699920055"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 7788999199", "answers": ["7788999199"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 2511111997.", "answers": ["2511111997"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6639993337.", "answers": ["6639993337"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9944488477.", "answers": ["9944488477"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0888244666.", "answers": ["0888244666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2222338544", "answers": ["2222338544"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 6111300888.", "answers": ["6111300888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 2200003350.", "answers": ["2200003350"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: \n\n0001114476", "answers": ["0001114476"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n5666695553\n\nRemember this sequence as it was mentioned in the last line", "answers": ["5666695553"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: \n\n0242888888", "answers": ["0242888888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 1224444554", "answers": ["1224444554"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n7755078888", "answers": ["7755078888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n7777794188", "answers": ["7777794188"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3333901444.", "answers": ["3333901444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: \n\n5794444466", "answers": ["5794444466"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2222997770\n\nRemember this sequence for the quiz.", "answers": ["2222997770"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n8804444422\n\nRemember this sequence as it was mentioned at the end of", "answers": ["8804444422"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9699999927.", "answers": ["9699999927"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n6888555377\n\nRemember this sequence as it was the important information you were", "answers": ["6888555377"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9999999944.", "answers": ["9999999944"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7009000999.", "answers": ["7009000999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 4332255555.", "answers": ["4332255555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n7555641111", "answers": ["7555641111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7744669999.", "answers": ["7744669999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n0062222200", "answers": ["0062222200"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n7000822224", "answers": ["7000822224"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9000083355.", "answers": ["9000083355"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3588883888.", "answers": ["3588883888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n1999997299", "answers": ["1999997299"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3855088888.", "answers": ["3855088888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3722220000.", "answers": ["3722220000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 4666666344.", "answers": ["4666666344"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 4414443322.", "answers": ["4414443322"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n9999988633", "answers": ["9999988633"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 9933002222.", "answers": ["9933002222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2222276544.", "answers": ["2222276544"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: 0066442222", "answers": ["0066442222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7888773222.", "answers": ["7888773222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2299993988.", "answers": ["2299993988"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n3900229999", "answers": ["3900229999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: 4443005444", "answers": ["4443005444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: 0888885330.", "answers": ["0888885330"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 4499995537", "answers": ["4499995537"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n9999913303", "answers": ["9999913303"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n8888844460", "answers": ["8888844460"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9997001166.", "answers": ["9997001166"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 0000999944.", "answers": ["0000999944"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 1177444880.", "answers": ["1177444880"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 1555333111.", "answers": ["1555333111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 0072777222.", "answers": ["0072777222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n9420077777", "answers": ["9420077777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 1144111179.", "answers": ["1144111179"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n5555644222", "answers": ["5555644222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n1133889994", "answers": ["1133889994"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9955555880.", "answers": ["9955555880"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: \n\n0004544488", "answers": ["0004544488"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n6666636110", "answers": ["6666636110"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n2244437666", "answers": ["2244437666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4055111113.", "answers": ["4055111113"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: \n\n8887567777", "answers": ["8887567777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n7000006670", "answers": ["7000006670"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n4333333600", "answers": ["4333333600"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: \n\n8888033333", "answers": ["8888033333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 6644444644.", "answers": ["6644444644"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n4555500677", "answers": ["4555500677"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1511000000.", "answers": ["1511000000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n9477788844", "answers": ["9477788844"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8999049999.", "answers": ["8999049999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 6611111506.", "answers": ["6611111506"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is:\n\n5440000033", "answers": ["5440000033"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 5801111000.", "answers": ["5801111000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9999447779.", "answers": ["9999447779"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8882222799.", "answers": ["8882222799"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3305559998.", "answers": ["3305559998"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 7444999443.", "answers": ["7444999443"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 4411444441.", "answers": ["4411444441"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9922222211.", "answers": ["9922222211"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n4444456636\n\nThis sequence repeats multiple times within the provided text.", "answers": ["4444456636"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 4955588855.", "answers": ["4955588855"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2211100155.", "answers": ["2211100155"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3333343996.", "answers": ["3333343996"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 7222044999.", "answers": ["7222044999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 8555700666.", "answers": ["8555700666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 2228811128.", "answers": ["2228811128"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0000708888.", "answers": ["0000708888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3312222262.", "answers": ["3312222262"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3766696666.", "answers": ["3766696666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1114445544.", "answers": ["1114445544"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0777777991.", "answers": ["0777777991"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9557399999.", "answers": ["9557399999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3333000499.", "answers": ["3333000499"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3333995555.", "answers": ["3333995555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9910022333.", "answers": ["9910022333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5551172222.", "answers": ["5551172222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 5523333311.", "answers": ["5523333311"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9440055550.", "answers": ["9440055550"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1114442555.", "answers": ["1114442555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6999999911.", "answers": ["6999999911"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0000555716.", "answers": ["0000555716"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9222445666.", "answers": ["9222445666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4422233992.", "answers": ["4422233992"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0005577781.", "answers": ["0005577781"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5595444446.", "answers": ["5595444446"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7776889977.", "answers": ["7776889977"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1122791111.", "answers": ["1122791111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3331688811.", "answers": ["3331688811"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4511111822.", "answers": ["4511111822"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7771177990.", "answers": ["7771177990"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3300455000.", "answers": ["3300455000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2222227766.", "answers": ["2222227766"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3333444555.", "answers": ["3333444555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3388999588.", "answers": ["3388999588"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3866666668.", "answers": ["3866666668"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: \n\n5444555004", "answers": ["5444555004"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 9000755577.", "answers": ["9000755577"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8885555596.", "answers": ["8885555596"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3312222446.", "answers": ["3312222446"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 6664444889.", "answers": ["6664444889"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5666694888.", "answers": ["5666694888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n7740887777\n\nThis sequence repeats multiple times, embedded within the irrelevant text", "answers": ["7740887777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1119922777.", "answers": ["1119922777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5588842226.", "answers": ["5588842226"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5888873334.", "answers": ["5888873334"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1111169995.", "answers": ["1111169995"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7805555599.", "answers": ["7805555599"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 7222229991.", "answers": ["7222229991"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0000444696.", "answers": ["0000444696"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0222885000.", "answers": ["0222885000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 4400449991.", "answers": ["4400449991"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2224445100.", "answers": ["2224445100"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1333777743.", "answers": ["1333777743"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9999934885.", "answers": ["9999934885"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3303444446.", "answers": ["3303444446"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1433100000.", "answers": ["1433100000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6699777066.", "answers": ["6699777066"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7722222333.", "answers": ["7722222333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is:\n\n1608888886\n\nThis sequence repeats multiple times, but it is the same", "answers": ["1608888886"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5557762224.", "answers": ["5557762224"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4442266999.", "answers": ["4442266999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1111666464.", "answers": ["1111666464"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3933711111.", "answers": ["3933711111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2485888888.", "answers": ["2485888888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0411111133.", "answers": ["0411111133"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4488812000.", "answers": ["4488812000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9966666609.", "answers": ["9966666609"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4448822999.", "answers": ["4448822999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6666337783.", "answers": ["6666337783"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 7700999555.", "answers": ["7700999555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1130000042.", "answers": ["1130000042"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1133377666.", "answers": ["1133377666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1112244411.", "answers": ["1112244411"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3334333333.", "answers": ["3334333333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 8884660999.", "answers": ["8884660999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1199446662.", "answers": ["1199446662"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4366642222.", "answers": ["4366642222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3702555555.", "answers": ["3702555555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9999199915.", "answers": ["9999199915"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 4445222225.", "answers": ["4445222225"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1115555665.", "answers": ["1115555665"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1112222378.", "answers": ["1112222378"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1666666653.", "answers": ["1666666653"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 4444495233.", "answers": ["4444495233"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8804555555.", "answers": ["8804555555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1222277777.", "answers": ["1222277777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4400000050.", "answers": ["4400000050"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7733333077.", "answers": ["7733333077"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 3330777255.", "answers": ["3330777255"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2422211116.", "answers": ["2422211116"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1111442211.", "answers": ["1111442211"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4222233311.", "answers": ["4222233311"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9555666666.", "answers": ["9555666666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 0077777713.", "answers": ["0077777713"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7799888200.", "answers": ["7799888200"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8044111111.", "answers": ["8044111111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5444407775.", "answers": ["5444407775"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 2221009990.", "answers": ["2221009990"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4442885553.", "answers": ["4442885553"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7766655777.", "answers": ["7766655777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: 5555722776.", "answers": ["5555722776"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0007755500.", "answers": ["0007755500"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: \n\n8811500055", "answers": ["8811500055"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 7771444449.", "answers": ["7771444449"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7788811150.", "answers": ["7788811150"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1111199451.", "answers": ["1111199451"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 6633112666.", "answers": ["6633112666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5744400000.", "answers": ["5744400000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0009366600.", "answers": ["0009366600"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0016666677.", "answers": ["0016666677"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9977988222.", "answers": ["9977988222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0002222513.", "answers": ["0002222513"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8807447777.", "answers": ["8807447777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is: \n\n6756666600", "answers": ["6756666600"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5664446699.", "answers": ["5664446699"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6655577733.", "answers": ["6655577733"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5577786333.", "answers": ["5577786333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4399993444.", "answers": ["4399993444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: \n\n0005833339", "answers": ["0005833339"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6635655555.", "answers": ["6635655555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6322277111.", "answers": ["6322277111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 6629662222.", "answers": ["6629662222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1111003366.", "answers": ["1111003366"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5500000555.", "answers": ["5500000555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0599999996.", "answers": ["0599999996"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2544777771.", "answers": ["2544777771"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6625559993.", "answers": ["6625559993"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4444003111.", "answers": ["4444003111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2939666666.", "answers": ["2939666666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1449999588.", "answers": ["1449999588"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4402200003.", "answers": ["4402200003"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6647700007.", "answers": ["6647700007"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3333966634.", "answers": ["3333966634"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9994441170.", "answers": ["9994441170"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1113332264.", "answers": ["1113332264"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 2222221011.", "answers": ["2222221011"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 7773322733.", "answers": ["7773322733"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0003788880.", "answers": ["0003788880"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3356611116.", "answers": ["3356611116"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 8222222330.", "answers": ["8222222330"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0366555444.", "answers": ["0366555444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0166440000.", "answers": ["0166440000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9988288555.", "answers": ["9988288555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 9999223733.", "answers": ["9999223733"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6666655570.", "answers": ["6666655570"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0889555552.", "answers": ["0889555552"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2222232228.", "answers": ["2222232228"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9999004005.", "answers": ["9999004005"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9223323333.", "answers": ["9223323333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5550031122.", "answers": ["5550031122"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 5555488433.", "answers": ["5555488433"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0699777777.", "answers": ["0699777777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6622355999.", "answers": ["6622355999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2222477117.", "answers": ["2222477117"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0000178883.", "answers": ["0000178883"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7777229999.", "answers": ["7777229999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7771199444.", "answers": ["7771199444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2222222288.", "answers": ["2222222288"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7477777717.", "answers": ["7477777717"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7770033766.", "answers": ["7770033766"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4444445924.", "answers": ["4444445924"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6625663333.", "answers": ["6625663333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9444555077.", "answers": ["9444555077"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8533881111.", "answers": ["8533881111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2232333333.", "answers": ["2232333333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6669900000.", "answers": ["6669900000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3666117777.", "answers": ["3666117777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2285558888.", "answers": ["2285558888"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7088833330.", "answers": ["7088833330"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0099997119.", "answers": ["0099997119"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6111444411.", "answers": ["6111444411"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8888885588.", "answers": ["8888885588"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8666600012.", "answers": ["8666600012"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2221631111.", "answers": ["2221631111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0044433557.", "answers": ["0044433557"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8888399902.", "answers": ["8888399902"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8885557233.", "answers": ["8885557233"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 4444744559.", "answers": ["4444744559"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2223388555.", "answers": ["2223388555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden throughout the text is 7443332255.", "answers": ["7443332255"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 3004266666", "answers": ["3004266666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3357777744.", "answers": ["3357777744"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8554443355.", "answers": ["8554443355"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9988444499.", "answers": ["9988444499"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden in the text is 9999916665.", "answers": ["9999916665"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 7711222110.", "answers": ["7711222110"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2219999566.", "answers": ["2219999566"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8887044466.", "answers": ["8887044466"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9997444408.", "answers": ["9997444408"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3777011119.", "answers": ["3777011119"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5569990111.", "answers": ["5569990111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9904444445.", "answers": ["9904444445"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9335551444.", "answers": ["9335551444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 1119988335.", "answers": ["1119988335"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 4444468876.", "answers": ["4444468876"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9999995582.", "answers": ["9999995582"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2333664444.", "answers": ["2333664444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0000055495.", "answers": ["0000055495"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 0033333277", "answers": ["0033333277"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2225588880.", "answers": ["2225588880"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8666532222.", "answers": ["8666532222"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7756699998.", "answers": ["7756699998"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3888888538.", "answers": ["3888888538"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3333115112.", "answers": ["3333115112"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5555220038.", "answers": ["5555220038"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9999331000.", "answers": ["9999331000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9966533335.", "answers": ["9966533335"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3007222211.", "answers": ["3007222211"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 3333322700.", "answers": ["3333322700"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6611886666.", "answers": ["6611886666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 6077777711.", "answers": ["6077777711"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3333333965.", "answers": ["3333333965"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8888669664.", "answers": ["8888669664"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 6666037799.", "answers": ["6666037799"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0882225551.", "answers": ["0882225551"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8333333923.", "answers": ["8333333923"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0444000014.", "answers": ["0444000014"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 6333999008.", "answers": ["6333999008"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1111994889.", "answers": ["1111994889"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5587770005.", "answers": ["5587770005"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0076665599.", "answers": ["0076665599"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2776667111.", "answers": ["2776667111"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3337007778.", "answers": ["3337007778"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1448888882.", "answers": ["1448888882"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0033223322.", "answers": ["0033223322"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 1188993377.", "answers": ["1188993377"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 7222999916.", "answers": ["7222999916"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2228777744.", "answers": ["2228777744"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9926666443.", "answers": ["9926666443"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9966665887.", "answers": ["9966665887"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0009993362.", "answers": ["0009993362"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5888888884.", "answers": ["5888888884"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8889550009.", "answers": ["8889550009"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2270000997.", "answers": ["2270000997"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 5555131115.", "answers": ["5555131115"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 5777788444.", "answers": ["5777788444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6444440777.", "answers": ["6444440777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5519922999.", "answers": ["5519922999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4411167772.", "answers": ["4411167772"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4744888000.", "answers": ["4744888000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3332271000.", "answers": ["3332271000"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4477554422.", "answers": ["4477554422"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5599222226.", "answers": ["5599222226"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0002003999.", "answers": ["0002003999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4448852555.", "answers": ["4448852555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3338888897.", "answers": ["3338888897"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9997738877.", "answers": ["9997738877"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3099555554.", "answers": ["3099555554"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9555552600.", "answers": ["9555552600"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8980004444.", "answers": ["8980004444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3390888899.", "answers": ["3390888899"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1100003387.", "answers": ["1100003387"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4220001118.", "answers": ["4220001118"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3344488447.", "answers": ["3344488447"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7463333339.", "answers": ["7463333339"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 8666666944.", "answers": ["8666666944"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is: 0955511444", "answers": ["0955511444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2222288777.", "answers": ["2222288777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 4444611700.", "answers": ["4444611700"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2222002244.", "answers": ["2222002244"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4411144200.", "answers": ["4411144200"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7884444446.", "answers": ["7884444446"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9900099444.", "answers": ["9900099444"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 3371333399.", "answers": ["3371333399"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6667246666.", "answers": ["6667246666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0444488889.", "answers": ["0444488889"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2222255552.", "answers": ["2222255552"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8778866644.", "answers": ["8778866644"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 2211122211.", "answers": ["2211122211"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5333336335.", "answers": ["5333336335"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5533333345.", "answers": ["5533333345"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5882211666.", "answers": ["5882211666"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7781111660.", "answers": ["7781111660"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits hidden within the text is 9919999955.", "answers": ["9919999955"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9977666555.", "answers": ["9977666555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6666000393.", "answers": ["6666000393"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0003306664.", "answers": ["0003306664"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0004999922.", "answers": ["0004999922"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8888155566.", "answers": ["8888155566"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits you provided is: \n\n3888808800", "answers": ["3888808800"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits you provided is: \n\n2222448448", "answers": ["2222448448"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 9999666049.", "answers": ["9999666049"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8811666223.", "answers": ["8811666223"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2555555607.", "answers": ["2555555607"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0444400661.", "answers": ["0444400661"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2182222229.", "answers": ["2182222229"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6222227777.", "answers": ["6222227777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3335558188.", "answers": ["3335558188"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1112777633.", "answers": ["1112777633"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7444755333.", "answers": ["7444755333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1111889911.", "answers": ["1111889911"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1116666663.", "answers": ["1116666663"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6667111333.", "answers": ["6667111333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5566658555.", "answers": ["5566658555"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1171111110.", "answers": ["1171111110"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7500007772.", "answers": ["7500007772"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1111112226.", "answers": ["1111112226"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1668881114.", "answers": ["1668881114"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0029977733.", "answers": ["0029977733"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8200888800.", "answers": ["8200888800"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3356666552.", "answers": ["3356666552"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0003322144.", "answers": ["0003322144"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5556000440.", "answers": ["5556000440"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 2809999977.", "answers": ["2809999977"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4444444413.", "answers": ["4444444413"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7299999333.", "answers": ["7299999333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8888820055.", "answers": ["8888820055"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8666693999.", "answers": ["8666693999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8823333388.", "answers": ["8823333388"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0095552211.", "answers": ["0095552211"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1555666446.", "answers": ["1555666446"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 3338333333.", "answers": ["3338333333"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1615555550.", "answers": ["1615555550"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0991110009.", "answers": ["0991110009"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4111199944.", "answers": ["4111199944"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6635522777.", "answers": ["6635522777"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0777773334.", "answers": ["0777773334"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1155511055.", "answers": ["1155511055"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7199994441.", "answers": ["7199994441"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 7799966660.", "answers": ["7799966660"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 5088884433.", "answers": ["5088884433"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 6662990999.", "answers": ["6662990999"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 0091111160.", "answers": ["0091111160"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 8100077779.", "answers": ["8100077779"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 1199992263.", "answers": ["1199992263"], "all_classes": null, "length": 99194, "token_length": 125401}
+{"pred": "The sequence of digits is 4455488866.", "answers": ["4455488866"], "all_classes": null, "length": 99194, "token_length": 125401}

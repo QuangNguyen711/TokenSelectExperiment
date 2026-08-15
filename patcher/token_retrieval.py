@@ -482,41 +482,6 @@ class TokenRetriever:
             
             sorted_topk_tokens = final_indices
 
-        # elif HEAD_WISE_ADAPTIVE:
-        #     # --- PHƯƠNG PHÁP B: HEAD-WISE ADAPTIVE UNION ---
-        #     head_probs = torch.softmax(scores, dim=-1)
-        #     topk_probs, topk_indices = torch.topk(head_probs, actual_topk, dim=-1)
-            
-        #     local_sum = topk_probs.sum(dim=-1, keepdim=True) + 1e-5
-        #     normalized_probs = topk_probs / local_sum
-        #     cumsum_probs = torch.cumsum(normalized_probs, dim=-1, dtype=torch.float32)
-            
-        #     threshold_mask = cumsum_probs >= ATTENTION_THRESHOLD
-        #     max_val, max_idx = torch.max(threshold_mask, dim=-1)
-            
-        #     adaptive_k_per_head = torch.where(max_val, max_idx + 1, actual_topk)
-        #     adaptive_k_per_head = torch.clamp(adaptive_k_per_head, min=1)
-            
-        #     max_k = adaptive_k_per_head.max().item()
-        #     # Tái sử dụng mảng topk_indices đã tính, chỉ cắt lấy max_k
-        #     batched_idx_adaptive = topk_indices[:, :max_k]
-            
-        #     seq_arange = torch.arange(max_k, device=scores.device).unsqueeze(0)
-        #     valid_mask = seq_arange < adaptive_k_per_head.unsqueeze(1)
-            
-        #     final_indices = torch.unique(batched_idx_adaptive[valid_mask])
-            
-        #     if dist.is_initialized():
-        #         mask = torch.zeros(num_tokens, device=scores.device, dtype=torch.int32)
-        #         mask[final_indices] = 1
-        #         dist.all_reduce(mask, op=dist.ReduceOp.MAX)
-        #         final_indices = torch.nonzero(mask).squeeze(-1)
-            
-        #     if final_indices.shape[0] > actual_topk:
-        #         final_indices = final_indices[torch.randperm(final_indices.shape[0])[:actual_topk]]
-            
-        #     sorted_topk_tokens = torch.sort(final_indices).values
-
         elif UNION_OF_SETS:
             k_per_head = max(1, actual_topk // num_heads)
             _, topk_indices_per_head = torch.topk(scores, k_per_head, dim=-1)
@@ -618,11 +583,7 @@ class TokenRetriever:
                 if PPL_MODE == "fixed" or PPL_MODE == "thresh":
                     k_eff_raw = 0                       # thresh tính k sau, ở post-sum
                 elif PPL_MODE == "post":
-                    # perplexity của post-sum
-                    _S = _Ph.sum(dim=0)                            # [T]
-                    _S = _S / (_S.sum() + _eps)
-                    _Hpost = -(_S * (_S + _eps).log()).sum()
-                    k_eff_raw = int(torch.exp(_Hpost).item())
+                    k_eff_raw = 0        # pplpost tính ở TẦNG HAI (trên 8192, có scale)
                 
                 else:  # "sum"
                     _Hh = -(_Ph * (_Ph + _eps).log()).sum(dim=-1)  # [H]
@@ -635,51 +596,11 @@ class TokenRetriever:
                 head_weights = torch.softmax(head_energy, dim=0).unsqueeze(1)
                 scores = torch.sum(head_probs * head_weights, dim=0)
             else:
-                scores = torch.softmax(scores, dim=-1).sum(dim=0)        # post-sum [T]
+                scores_raw = scores
+                scores = torch.softmax(scores, dim=-1).sum(dim=0)
 
             if dist.is_initialized():
                 dist.all_reduce(scores, op=dist.ReduceOp.SUM)
-            
-            # if num_tokens >= 256 and _vlog_should(layer_id):
-            #     with torch.no_grad():
-            #         a = scores.float()
-            #         a = a / (a.sum() + 1e-12)
-            #         T = a.numel()
-            #         amax = a.max()
-            #         uni = 1.0 / T
-            #         # entropy normalized của post-sum
-            #         Hn = (-(a * (a + 1e-12).log()).sum() / float(torch.log(torch.tensor(max(T,2.0))))).item()
-            #         ppl = float(torch.exp(-(a * (a + 1e-12).log()).sum()).item())  # perplexity tuyệt đối
-            #         # ngưỡng tương đối max
-            #         rel = {th: int((a >= th * amax).sum().item())
-            #                for th in (1e-13, 1e-12, 1e-11, 1e-10, 1e-9, 1e-8)}
-            #         # ngưỡng theo bội số mức đều
-            #         uni_k = {th: int((a >= th * uni).sum().item())
-            #                  for th in (1.0, 2.0, 3.0, 5.0, 10.0)}
-            #         # ngưỡng TUYỆT ĐỐI thuần a >= theta (KHÔNG nhân gì)
-            #         absk = {th: int((a >= th).sum().item())
-            #                 for th in (1e-6, 3e-6, 1e-5, 3e-5, 1e-4)}
-            #         _vlog_write(
-            #             f"L{layer_id:<2} T={T:<6} Hn={Hn:.4f} ppl={ppl:.0f} "
-            #             f"REL(1e13={rel[1e-13]} 1e12={rel[1e-12]} 1e11={rel[1e-11]} 1e10={rel[1e-10]} 1e9={rel[1e-9]} 1e8={rel[1e-8]}) "
-            #             f"UNI(1={uni_k[1.0]} 2={uni_k[2.0]} 3={uni_k[3.0]} 5={uni_k[5.0]} 10={uni_k[10.0]}) "
-            #             f"ABS(1e6={absk[1e-6]} 3e6={absk[3e-6]} 1e5={absk[1e-5]} 3e5={absk[3e-5]} 1e4={absk[1e-4]})"
-            #         )
-            # # === SINK v2 HOOK B ===
-            # if slog.ENABLED and (slog.LAYERS_TO_LOG is None or layer_id in slog.LAYERS_TO_LOG):
-            #     try:
-            #         _kn = token_fingerprints[indices].view(indices.shape[0], -1).float().norm(dim=-1)
-            #     except Exception:
-            #         _kn = None
-            #     slog.log_call(
-            #         layer_id=layer_id,
-            #         relevant_indices=indices,
-            #         scores_postvote=scores,        # [T] post soft-vote
-            #         raw_scores_2d=_raw_2d,         # [H,T] raw, reduced inside logger
-            #         key_norms=_kn,
-            #         anchor_qnorm=query_fingerprints.float().norm().item(),
-            #         chunk_len=chunk_size,
-            #     )
 
             if KERNEL_SIZE > 0:
                 total_pad = KERNEL_SIZE - 1
@@ -700,7 +621,37 @@ class TokenRetriever:
                 else:
                     KEEP_FULL_LAYERS = {}
 
-                if ADAPTIVE_TOPK and PPL_MODE == "thresh":
+                if ADAPTIVE_TOPK and PPL_MODE == "unioncoll":
+                    # ===== TẦNG 1 GIỮ NGUYÊN, chỉ thay TẦNG 2 =====
+                    # Tầng 1: _sel = top-k1 theo soft-vote (y hệt pplpost).
+                    # Tầng 2: mỗi head lấy k_h = N_alpha (Hill/Rényi) token của RIÊNG nó, rồi UNION.
+                    #   N_alpha = (sum p^alpha)^(1/(1-alpha)),  alpha -> 1 cho exp(H) Shannon.
+                    #   alpha lay tu CUMSUM_THRESHOLD (arg 17 cua run_experiment).
+                    _k1 = min(actual_topk, scores.shape[-1])
+                    _, _sel = torch.topk(scores, _k1, dim=-1)                        # [k1] index trong [0,T)
+                    _scp = 1.0 / (self.head_dim ** 0.5)
+                    _p = torch.softmax(scores_raw[:, _sel].float() * _scp, dim=-1)   # [H,k1]
+
+                    _a = float(CUMSUM_THRESHOLD)
+                    if abs(_a - 1.0) < 1e-6:
+                        # Shannon. xlogy cho 0*log0 = 0 dung dinh nghia -> khong can hack +1e-12
+                        # (hack do lam log(p) bi chan o -27.6 voi p < 1e-12 => entropy hut).
+                        _kh = torch.exp(-torch.xlogy(_p, _p).sum(dim=-1))
+                    else:
+                        # Log-domain: p^alpha underflow khi alpha lon, pow(1/(1-a)) khuech dai sai so.
+                        _kh = torch.exp(
+                            torch.logsumexp(_a * torch.log(_p.clamp_min(1e-30)), dim=-1) / (1.0 - _a)
+                        )
+                    _kh = torch.nan_to_num(_kh, nan=1.0, posinf=float(_k1), neginf=1.0)
+                    _kh = _kh.round().long().clamp_(1, _k1)                          # [H]
+
+                    _mk = int(_kh.max().item())
+                    _idx = torch.topk(_p, _mk, dim=-1).indices                       # [H, _mk]
+                    _col = torch.arange(_mk, device=_p.device).unsqueeze(0)
+                    _u = torch.unique(_idx[_col < _kh.unsqueeze(1)])                 # index trong [0,k1)
+                    final_indices = _sel[_u]                                         # map ve [0,T)
+                    k_dynamic = -1                                                   # da set final_indices
+                elif ADAPTIVE_TOPK and PPL_MODE == "thresh":
                     if layer_id in KEEP_FULL_LAYERS:
                         k_dynamic = actual_topk
                     else:
@@ -709,6 +660,27 @@ class TokenRetriever:
                         thr = CUMSUM_THRESHOLD              # ngưỡng tuyệt đối trên a (BỎ * a.max())
                         cnt = int((a >= thr).sum().item())
                         k_dynamic = max(256, cnt)   # N_TAIL làm SÀN
+                elif ADAPTIVE_TOPK and PPL_MODE == "post":
+                    if layer_id in KEEP_FULL_LAYERS:
+                        k_dynamic = actual_topk
+                    else:
+                        # BƯỚC 1: top-8192 thô (không scale) từ post-sum đã có
+                        _k1 = min(actual_topk, scores.shape[-1])
+                        _, _sel = torch.topk(scores, _k1, dim=-1)          # [k1] index [0,T)
+                        # TẦNG HAI: pplpost CÓ scale, chỉ trên 8192
+                        _scp = 1.0 / (self.head_dim ** 0.5)
+                        _s_sel = scores_raw[:, _sel].float()               # [H, k1]
+                        _P = torch.softmax(_s_sel * _scp, dim=-1).sum(dim=0)   # [k1]
+                        _P = _P / (_P.sum() + 1e-12)
+                        _Hpost = -(_P * (_P + 1e-12).log()).sum()
+                        _kfp = torch.exp(_Hpost).item()
+                        # hệ số an toàn = CUMSUM_THRESHOLD (dùng làm alpha, vd 1.5)
+                        _k2 = int(round(CUMSUM_THRESHOLD * _kfp))
+                        _k2 = max(256, min(_k2, _k1))
+                        # giữ _k2 token P cao nhất, map về [0,T)
+                        _keep = torch.topk(_P, _k2).indices
+                        final_indices = _sel[_keep]
+                        k_dynamic = -1     # đánh dấu: đã set final_indices, bỏ qua topk cuối
                 elif ADAPTIVE_TOPK:
                     # --- Σ exp(H_h) (đã tính ở trên), chọn top-k trên post-sum ---
                     k_dynamic = actual_topk if layer_id in KEEP_FULL_LAYERS else k_eff_sum_ppl
@@ -731,12 +703,11 @@ class TokenRetriever:
                             m = cum >= CUMSUM_THRESHOLD
                             k_dynamic = int(m.int().argmax().item()) + 1 if m.any() else available_tokens
 
-                # rào an toàn — HẠ SÀN từ 512 -> 64 để KHÔNG che hành vi Σ exp H_h
-                max_k_limit = min(8192, available_tokens)
-                min_k_limit = min(64, available_tokens)
-                k_dynamic = max(min_k_limit, min(k_dynamic, max_k_limit))
-
-                _, final_indices = torch.topk(scores, k_dynamic, dim=-1)
+                if k_dynamic != -1:          # chỉ kẹp khi k_dynamic là SỐ TOKEN thật
+                    max_k_limit = min(8192, available_tokens)
+                    min_k_limit = min(64, available_tokens)
+                    k_dynamic = max(min_k_limit, min(k_dynamic, max_k_limit))
+                    _, final_indices = torch.topk(scores, k_dynamic, dim=-1)
             else:
                 _, final_indices = torch.topk(scores, actual_topk, dim=-1)
 
