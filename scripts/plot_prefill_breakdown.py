@@ -21,8 +21,26 @@ STAGES = [
 CONFIGS = ["TokenSelect (base)", "TokenSelect + SCR"]
 
 # lavender ordinal ramp — validateOrdinal: monotone L, dL>=0.083, light-end 2.32:1, CVD dE 8.5
-# ordinal ramp lavender, validateOrdinal: dL>=0.091, light-end 2.18:1, CVD dE 8.6 (PASS)
-RAMP = ["#b6a5d9", "#9c86c5", "#8267b1", "#6a489c", "#512b82", "#381361"]
+# Ramp da sac xanh bien dam -> tim (kieu ColorBrewer BuPu, dao chieu).
+# validateOrdinal: L don dieu, dL>=0.090, light-end 2.01:1, CVD dE 8.4 (PASS).
+# Rieng check "Single hue" khong ap dung: day la multi-hue sequential co chu dich.
+RAMP = ["#00306e", "#284590", "#515ab0", "#7b71c8", "#a28cd6", "#c6a9e2"]
+
+
+def _lum(hexc):
+    def f(c):
+        c = int(hexc[c:c + 2], 16) / 255
+        return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    r, g, b = f(1), f(3), f(5)
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
+def label_ink(bg):
+    """Chon mau chu theo do tuong phan: ramp trai dai tu rat dam den rat sang."""
+    L = _lum(bg)
+    white = (1.05) / (L + 0.05)
+    dark = (L + 0.05) / (0.0086 + 0.05)
+    return "#ffffff" if white >= dark else "#0b0b0b"
 
 SURFACE = "#fcfcfb"
 INK      = "#0b0b0b"
@@ -31,6 +49,12 @@ INK_MUTE = "#807e79"
 
 BAR_H = 0.34
 GAP   = 0.022          # khe ~2px giua cac doan
+# Doan nho nhat van phai nhin thay duoc, neu khong nguoi doc dem thieu thanh phan.
+# Chunk-plan cua baseline = 0.006s -> 0.7px, mong hon ca khe ngan cach nen mat hut.
+# Phai ep ca BE RONG VE lan BUOC NHICH; neu chi ep be rong ma van nhich theo gia tri
+# that thi doan sau se ve de len gan het -> baseline chi con 5 doan.
+# Chi 1 doan bi anh huong (chunk-plan baseline), lam thanh dai them 0.046s tren 8.81s (0.5%).
+MIN_V = 0.052
 
 
 def rounded(ax, x, y, w, h, color, left=False, right=False, r=0.055):
@@ -70,15 +94,16 @@ for ci, ypos_i in enumerate(ypos):
     for si, v in enumerate(vals):
         if v <= 0:
             continue
-        w = max(v - GAP, 0.012)
+        dv = max(v, MIN_V)
+        w = dv - GAP
         rounded(ax, x, ypos_i, w, BAR_H, RAMP[si],
                 left=(si == first), right=(si == last))
         # nhan truc tiep, chi cho doan du rong (selective direct labels)
         if v >= 0.75:
             ax.text(x + w / 2, ypos_i + BAR_H / 2, f"{v:.2f}s",
-                    ha="center", va="center", fontsize=8.6, color="#ffffff",
+                    ha="center", va="center", fontsize=8.6, color=label_ink(RAMP[si]),
                     fontweight="medium", zorder=4)
-        x += v
+        x += dv
     # tong o cuoi thanh
     ax.text(totals[ci] + 0.18, ypos_i + BAR_H / 2, f"{totals[ci]:.2f}s",
             ha="left", va="center", fontsize=9.6, color=INK, fontweight="bold", zorder=4)
