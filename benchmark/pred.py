@@ -94,6 +94,8 @@ def get_model_and_tokenizer(config, kernel_size):
             cumsum_threshold=getattr(config.model, 'cumsum_threshold', 0.95),
             n_tail=getattr(config.model, 'n_tail', 2048),
             ppl_mode=getattr(config.model, 'ppl_mode', 'sum'),
+            query_cache=getattr(config.model, 'query_cache', False),
+            query_cache_sim_threshold=getattr(config.model, 'query_cache_sim_threshold', 0.9),
         )
     else:
         raise NotImplementedError()

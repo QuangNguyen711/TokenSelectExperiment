@@ -35,6 +35,8 @@ def patch_model(config):
         max_dynamic_chunk=getattr(config.model, 'max_dynamic_chunk', 1024),
         use_dynamic_chunking=getattr(config.model, 'use_dynamic_chunking', False),
         dynamic_budget_balancing=getattr(config.model, 'dynamic_budget_balancing', True),
+        query_cache=getattr(config.model, 'query_cache', False),
+        query_cache_sim_threshold=getattr(config.model, 'query_cache_sim_threshold', 0.9),
     )
 
 

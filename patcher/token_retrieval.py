@@ -90,6 +90,7 @@ N_Local = -1
 PREFILL_CHUNK_SIZE = -1
 QUERY_ROTATE = False
 QUERY_CACHE = False
+QUERY_CACHE_SIM_THRESHOLD = 0.9  # ngưỡng cosine similarity riêng cho Selection Cache (decode), tách khỏi SIM_THRESHOLD (Dynamic Chunking prefill)
 KERNEL_SIZE=-1
 ADAPTIVE_TOPK = False
 ATTENTION_THRESHOLD = 0.9
@@ -384,7 +385,7 @@ class TokenRetriever:
         )
 
         self.similarity_threshold = torch.tensor(
-            [0.9 for _ in range(self.num_layers)], device=self.device, dtype=self.dtype
+            [QUERY_CACHE_SIM_THRESHOLD for _ in range(self.num_layers)], device=self.device, dtype=self.dtype
         )
 
         self.skip_count = 0
@@ -763,7 +764,7 @@ class TokenRetriever:
             if (
                     self.is_first_query[layer_id]
                     or torch.cosine_similarity(
-                self.query_fingerprints_cache[layer_id], query_fingerprints
+                self.query_fingerprints_cache[layer_id], query_fingerprints, dim=0
             )
                     < self.similarity_threshold[layer_id]
             ):
@@ -775,9 +776,13 @@ class TokenRetriever:
                 token_fingerprints = token_fingerprints.view(
                     token_fingerprints.shape[0], -1
                 )
+                # đã gather sẵn theo self.token_indices ở trên -> indices là identity
+                gathered_indices = torch.arange(
+                    token_fingerprints.shape[0], device=self.device, dtype=torch.int32
+                )
 
                 topk_tokens = (
-                        self.get_topk_tokens(query_fingerprints, token_fingerprints, topk, layer_id=layer_id, chunk_size=query.shape[0])
+                        self.get_topk_tokens(query_fingerprints, token_fingerprints, topk, gathered_indices, layer_id=layer_id, chunk_size=query.shape[0])
                         + n_init
                 )
                 self.topk_indices_cache[layer_id] = topk_tokens
@@ -1338,6 +1343,8 @@ def patch(
         cumsum_threshold=0.95,
         n_tail=2048,
         ppl_mode="sum",
+        query_cache=False,
+        query_cache_sim_threshold=0.9,
 ):
     global ROPE_BASE
     global ROPE_SCALE
@@ -1348,6 +1355,7 @@ def patch(
     global N_Local
     global QUERY_ROTATE
     global QUERY_CACHE
+    global QUERY_CACHE_SIM_THRESHOLD
     global PREFILL_CHUNK_SIZE
     global KERNEL_SIZE
     global ADAPTIVE_TOPK
@@ -1394,7 +1402,8 @@ def patch(
 
     QUERY_ROTATE = True
     PREFILL_CHUNK_SIZE = prefill_chunk_size
-    QUERY_CACHE = False
+    QUERY_CACHE = query_cache
+    QUERY_CACHE_SIM_THRESHOLD = query_cache_sim_threshold
 
     SIM_THRESHOLD = sim_threshold
     MAX_DYNAMIC_CHUNK = max_dynamic_chunk

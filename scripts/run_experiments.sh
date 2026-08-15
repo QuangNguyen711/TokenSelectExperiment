@@ -26,6 +26,8 @@ run_experiment() {
     local cumsum_threshold=${17:-0.95}
     local n_tail=${18:-2048}
     local ppl_mode=${19:-"sum"}
+    local query_cache=${20:-"false"}
+    local query_cache_sim_threshold=${21:-0.9}
 
     local output_dir="result_release_ttft/infinitbench/qwen-${exp_name}"
 
@@ -60,6 +62,8 @@ model:
   cumsum_threshold: $cumsum_threshold
   n_tail: $n_tail
   ppl_mode: $ppl_mode
+  query_cache: $query_cache
+  query_cache_sim_threshold: $query_cache_sim_threshold
 
 max_len: 1048576
 chunk_size: 8192
@@ -85,7 +89,7 @@ EOF
 # CÁC KỊCH BẢN THỬ NGHIỆM
 # Cấu trúc tham số:
 # run_experiment <Tên> <L2> <Weight> <Union> <TopK> <DCU> <Adaptive> <EnergyMode> <PrefillChunk> <Sim_Threshold>
-# <Max_Chunk_Size> <Use_Dynamic_Chunking> <Budget_Balancing> <Use_Adaptive_TopK> <Use_Cumsum_Adaptive> <Use_Hybrid_Adaptive> <Cumsum_Threshold> <N_Tail> <PPL_Mode>
+# <Max_Chunk_Size> <Use_Dynamic_Chunking> <Budget_Balancing> <Use_Adaptive_TopK> <Use_Cumsum_Adaptive> <Use_Hybrid_Adaptive> <Cumsum_Threshold> <N_Tail> <PPL_Mode> <Query_Cache> <Query_Cache_Sim_Threshold>
 # ==============================================================================
 
 
@@ -179,3 +183,16 @@ EOF
 # run_experiment "unioncoll-1sp2"                                     "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 2 4096 "unioncoll"
 # run_experiment "unioncoll-1sp3"                                     "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 3 4096 "unioncoll"
 run_experiment "unioncoll-1sp1"                                     "false" "false" "false" 8192 "false" "false" "both" 512 0.95 4096 "false" "false" "true" "false" "false" 1 4096 "unioncoll"
+
+# --- Test Selection Cache (decode) sau khi fix bug ---
+# So sánh trực tiếp với baseline "token-retrieval" (dòng đầu tiên ở trên): mọi tham số giữ nguyên,
+# chỉ bật query_cache=true để đo ảnh hưởng riêng của decode-side Selection Cache.
+# Ngưỡng similarity (tham số 21) tách riêng khỏi Sim_Threshold của Dynamic Chunking (tham số 10).
+# run_experiment "token-retrieval-qcache-sim0.90"                     "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "false" "false" "false" "false" 0.99 0 "sum" "true" 0.90
+
+# Sweep ngưỡng similarity của Selection Cache để tìm điểm cân bằng skip-rate / accuracy:
+# run_experiment "token-retrieval-qcache-sim0.95"                     "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "false" "false" "false" "false" 0.99 0 "sum" "true" 0.95
+# run_experiment "token-retrieval-qcache-sim0.99"                     "false" "false" "false" 8192 "false" "false" "both" 512 0.95 1024 "false" "false" "false" "false" "false" 0.99 0 "sum" "true" 0.99
+
+# Kết hợp Selection Cache decode + Dynamic Chunking (prefill) — bản đầy đủ contribution:
+# run_experiment "sim-0.97-max-2048-no-balance-qcache-sim0.90"        "false" "false" "false" 8192 "false" "false" "both" 512 0.97 2048 "true" "false" "false" "false" "false" 0.99 0 "sum" "true" 0.90
