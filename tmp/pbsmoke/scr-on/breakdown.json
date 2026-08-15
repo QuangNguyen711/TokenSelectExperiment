@@ -1,0 +1,18 @@
+{
+  "samples": 2,
+  "stages": {
+    "1_chunk_plan": 0.00040742778219282627,
+    "2_store_kv": 0.0016270594205707312,
+    "3_retrieval": 0.0005557716358453035,
+    "4_wrapper_setup": 0.0013563898392021656,
+    "5_attention": 0.0028854727279394865
+  },
+  "counts": {
+    "n_subchunks": 28,
+    "n_macrochunk_layer_calls": 28,
+    "n_full_attn_fallback": 28,
+    "n_retrieval_calls": 28,
+    "sum_kv_len": 168,
+    "sum_q_len": 168
+  }
+}

@@ -44,6 +44,8 @@ from typing import Optional
 import sglang
 import torch
 import torch.distributed as dist
+
+import patcher.prefill_profiler as _pp
 import triton
 import triton.language as tl
 from sglang.srt.managers.schedule_batch import ScheduleBatch
@@ -220,6 +222,9 @@ class ReqToTokenRetriever:
     def get_token_retriever(self, req_id):
         if self.current_req_id != req_id:
             self.current_req_id = req_id
+            if _pp.ENABLED:
+                _pp.next_sample()
+                _pp.dump()
             # # === SINK: rid mới = sample mới ===
             # slog.next_sample()
             if (
@@ -1071,6 +1076,17 @@ def patch_model():
         def patched_radix_attention_extend_forward_flashinfer(
                 self, q, k, v, input_metadata: InputMetadata
         ):
+            # Do TAT CA layer. Neu chi do 1 layer roi nhan len thi cuda.synchronize()
+            # (dong bo toan cuc) se hut ca phan viec dang xep hang cua cac layer khac
+            # -> layer duoc do bi thoi phong ~1.4x. Do het thi khong con nhiem.
+            if _pp.ENABLED:
+                with _pp.stage("0_total_attn_forward"):
+                    return _extend_forward_body(self, q, k, v, input_metadata)
+            return _extend_forward_body(self, q, k, v, input_metadata)
+
+        def _extend_forward_body(
+                self, q, k, v, input_metadata: InputMetadata
+        ):
             # --- CÀI BẤM GIỜ BẮT ĐẦU PREFILL ---
             global _TRACKER_PREFILL_START
             # Chỉ bấm giờ ở layer 0 và lúc _TRACKER_PREFILL_START đang = 0 
@@ -1097,6 +1113,12 @@ def patch_model():
             # =================================================================
             BASE_CHUNK = PREFILL_CHUNK_SIZE
             chunk_plan = []
+
+            _prof = _pp.ENABLED
+            _plan_t0 = None
+            if _prof:
+                torch.cuda.synchronize()
+                _plan_t0 = time.perf_counter()
 
             if USE_DYNAMIC_CHUNKING and MAX_DYNAMIC_CHUNK > BASE_CHUNK:
                 # BƯỚC 1: Tính Vector trung bình cho các block
@@ -1143,13 +1165,20 @@ def patch_model():
                     end = min((chunk_idx + 1) * BASE_CHUNK, seq_len)
                     chunk_plan.append((start, end))
 
+            if _prof:
+                torch.cuda.synchronize()
+                _pp.add("1_chunk_plan", time.perf_counter() - _plan_t0)
+                _pp.count("n_subchunks", len(chunk_plan))
+                _pp.count("n_macrochunk_layer_calls")
+
             # BƯỚC 2: Thực thi theo Plan
             for start, end in chunk_plan:
                 actual_step = end - start
 
                 if k is not None:
                     assert v is not None
-                    self.store_kv_cache(k, v, input_metadata, start=start, end=end)
+                    with _pp.stage("2_store_kv", _prof):
+                        self.store_kv_cache(k, v, input_metadata, start=start, end=end)
 
                 # --- Cân bằng Local và Top-K ---
                 current_n_local = max(N_Local, actual_step)
@@ -1161,32 +1190,42 @@ def patch_model():
                     # Tắt bù trừ: Giữ nguyên Top-K, cho phép tổng ngân sách phình to ra
                     current_top_k = TOP_K
 
-                retrieved_indices = input_metadata.token_retriever.retrieval_indices(
-                    q[start:end].contiguous(), self.layer_id, N_INIT, current_n_local, current_top_k,
-                    is_decode=False,
-                )
-                
+                with _pp.stage("3_retrieval", _prof):
+                    retrieved_indices = input_metadata.token_retriever.retrieval_indices(
+                        q[start:end].contiguous(), self.layer_id, N_INIT, current_n_local, current_top_k,
+                        is_decode=False,
+                    )
+
                 retrieved_indptr = prefill_wrapper_paged._paged_kv_indptr_buf.clone()
 
                 if retrieved_indices is None:
                     retrieved_indices = input_metadata.token_retriever.get_all_tokens(self.layer_id)
+                    if _prof:
+                        _pp.count("n_full_attn_fallback")
 
                 retrieved_indptr[1] = len(retrieved_indices)
                 qo_indptr[1] = actual_step
-                
-                prefill_wrapper_paged.end_forward()
-                prefill_wrapper_paged.begin_forward(
-                    qo_indptr, retrieved_indptr, retrieved_indices, kv_last_page_len,
-                    self.tp_q_head_num, self.tp_k_head_num, self.head_dim, 1,
-                )
 
-                o = prefill_wrapper_paged.forward(
-                    q[start:end].contiguous().view(-1, self.tp_q_head_num, self.head_dim),
-                    input_metadata.token_to_kv_pool.get_kv_buffer(self.layer_id),
-                    causal=True, sm_scale=self.scaling, window_left=self.sliding_window_size,
-                    logits_soft_cap=self.logit_cap, rope_scale=ROPE_SCALE, 
-                    rope_theta=ROPE_BASE, pos_encoding_mode=ROPE_MODE,
-                )
+                if _prof:
+                    _pp.count("n_retrieval_calls")
+                    _pp.count("sum_kv_len", int(len(retrieved_indices)))
+                    _pp.count("sum_q_len", int(actual_step))
+
+                with _pp.stage("4_wrapper_setup", _prof):
+                    prefill_wrapper_paged.end_forward()
+                    prefill_wrapper_paged.begin_forward(
+                        qo_indptr, retrieved_indptr, retrieved_indices, kv_last_page_len,
+                        self.tp_q_head_num, self.tp_k_head_num, self.head_dim, 1,
+                    )
+
+                with _pp.stage("5_attention", _prof):
+                    o = prefill_wrapper_paged.forward(
+                        q[start:end].contiguous().view(-1, self.tp_q_head_num, self.head_dim),
+                        input_metadata.token_to_kv_pool.get_kv_buffer(self.layer_id),
+                        causal=True, sm_scale=self.scaling, window_left=self.sliding_window_size,
+                        logits_soft_cap=self.logit_cap, rope_scale=ROPE_SCALE,
+                        rope_theta=ROPE_BASE, pos_encoding_mode=ROPE_MODE,
+                    )
 
                 outputs[start:end] = o.view(-1, self.tp_q_head_num * self.head_dim)
 
@@ -1421,6 +1460,14 @@ def patch(
     # slog.set_output_dir(_os.environ.get("SINK_LOG_DIR", "./sink_logs"))
     # print(f"[SINK] logger ON in server pid={_os.getpid()} "
     #       f"ds={slog.DATASET} dir={slog.OUTPUT_DIR}", flush=True)
+
+    # Profiler bat qua env vi server chay o tien trinh con, khong nhan duoc
+    # bien global set tu phia client.
+    import os as _os
+    _pp_out = _os.environ.get("PREFILL_PROFILE_OUT")
+    if _pp_out:
+        _pp.enable(True, _pp_out)
+        print(f"[PREFILL-PROFILER] ON -> {_pp_out}", flush=True)
 
     patch_input_metadata()
     patch_model_runner()
